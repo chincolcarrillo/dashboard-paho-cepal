@@ -1,0 +1,26 @@
+---
+title: "Metodología"
+---
+
+## Fuente de datos
+
+Los indicadores se construyen a partir de datos de comercio internacional procesados para identificar tecnologías sanitarias.
+
+## Cobertura
+
+La cobertura será definida según disponibilidad de datos, países incluidos, categorías de productos y período temporal.
+
+## Clasificación de productos
+
+Las categorías preliminares pueden incluir:
+
+- medicamentos;
+- vacunas;
+- ingredientes farmacéuticos activos;
+- kits diagnósticos;
+- dispositivos médicos;
+- otros productos farmacéuticos.
+
+## Notas metodológicas
+
+Los valores monetarios deben presentarse en una unidad consistente, por ejemplo miles de USD o millones de USD.

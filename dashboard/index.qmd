@@ -1,0 +1,16 @@
+---
+title: "Comercio de tecnologías sanitarias en América Latina y el Caribe"
+---
+
+## Presentación
+
+Este dashboard presenta indicadores sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe.
+
+El objetivo es facilitar la exploración de tendencias regionales, participación de LAC en el comercio mundial, comercio intrarregional y patrones por país y categoría de producto.
+
+## Secciones
+
+- **Comercio global:** evolución de la participación de LAC en exportaciones e importaciones mundiales.
+- **Comercio intrarregional:** composición del comercio dentro y fuera de la región.
+- **Países:** perfiles nacionales.
+- **Metodología:** fuentes, clasificación de productos y criterios de procesamiento.
