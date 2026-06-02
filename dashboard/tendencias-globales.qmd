@@ -1,0 +1,216 @@
+---
+title: "Tendencias globales"
+format:
+  html:
+    toc: true
+    code-fold: true
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(plotly)
+library(scales)
+library(here)
+library(janitor)
+
+theme_set(theme_minimal(base_size = 12))
+```
+
+## ¿Cómo se comparan las exportaciones de LAC con las de otras regiones?
+
+Esta sección presenta la evolución anual de las exportaciones de tecnologías sanitarias vinculadas con América Latina y el Caribe, desagregadas según región exportadora.
+
+Los valores se expresan en millones de dólares estadounidenses.
+
+```{r}
+#| label: cargar-datos
+#| include: false
+
+comercio_hc_lac <- readr::read_rds("../data/proc/comercio_hc_lac.rds")
+```
+
+```{r}
+#| label: preparar-datos
+#| include: false
+
+# Revisión mínima de variables esperadas
+vars_necesarias <- c(
+  "year",
+  "value_1000usd",
+  "hc_cat1",
+  "hc_cat_paho",
+  "exp_region_name"
+)
+
+vars_faltantes <- setdiff(vars_necesarias, names(comercio_hc_lac))
+
+if (length(vars_faltantes) > 0) {
+  stop(
+    "Faltan las siguientes variables en comercio_hc_lac: ",
+    paste(vars_faltantes, collapse = ", ")
+  )
+}
+
+# Base auxiliar para exportaciones por región
+# Nota: value_1000usd está en miles de USD; se divide por 1.000 para expresar en millones de USD.
+
+exportaciones_region <- comercio_hc_lac |>
+  mutate(
+    region_exportadora = case_when(
+      exp_region_name == "Latin America and the Caribbean" ~ "Latin America and the Caribbean",
+      is.na(exp_region_name) ~ "Sin información",
+      TRUE ~ exp_region_name
+    ),
+    vista_producto = case_when(
+      hc_cat1 == "Pharma" ~ "Productos farmacéuticos",
+      hc_cat_paho == "Principios activos" ~ "Principios activos",
+      hc_cat_paho %in% c(
+        "Medicamentos",
+        "Vacunas (humanas)",
+        "Kits diagnósticos",
+        "Dispositivos médicos"
+      ) ~ "Tecnologías sanitarias",
+      TRUE ~ NA_character_
+    )
+  )
+
+# Vista 1: productos farmacéuticos totales
+datos_pharma <- exportaciones_region |>
+  filter(hc_cat1 == "Pharma") |>
+  group_by(year, region_exportadora) |>
+  summarise(
+    valor_mill_usd = sum(value_1000usd, na.rm = TRUE) / 1000,
+    .groups = "drop"
+  )
+
+# Vista 2: principios activos
+datos_principios_activos <- exportaciones_region |>
+  filter(hc_cat_paho == "Principios activos") |>
+  group_by(year, region_exportadora) |>
+  summarise(
+    valor_mill_usd = sum(value_1000usd, na.rm = TRUE) / 1000,
+    .groups = "drop"
+  )
+
+# Vista 3: tecnologías sanitarias seleccionadas
+datos_tecnologias_sanitarias <- exportaciones_region |>
+  filter(
+    hc_cat_paho %in% c(
+      "Medicamentos",
+      "Vacunas (humanas)",
+      "Kits diagnósticos",
+      "Dispositivos médicos"
+    )
+  ) |>
+  group_by(year, region_exportadora) |>
+  summarise(
+    valor_mill_usd = sum(value_1000usd, na.rm = TRUE) / 1000,
+    .groups = "drop"
+  )
+
+crear_area_exportaciones <- function(datos, titulo) {
+  
+  datos_plot <- datos |>
+    mutate(
+      region_exportadora = fct_reorder(region_exportadora, valor_mill_usd, .fun = sum, .desc = FALSE),
+      tooltip = paste0(
+        "Año: ", year,
+        "<br>Región exportadora: ", region_exportadora,
+        "<br>Valor: US$ ", scales::comma(round(valor_mill_usd, 1)), " millones"
+      )
+    )
+  
+  p <- ggplot(
+    datos_plot,
+    aes(
+      x = year,
+      y = valor_mill_usd,
+      fill = region_exportadora,
+      text = tooltip
+    )
+  ) +
+    geom_area(alpha = 0.85, linewidth = 0.2, colour = "white") +
+    scale_x_continuous(
+      breaks = sort(unique(datos_plot$year))
+    ) +
+    scale_y_continuous(
+      labels = label_number(scale_cut = cut_short_scale())
+    ) +
+    labs(
+      title = titulo,
+      subtitle = "Flujos comerciales vinculados con América Latina y el Caribe",
+      x = NULL,
+      y = "Millones de USD",
+      fill = "Región exportadora",
+      caption = "Fuente: elaboración propia con base en datos procesados de comercio internacional."
+    ) +
+    theme(
+      legend.position = "bottom",
+      plot.title = element_text(face = "bold"),
+      panel.grid.minor = element_blank()
+    )
+  
+  ggplotly(p, tooltip = "text") |>
+    layout(
+      legend = list(
+        orientation = "h",
+        x = 0,
+        y = -0.2
+      ),
+      margin = list(b = 100)
+    )
+}
+```
+
+::: {.panel-tabset}
+
+## Productos farmacéuticos
+
+```{r}
+#| label: grafico-pharma
+#| echo: false
+#| warning: false
+#| message: false
+
+crear_area_exportaciones(
+  datos_pharma,
+  "Exportaciones de productos farmacéuticos por región exportadora"
+)
+```
+
+## Principios activos
+
+```{r}
+#| label: grafico-principios-activos
+#| echo: false
+#| warning: false
+#| message: false
+
+crear_area_exportaciones(
+  datos_principios_activos,
+  "Exportaciones de principios activos por región exportadora"
+)
+```
+
+## Tecnologías sanitarias
+
+```{r}
+#| label: grafico-tecnologias-sanitarias
+#| echo: false
+#| warning: false
+#| message: false
+
+crear_area_exportaciones(
+  datos_tecnologias_sanitarias,
+  "Exportaciones de tecnologías sanitarias seleccionadas por región exportadora"
+)
+```
+
+:::
+
+## Nota de lectura
+
+El gráfico muestra la evolución del valor exportado por región exportadora. La categoría de América Latina y el Caribe permite observar la participación de la región frente a otras regiones exportadoras en los flujos comerciales vinculados con LAC.

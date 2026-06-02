@@ -1,5 +1,26 @@
 [
   {
+    "objectID": "dashboard/tendencias-globales.html",
+    "href": "dashboard/tendencias-globales.html",
+    "title": "Tendencias globales",
+    "section": "",
+    "text": "Esta sección presenta la evolución anual de las exportaciones de tecnologías sanitarias vinculadas con América Latina y el Caribe, desagregadas según región exportadora.\nLos valores se expresan en millones de dólares estadounidenses.\n\nProductos farmacéuticosPrincipios activosTecnologías sanitarias"
+  },
+  {
+    "objectID": "dashboard/tendencias-globales.html#cómo-se-comparan-las-exportaciones-de-lac-con-las-de-otras-regiones",
+    "href": "dashboard/tendencias-globales.html#cómo-se-comparan-las-exportaciones-de-lac-con-las-de-otras-regiones",
+    "title": "Tendencias globales",
+    "section": "",
+    "text": "Esta sección presenta la evolución anual de las exportaciones de tecnologías sanitarias vinculadas con América Latina y el Caribe, desagregadas según región exportadora.\nLos valores se expresan en millones de dólares estadounidenses.\n\nProductos farmacéuticosPrincipios activosTecnologías sanitarias"
+  },
+  {
+    "objectID": "dashboard/tendencias-globales.html#nota-de-lectura",
+    "href": "dashboard/tendencias-globales.html#nota-de-lectura",
+    "title": "Tendencias globales",
+    "section": "Nota de lectura",
+    "text": "Nota de lectura\nEl gráfico muestra la evolución del valor exportado por región exportadora. La categoría de América Latina y el Caribe permite observar la participación de la región frente a otras regiones exportadoras en los flujos comerciales vinculados con LAC."
+  },
+  {
     "objectID": "dashboard/index.html",
     "href": "dashboard/index.html",
     "title": "Comercio de tecnologías sanitarias en América Latina y el Caribe",
@@ -19,6 +40,41 @@
     "title": "Comercio de tecnologías sanitarias en América Latina y el Caribe",
     "section": "Secciones",
     "text": "Secciones\n\nComercio global: evolución de la participación de LAC en exportaciones e importaciones mundiales.\nComercio intrarregional: composición del comercio dentro y fuera de la región.\nPaíses: perfiles nacionales.\nMetodología: fuentes, clasificación de productos y criterios de procesamiento."
+  },
+  {
+    "objectID": "dashboard/balance-comercial.html",
+    "href": "dashboard/balance-comercial.html",
+    "title": "Balance comercial",
+    "section": "",
+    "text": "Esta sección presenta la evolución anual de las exportaciones, importaciones y balance comercial neto de América Latina y el Caribe en tecnologías sanitarias.\nEl balance comercial se calcula como:\nBalance comercial = Exportaciones de LAC - Importaciones de LAC\nLos valores se expresan en millones de dólares estadounidenses."
+  },
+  {
+    "objectID": "dashboard/balance-comercial.html#cuál-es-el-balance-comercial-de-américa-latina-y-el-caribe",
+    "href": "dashboard/balance-comercial.html#cuál-es-el-balance-comercial-de-américa-latina-y-el-caribe",
+    "title": "Balance comercial",
+    "section": "",
+    "text": "Esta sección presenta la evolución anual de las exportaciones, importaciones y balance comercial neto de América Latina y el Caribe en tecnologías sanitarias.\nEl balance comercial se calcula como:\nBalance comercial = Exportaciones de LAC - Importaciones de LAC\nLos valores se expresan en millones de dólares estadounidenses."
+  },
+  {
+    "objectID": "dashboard/balance-comercial.html#productos-farmacéuticos-principios-activos-y-tecnologías-sanitarias",
+    "href": "dashboard/balance-comercial.html#productos-farmacéuticos-principios-activos-y-tecnologías-sanitarias",
+    "title": "Balance comercial",
+    "section": "Productos farmacéuticos, principios activos y tecnologías sanitarias",
+    "text": "Productos farmacéuticos, principios activos y tecnologías sanitarias\nEsta visualización compara exportaciones, importaciones y balance comercial neto de LAC para tres agregados: productos farmacéuticos, principios activos y tecnologías sanitarias seleccionadas.\n\nProductos farmacéuticosPrincipios activosTecnologías sanitarias"
+  },
+  {
+    "objectID": "dashboard/balance-comercial.html#tecnologías-sanitarias-por-categoría",
+    "href": "dashboard/balance-comercial.html#tecnologías-sanitarias-por-categoría",
+    "title": "Balance comercial",
+    "section": "Tecnologías sanitarias por categoría",
+    "text": "Tecnologías sanitarias por categoría\nEsta visualización permite observar si el balance comercial regional cambia según el tipo de tecnología sanitaria considerada.\n\nTotal tecnologías sanitariasMedicamentosVacunas humanasKits diagnósticosDispositivos médicos"
+  },
+  {
+    "objectID": "dashboard/balance-comercial.html#nota-de-lectura",
+    "href": "dashboard/balance-comercial.html#nota-de-lectura",
+    "title": "Balance comercial",
+    "section": "Nota de lectura",
+    "text": "Nota de lectura\nLas barras representan el valor anual exportado e importado por América Latina y el Caribe. La línea muestra el balance comercial neto, calculado como exportaciones menos importaciones. Valores negativos indican déficit comercial regional; valores positivos indican superávit."
   },
   {
     "objectID": "dashboard/metodologia.html",
