@@ -1,0 +1,58 @@
+[
+  {
+    "objectID": "dashboard/index.html",
+    "href": "dashboard/index.html",
+    "title": "Comercio de tecnologías sanitarias en América Latina y el Caribe",
+    "section": "",
+    "text": "Este dashboard presenta indicadores sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe.\nEl objetivo es facilitar la exploración de tendencias regionales, participación de LAC en el comercio mundial, comercio intrarregional y patrones por país y categoría de producto."
+  },
+  {
+    "objectID": "dashboard/index.html#presentación",
+    "href": "dashboard/index.html#presentación",
+    "title": "Comercio de tecnologías sanitarias en América Latina y el Caribe",
+    "section": "",
+    "text": "Este dashboard presenta indicadores sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe.\nEl objetivo es facilitar la exploración de tendencias regionales, participación de LAC en el comercio mundial, comercio intrarregional y patrones por país y categoría de producto."
+  },
+  {
+    "objectID": "dashboard/index.html#secciones",
+    "href": "dashboard/index.html#secciones",
+    "title": "Comercio de tecnologías sanitarias en América Latina y el Caribe",
+    "section": "Secciones",
+    "text": "Secciones\n\nComercio global: evolución de la participación de LAC en exportaciones e importaciones mundiales.\nComercio intrarregional: composición del comercio dentro y fuera de la región.\nPaíses: perfiles nacionales.\nMetodología: fuentes, clasificación de productos y criterios de procesamiento."
+  },
+  {
+    "objectID": "dashboard/metodologia.html",
+    "href": "dashboard/metodologia.html",
+    "title": "Metodología",
+    "section": "",
+    "text": "Los indicadores se construyen a partir de datos de comercio internacional procesados para identificar tecnologías sanitarias."
+  },
+  {
+    "objectID": "dashboard/metodologia.html#fuente-de-datos",
+    "href": "dashboard/metodologia.html#fuente-de-datos",
+    "title": "Metodología",
+    "section": "",
+    "text": "Los indicadores se construyen a partir de datos de comercio internacional procesados para identificar tecnologías sanitarias."
+  },
+  {
+    "objectID": "dashboard/metodologia.html#cobertura",
+    "href": "dashboard/metodologia.html#cobertura",
+    "title": "Metodología",
+    "section": "Cobertura",
+    "text": "Cobertura\nLa cobertura será definida según disponibilidad de datos, países incluidos, categorías de productos y período temporal."
+  },
+  {
+    "objectID": "dashboard/metodologia.html#clasificación-de-productos",
+    "href": "dashboard/metodologia.html#clasificación-de-productos",
+    "title": "Metodología",
+    "section": "Clasificación de productos",
+    "text": "Clasificación de productos\nLas categorías preliminares pueden incluir:\n\nmedicamentos;\nvacunas;\ningredientes farmacéuticos activos;\nkits diagnósticos;\ndispositivos médicos;\notros productos farmacéuticos."
+  },
+  {
+    "objectID": "dashboard/metodologia.html#notas-metodológicas",
+    "href": "dashboard/metodologia.html#notas-metodológicas",
+    "title": "Metodología",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\nLos valores monetarios deben presentarse en una unidad consistente, por ejemplo miles de USD o millones de USD."
+  }
+]
