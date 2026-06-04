@@ -232,7 +232,7 @@ htmltools::div(
 #| results: asis
 
 cat(glue::glue(
-"**Hallazgos automáticos para {latest_year}.** En el agregado de América Latina y el Caribe, la categoría con mayores exportaciones fue **{top_export_category_latest$hc_cat2}** ({fmt_musd(top_export_category_latest$exports_musd)}), mientras que la categoría con mayores importaciones fue **{top_import_category_latest$hc_cat2}** ({fmt_musd(top_import_category_latest$imports_musd)}). El balance comercial agregado fue de **{fmt_musd(latest_lac$balance_musd)}**.\n"
+"**Hallazgos automáticos para {latest_year}.** *(Se pueden elegir otros, pero es una opción para visualizar en la landing page)*. En el agregado de América Latina y el Caribe, la categoría con mayores exportaciones fue **{top_export_category_latest$hc_cat2}** ({fmt_musd(top_export_category_latest$exports_musd)}), mientras que la categoría con mayores importaciones fue **{top_import_category_latest$hc_cat2}** ({fmt_musd(top_import_category_latest$imports_musd)}). El balance comercial agregado fue de **{fmt_musd(latest_lac$balance_musd)}**.\n"
 ))
 ```
 
@@ -247,7 +247,12 @@ Este gráfico muestra qué proporción de las exportaciones mundiales de cada ca
 lac_share_exports <- exports_region_hc_cat2 |>
   filter(exp_region == "LAC") |>
   mutate(
-    hc_cat2 = forcats::fct_reorder(hc_cat2, share_exports_value, .fun = max, .desc = TRUE)
+    hc_cat2 = forcats::fct_reorder(
+      hc_cat2,
+      share_exports_value,
+      .fun = max,
+      .desc = TRUE
+    )
   )
 
 p_lac_share <- ggplot(
@@ -256,8 +261,13 @@ p_lac_share <- ggplot(
 ) +
   geom_line(linewidth = 0.9) +
   geom_point(size = 1.4) +
-  facet_wrap(~ hc_cat2, scales = "free_y") +
-  scale_y_continuous(labels = fmt_pct, limits = c(0, NA)) +
+  facet_wrap(~ hc_cat2) +
+  scale_y_continuous(
+    labels = fmt_pct,
+    breaks = seq(0, 0.12, by = 0.02),
+    expand = expansion(mult = c(0, 0.03))
+  ) +
+  coord_cartesian(ylim = c(0, 0.12)) +
   scale_x_continuous(breaks = scales::pretty_breaks()) +
   labs(
     title = "Participación de LAC en las exportaciones mundiales",
@@ -277,7 +287,7 @@ Nota: Por defecto se muestra **`r selected_category`**, pero esta categoría pue
 
 ```{r}
 #| label: world-region-composition-selected
-#| fig-height: 6
+#| fig-height: 9
 
 region_exports_selected <- exports_region_hc_cat2 |>
   filter(hc_cat2 == selected_category) |>
@@ -313,63 +323,16 @@ La visualización sigue la lógica de barras divergentes: las exportaciones apar
 #| label: lac-balance-by-category
 #| fig-height: 9
 
-balance_long_cat <- lac_by_cat_year |>
-  select(year, hc_cat2, exports_musd, imports_musd, balance_musd) |>
-  pivot_longer(
-    cols = c(exports_musd, imports_musd),
-    names_to = "flow",
-    values_to = "value_musd"
-  ) |>
-  mutate(
-    value_musd = if_else(flow == "imports_musd", -value_musd, value_musd),
-    flow = recode(
-      flow,
-      exports_musd = "Exportaciones",
-      imports_musd = "Importaciones"
-    ),
-    hc_cat2 = forcats::fct_reorder(hc_cat2, abs(value_musd), .fun = max, .desc = TRUE)
-  )
-
-p_balance_cat <- ggplot() +
-  geom_col(
-    data = balance_long_cat,
-    aes(x = year, y = value_musd, fill = flow),
-    alpha = 0.85
-  ) +
-  geom_line(
-    data = lac_by_cat_year,
-    aes(x = year, y = balance_musd, group = hc_cat2),
-    linewidth = 0.9
-  ) +
-  geom_point(
-    data = lac_by_cat_year,
-    aes(x = year, y = balance_musd),
-    size = 1.2
-  ) +
-  geom_hline(yintercept = 0, linewidth = 0.35) +
-  facet_wrap(~ hc_cat2, scales = "free_y", ncol = 2) +
-  scale_y_continuous(labels = fmt_musd) +
-  scale_x_continuous(breaks = scales::pretty_breaks()) +
-  labs(
-    title = "América Latina y el Caribe: exportaciones, importaciones y balance comercial",
-    subtitle = "Importaciones expresadas como valores negativos; línea = balance comercial",
-    x = NULL,
-    y = "Millones de USD",
-    fill = NULL
-  ) +
-  theme_trade()
-
-ggplotly(p_balance_cat, tooltip = c("x", "y", "fill")) |>
-  layout(legend = list(orientation = "h", x = 0, y = -0.15))
+#| label: lac-balance-by-category #| fig-height: 9 balance_long_cat <- lac_by_cat_year |> select(year, hc_cat2, exports_musd, imports_musd, balance_musd) |> pivot_longer( cols = c(exports_musd, imports_musd), names_to = "flow", values_to = "value_musd" ) |> mutate( value_musd = if_else(flow == "imports_musd", -value_musd, value_musd), flow = recode( flow, exports_musd = "Exportaciones", imports_musd = "Importaciones" ), hc_cat2 = forcats::fct_reorder(hc_cat2, abs(value_musd), .fun = max, .desc = TRUE) ) p_balance_cat <- ggplot() + geom_col( data = balance_long_cat, aes(x = year, y = value_musd, fill = flow), alpha = 0.85 ) + geom_line( data = lac_by_cat_year, aes(x = year, y = balance_musd, group = hc_cat2), linewidth = 0.9 ) + geom_point( data = lac_by_cat_year, aes(x = year, y = balance_musd), size = 1.2 ) + geom_hline(yintercept = 0, linewidth = 0.35) + facet_wrap(~ hc_cat2, scales = "free_y", ncol = 2) + scale_y_continuous(labels = fmt_musd) + scale_x_continuous(breaks = scales::pretty_breaks()) + labs( title = "América Latina y el Caribe: exportaciones, importaciones y balance comercial", subtitle = "Importaciones expresadas como valores negativos; línea = balance comercial", x = NULL, y = "Millones de USD", fill = NULL ) + theme_trade() ggplotly(p_balance_cat, tooltip = c("x", "y", "fill")) |> layout(legend = list(orientation = "h", x = 0, y = -0.15))
 ```
 
 ## 4. Composición del comercio regional por categoría
 
-Este gráfico compara la canasta exportadora e importadora de LAC en el último año disponible. Es útil para detectar si la especialización exportadora coincide o no con la estructura de necesidades de importación.
+Este gráfico compara la canasta exportadora e importadora de LAC en el último año disponible.
 
 ```{r}
 #| label: composition-category-latest
-#| fig-height: 6
+#| fig-height: 9
 
 category_composition_latest <- lac_by_cat_year |>
   filter(year == latest_year) |>
@@ -407,9 +370,17 @@ ggplotly(p_category_composition, tooltip = c("x", "y", "fill")) |>
   layout(legend = list(orientation = "h", x = 0, y = -0.2))
 ```
 
+### Importaciones: Otros productos farmacéuticos
+El principal producto es: **Toxinas, cultivos de microorganismos (excluyendo yeasts) y productos similares**, desde Europa, Asia y Norteamérica. Este tipo de producto es importado similarmente por toda la región. Corresponde al 91,47% de las importaciones en esta categoría.  
+
+El segundo producto es: Sangre (animal o humana, componentes, sean o no de origen sintético), desde Europa, Asia,  Norteamérica y en menor media Argentina. Este tipo de producto es importado principalmente por Brasil. Corresponde al 6,91% de la categoría.
+
+El tercer y cuarto producto corresponden a glándulas y otros órganos. Juntas suman sólo 1,6% de la categoría.
+
+
 ## 5. Países LAC con mayor comercio total
 
-El ranking ordena países por comercio total —exportaciones más importaciones— en el último año disponible. El punto representa el balance comercial. Este enfoque permite distinguir países con gran escala comercial de países con mejor posición neta.
+El ranking ordena países por comercio total (exportaciones + importaciones) en el último año disponible. El punto representa el balance comercial.
 
 ```{r}
 #| label: top-countries-all-products
@@ -625,7 +596,7 @@ ggplotly(p_partner_cat, tooltip = c("x", "y", "fill")) |>
 
 ## 8. Comercio intrarregional LAC: principales flujos
 
-El diagrama Sankey resume los principales flujos intrarregionales para la categoría seleccionada. Para evitar ruido visual, se muestran los flujos de mayor valor.
+El diagrama Sankey resume los principales flujos intrarregionales para la categoría seleccionada. Se muestran los 40 flujos de mayor valor.
 
 ```{r}
 #| label: sankey-selected-category

@@ -604,6 +604,95 @@ revisar_exp_meddev <- medical_devices_lac_exports_2024_product |>
   ) |>
   arrange(product, desc(exports_1000usd))
 
+## 4.6. Base auxiliar: importaciones LAC de otros productos farmacéuticos, 2024 ----
+
+# Objetivo:
+#   Investigar qué productos HS6 explican los resultados observados para
+#   "Otros productos farmacéuticos" en las importaciones de LAC durante 2024.
+#
+# Unidad:
+#   - product: código HS07 a 6 dígitos
+#   - value_1000usd: miles de USD
+#
+# Nota:
+#   Se usa comercio_hc_world y no comercio_hc_min porque comercio_hc_min
+#   elimina description y description_short.
+
+other_pharma_lac_imports_2024_product <- comercio_hc_world |>
+  mutate(
+    year = as.integer(year),
+    product = as.character(product),
+    hc_cat2 = as.character(hc_cat2),
+    exp_region = as.character(exp_region),
+    imp_region = as.character(imp_region),
+    exporter = as.character(exporter),
+    importer = as.character(importer)
+  ) |>
+  filter(
+    year == 2024,
+    imp_region == "LAC",
+    hc_cat2 == "Otros productos farmacéuticos"
+  ) |>
+  group_by(
+    year,
+    product,
+    description,
+    description_short,
+    hc_cat2,
+    exporter,
+    exp_country_name,
+    exp_region,
+    importer,
+    imp_country_name
+  ) |>
+  summarise(
+    imports_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  group_by(product, description, description_short, hc_cat2) |>
+  mutate(
+    product_imports_1000usd = sum(imports_1000usd, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  mutate(
+    imports_musd = imports_1000usd / 1000,
+    product_imports_musd = product_imports_1000usd / 1000
+  ) |>
+  arrange(desc(product_imports_1000usd), desc(imports_1000usd))
+
+validate_dashboard_base(
+  other_pharma_lac_imports_2024_product,
+  base_name = "other_pharma_lac_imports_2024_product",
+  value_var = "imports_1000usd"
+)
+
+save_dashboard_rds(
+  other_pharma_lac_imports_2024_product,
+  "other_pharma_lac_imports_2024_product.rds"
+)
+
+rev_prods <- other_pharma_lac_imports_2024_product |>
+  distinct(
+    product,
+    description,
+    description_short,
+    product_imports_1000usd,
+    product_imports_musd
+  ) |>
+  arrange(desc(product_imports_1000usd)) |>
+  slice_head(n = 20)
+
+rev_paises <- other_pharma_lac_imports_2024_product |>
+  group_by(product, description_short, imp_country_name) |>
+  summarise(
+    imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+    imports_musd = imports_1000usd / 1000,
+    .groups = "drop"
+  ) |>
+  arrange(product, desc(imports_1000usd))
+
+
+
 # 5. RESUMEN DE ARCHIVOS CREADOS ----
 
 created_files <- tibble(

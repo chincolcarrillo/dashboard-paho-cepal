@@ -4,14 +4,14 @@
     "href": "dashboard/dashboard_salud_lac_estatico.html",
     "title": "Comercio internacional de productos farmacéuticos y tecnologías sanitarias",
     "section": "",
-    "text": "Exportaciones LAC\n\nAño 2024, total de categorías.\n\n\nImportaciones LAC\n\nAño 2024, total de categorías.\n\n\nBalance comercial\n\nExportaciones menos importaciones.\n\n\nMayor categoría por comercio total\n\n63.856 M en 2024.\n\n\nHallazgos automáticos para 2024. En el agregado de América Latina y el Caribe, la categoría con mayores exportaciones fue Dispositivos médicos (42.471 M), mientras que la categoría con mayores importaciones fue Medicamentos (22.557 M). El balance comercial agregado fue de -14.732 M."
+    "text": "Exportaciones LAC\n\nAño 2024, total de categorías.\n\n\nImportaciones LAC\n\nAño 2024, total de categorías.\n\n\nBalance comercial\n\nExportaciones menos importaciones.\n\n\nMayor categoría por comercio total\n\n63.856 M en 2024.\n\n\nHallazgos automáticos para 2024. (Se pueden elegir otros, pero es una opción para visualizar en la landing page). En el agregado de América Latina y el Caribe, la categoría con mayores exportaciones fue Dispositivos médicos (42.471 M), mientras que la categoría con mayores importaciones fue Medicamentos (22.557 M). El balance comercial agregado fue de -14.732 M."
   },
   {
     "objectID": "dashboard/dashboard_salud_lac_estatico.html#lectura-general",
     "href": "dashboard/dashboard_salud_lac_estatico.html#lectura-general",
     "title": "Comercio internacional de productos farmacéuticos y tecnologías sanitarias",
     "section": "",
-    "text": "Exportaciones LAC\n\nAño 2024, total de categorías.\n\n\nImportaciones LAC\n\nAño 2024, total de categorías.\n\n\nBalance comercial\n\nExportaciones menos importaciones.\n\n\nMayor categoría por comercio total\n\n63.856 M en 2024.\n\n\nHallazgos automáticos para 2024. En el agregado de América Latina y el Caribe, la categoría con mayores exportaciones fue Dispositivos médicos (42.471 M), mientras que la categoría con mayores importaciones fue Medicamentos (22.557 M). El balance comercial agregado fue de -14.732 M."
+    "text": "Exportaciones LAC\n\nAño 2024, total de categorías.\n\n\nImportaciones LAC\n\nAño 2024, total de categorías.\n\n\nBalance comercial\n\nExportaciones menos importaciones.\n\n\nMayor categoría por comercio total\n\n63.856 M en 2024.\n\n\nHallazgos automáticos para 2024. (Se pueden elegir otros, pero es una opción para visualizar en la landing page). En el agregado de América Latina y el Caribe, la categoría con mayores exportaciones fue Dispositivos médicos (42.471 M), mientras que la categoría con mayores importaciones fue Medicamentos (22.557 M). El balance comercial agregado fue de -14.732 M."
   },
   {
     "objectID": "dashboard/dashboard_salud_lac_estatico.html#participación-de-lac-en-las-exportaciones-mundiales-por-categoría",
@@ -39,14 +39,14 @@
     "href": "dashboard/dashboard_salud_lac_estatico.html#composición-del-comercio-regional-por-categoría",
     "title": "Comercio internacional de productos farmacéuticos y tecnologías sanitarias",
     "section": "4. Composición del comercio regional por categoría",
-    "text": "4. Composición del comercio regional por categoría\nEste gráfico compara la canasta exportadora e importadora de LAC en el último año disponible. Es útil para detectar si la especialización exportadora coincide o no con la estructura de necesidades de importación."
+    "text": "4. Composición del comercio regional por categoría\nEste gráfico compara la canasta exportadora e importadora de LAC en el último año disponible.\n\n\n\n\n\n\n\nImportaciones: Otros productos farmacéuticos\nEl principal producto es: Toxinas, cultivos de microorganismos (excluyendo yeasts) y productos similares, desde Europa, Asia y Norteamérica. Este tipo de producto es importado similarmente por toda la región. Corresponde al 91,47% de las importaciones en esta categoría.\nEl segundo producto es: Sangre (animal o humana, componentes, sean o no de origen sintético), desde Europa, Asia, Norteamérica y en menor media Argentina. Este tipo de producto es importado principalmente por Brasil. Corresponde al 6,91% de la categoría.\nEl tercer y cuarto producto corresponden a glándulas y otros órganos. Juntas suman sólo 1,6% de la categoría."
   },
   {
     "objectID": "dashboard/dashboard_salud_lac_estatico.html#países-lac-con-mayor-comercio-total",
     "href": "dashboard/dashboard_salud_lac_estatico.html#países-lac-con-mayor-comercio-total",
     "title": "Comercio internacional de productos farmacéuticos y tecnologías sanitarias",
     "section": "5. Países LAC con mayor comercio total",
-    "text": "5. Países LAC con mayor comercio total\nEl ranking ordena países por comercio total —exportaciones más importaciones— en el último año disponible. El punto representa el balance comercial. Este enfoque permite distinguir países con gran escala comercial de países con mejor posición neta."
+    "text": "5. Países LAC con mayor comercio total\nEl ranking ordena países por comercio total (exportaciones + importaciones) en el último año disponible. El punto representa el balance comercial."
   },
   {
     "objectID": "dashboard/dashboard_salud_lac_estatico.html#países-lac-en-la-categoría-seleccionada",
@@ -67,7 +67,7 @@
     "href": "dashboard/dashboard_salud_lac_estatico.html#comercio-intrarregional-lac-principales-flujos",
     "title": "Comercio internacional de productos farmacéuticos y tecnologías sanitarias",
     "section": "8. Comercio intrarregional LAC: principales flujos",
-    "text": "8. Comercio intrarregional LAC: principales flujos\nEl diagrama Sankey resume los principales flujos intrarregionales para la categoría seleccionada. Para evitar ruido visual, se muestran los flujos de mayor valor."
+    "text": "8. Comercio intrarregional LAC: principales flujos\nEl diagrama Sankey resume los principales flujos intrarregionales para la categoría seleccionada. Se muestran los 40 flujos de mayor valor."
   },
   {
     "objectID": "dashboard/dashboard_salud_lac_estatico.html#tabla-de-países-último-año-disponible",
