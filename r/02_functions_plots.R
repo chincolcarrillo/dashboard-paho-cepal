@@ -775,13 +775,13 @@ prepare_sankey_data <- function(
 #' Devuelve: objeto htmlwidget de networkD3.
 #'
 #' Recomendación:
-#'   Para dashboards, conviene limitar top_n_flows, por ahora: 15
+#'   Para dashboards, conviene limitar top_n_flows, por ahora: 40
 plot_sankey_intra_lac <- function(
   data,
   selected_year = 2024,
   selected_hc_cat2 = NULL,
   min_value_1000usd = 0,
-  top_n_flows = 15,
+  top_n_flows = 40,
   height = 500,
   width = NULL
 ) {
@@ -826,7 +826,7 @@ plot_sankey_intra_lac_by_year <- function(
   years = c(2018, 2021, 2024),
   selected_hc_cat2 = NULL,
   min_value_1000usd = 0,
-  top_n_flows = 15
+  top_n_flows = 40
 ) {
   sankeys <- purrr::map(
     years,

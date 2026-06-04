@@ -17,6 +17,8 @@ website:
         href: dashboard/origen-destino-regional.qmd
       - text: "Comercio intrarregional"
         href: dashboard/comercio-intrarregional.qmd
+      - text: "Demo estático"
+        href: dashboard/dashboard_salud_lac_estatico.qmd
   page-footer:
     left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
     right: "Dashboard PAHO/CEPAL"

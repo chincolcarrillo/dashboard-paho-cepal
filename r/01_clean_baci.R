@@ -516,6 +516,94 @@ save_dashboard_rds(
   "sankey_intra_lac.rds"
 )
 
+## 4.5. Base auxiliar: exportaciones LAC de dispositivos médicos, 2024 ----
+
+# Objetivo:
+#   Investigar qué productos HS6 explican los resultados observados para
+#   "Dispositivos médicos" en las exportaciones de LAC durante 2024.
+#
+# Unidad:
+#   - product: código HS07 a 6 dígitos
+#   - value_1000usd: miles de USD
+#
+# Nota:
+#   Se usa comercio_hc_world y no comercio_hc_min porque comercio_hc_min
+#   elimina description y description_short.
+
+medical_devices_lac_exports_2024_product <- comercio_hc_world |>
+  mutate(
+    year = as.integer(year),
+    product = as.character(product),
+    hc_cat2 = as.character(hc_cat2),
+    exp_region = as.character(exp_region),
+    exporter = as.character(exporter),
+    importer = as.character(importer)
+  ) |>
+  filter(
+    year == 2024,
+    exp_region == "LAC",
+    hc_cat2 == "Dispositivos médicos"
+  ) |>
+  group_by(
+    year,
+    product,
+    description,
+    description_short,
+    hc_cat2,
+    exporter,
+    exp_country_name,
+    importer,
+    imp_country_name,
+    imp_region
+  ) |>
+  summarise(
+    exports_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  group_by(product, description, description_short, hc_cat2) |>
+  mutate(
+    product_exports_1000usd = sum(exports_1000usd, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  mutate(
+    exports_musd = exports_1000usd / 1000,
+    product_exports_musd = product_exports_1000usd / 1000
+  ) |>
+  arrange(desc(product_exports_1000usd), desc(exports_1000usd))
+
+validate_dashboard_base(
+  medical_devices_lac_exports_2024_product,
+  base_name = "medical_devices_lac_exports_2024_product",
+  value_var = "exports_1000usd"
+)
+
+save_dashboard_rds(
+  medical_devices_lac_exports_2024_product,
+  "medical_devices_lac_exports_2024_product.rds"
+)
+
+# Revisar top 20
+revisar_prods_meddev <- medical_devices_lac_exports_2024_product |>
+  distinct(
+    product,
+    description,
+    description_short,
+    product_exports_1000usd,
+    product_exports_musd
+  ) |>
+  arrange(desc(product_exports_1000usd)) |>
+  slice_head(n = 20)
+
+# Revisar top exportadores
+revisar_exp_meddev <- medical_devices_lac_exports_2024_product |>
+  group_by(product, description_short, exp_country_name) |>
+  summarise(
+    exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+    exports_musd = exports_1000usd / 1000,
+    .groups = "drop"
+  ) |>
+  arrange(product, desc(exports_1000usd))
+
 # 5. RESUMEN DE ARCHIVOS CREADOS ----
 
 created_files <- tibble(
