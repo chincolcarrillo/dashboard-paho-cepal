@@ -1,4 +1,4 @@
-#  ----------- PROCESAMIENTO CEPII-BACI 17 PARA PRODUCTOS DEL AREA SALUD -----------
+#  ----------- PROCESAMIENTO CEPII-BACI 07 PARA PRODUCTOS DEL AREA SALUD -----------
 
 # 0. SET-UP ----
 
@@ -6,6 +6,7 @@
 if (!require("pacman")) install.packages("pacman")
 library(pacman)
 p_load(tidyverse,
+       glue,
        janitor,
        readxl,
        writexl,
@@ -13,11 +14,14 @@ p_load(tidyverse,
        duckdb,
        arrow)
 
+# evitar notacion cientifica
+options(scipen = 999)
+
 # 1. CARGAR DATA BACI ----
 
-# ZIP disponible en "https://www.cepii.fr/DATA_DOWNLOAD/baci/data/BACI_HS17_V202601.zip"
+# ZIP disponible en "https://www.cepii.fr/DATA_DOWNLOAD/baci/data/BACI_HS07_V202601.zip"
 
-csv_files <- dir_ls("data/raw", regexp = "BACI_HS17_Y.*\\.csv$")
+csv_files <- dir_ls("data/raw", regexp = "BACI_HS07_Y.*\\.csv$")
 con <- dbConnect(duckdb(), "data/raw/baci.duckdb")
 
 for (f in csv_files) {
@@ -45,10 +49,15 @@ dbDisconnect(con)
 baci <- open_dataset("data/raw/parquet")
 
 
-# 02. IDENTIFICAR PAISES Y REGIONES -----
+# 2. IDENTIFICAR PAISES Y REGIONES -----
+
+# Codigos BACI
 paises <-  read_csv("data/raw/country_codes_V202601.csv")
-regiones <-  read_excel("data/world-bank-country-class.xlsx") |> # World Bank Country and Lending Groups
+
+# World Bank Country and Lending Groups
+regiones <-  read_excel("data/world-bank-country-class.xlsx") |> 
   clean_names() 
+
 paises <- paises |>
   left_join(regiones, by = c("country_iso3" = "code")) |>
   mutate(country_code = as.integer(country_code),
@@ -72,59 +81,455 @@ paises_imp <- paises |> rename_with(~ paste0("imp_", .), -country_code)
 paises_exp <- paises |> rename_with(~ paste0("exp_", .), -country_code)
 
 
-# 03. SELECCIONAR PRODUCTOS AREA SALUD -----
-productos <-  read_excel("data/rev_paho_2026.xlsx", sheet = "exportable") # Categorias acordadas con MEPP (experta PAHO)
-concordancias <- read_excel("data/WITS_Concordance_H5_to_H3.xlsx") |> # Tabla de concordancias de la World Integrated Trade Solution (WITS)
-  clean_names()
+# 3. SELECCIONAR PRODUCTOS AREA SALUD -----
+
+# Categorias acordadas con MEPP (experta PAHO) de acuerdo a HS07
+productos <-  read_excel("data/rev_paho_2026.xlsx", 
+                         sheet = "exportable") 
 productos <- productos |>
-  left_join(concordancias, by = c("code" = "hs_2007_product_code"))
-prods_sin_HS2017 <- productos |> filter(is.na(hs_2017_product_code))
-
-concordancias <- concordancias |>
-  mutate(hs_2017_product_code = as.character(hs_2017_product_code))
-
-productos_iguales <- product_codes_HS17_V202601 |>
-  inner_join(concordancias, by = c("code" = "hs_2017_product_code"))
-
-productos_diff <- productos |>
-  left_join(product_codes_HS17_V202601, by = "code")
-prods_sin_BACI <- productos_diff |> filter(is.na(description.y))
-
-productos <- productos |> 
   mutate(code = as.character(code))
 
-product_codes_HS17_V202601 <- read_csv("data/raw/product_codes_HS17_V202601.csv")
-
-
 comercio_hc_world <- baci |> 
-  mutate(product = as.integer(product)) |>
+  mutate(product = as.character(product)) |>
   inner_join(productos, by = c("product" = "code")) |>
   left_join(paises_imp, by = c("importer" = "country_code")) |>
   left_join(paises_exp, by = c("exporter" = "country_code")) |>
   collect()
 
+# 4. CREAR DFs PARA DASHBOARD -----
+# >5millones de observaciones, mejor crear data sets parciales y mas livianos para el dashboard
 
-# 03. RECODIFICAR -----
-comercio_hc_world2 <- comercio_hc_world |>
+# Anios relevantes para algunas bases
+sankey_years <- c(2018, 2021, 2024)
+target_year_partner <- 2024
+
+## Base minima ----
+comercio_hc_min <- comercio_hc_world |>
+  select(-quantity_tons, -description, -description_short) |>
   mutate(
-    imp_lac = case_when(imp_sub_region_name == "Latin America and the Caribbean" ~ "LAC",
-                        imp_sub_region_name == "Northern America" ~ "Norteamérica",
-                        imp_region_name == "Europe" ~ "Europa",
-                        imp_region_name == "Oceania" ~ "Oceanía",
-                        imp_region_name == "Africa" ~ "África",
-                        imp_region_name == "Asia" ~ "Asia"),
-    exp_lac = case_when(exp_sub_region_name == "Latin America and the Caribbean" ~ "LAC",
-                        exp_sub_region_name == "Northern America" ~ "Norteamérica",
-                        exp_region_name == "Europe" ~ "Europa",
-                        exp_region_name == "Oceania" ~ "Oceanía",
-                        exp_region_name == "Africa" ~ "África",
-                        exp_region_name == "Asia" ~ "Asia"),
+    year = as.integer(year),
+    # Manejo explicito de datos perdidos en variables categoricas clave
+    # Evita que group_by() produzca categorías NA difíciles de interpretar en el dashboard
+    hc_cat2 = replace_na(as.character(hc_cat2), "Unclassified"),
+    exp_region = replace_na(as.character(exp_region), "Unclassified"),
+    imp_region = replace_na(as.character(imp_region), "Unclassified"),
+    exp_region_longname = replace_na(as.character(exp_region_longname), "Unclassified"),
+    imp_region_longname = replace_na(as.character(imp_region_longname), "Unclassified"),
+    exporter = replace_na(as.character(exporter), "Unclassified"),
+    importer = replace_na(as.character(importer), "Unclassified"),
+    exp_country_name = replace_na(as.character(exp_country_name), "Unclassified"),
+    imp_country_name = replace_na(as.character(imp_country_name), "Unclassified")
   )
 
-comercio_hc_lac <- comercio_hc_world |>
-  filter(imp_sub_region_name == "Latin America and the Caribbean" | exp_sub_region_name == "Latin America and the Caribbean")
+## Fx para guardar .rds ----
+output_dir <- "data/dashboard/"
+save_dashboard_rds <- function(object, file_name, output_dir = "data/dashboard/") {
+  path <- file.path(output_dir, file_name)
+  saveRDS(object, path)
+  invisible(path)
+}
 
-# 04. GUARDAR -----
-saveRDS(comercio_hc_lac, file = "data/comercio_hc_lac.rds")
+## Fx para imprimir validaciones simples ----
+validate_dashboard_base <- function(data, base_name, value_var = NULL) {
+  message("\n", strrep("=", 78))
+  message(glue("Validación: {base_name}"))
+  message(strrep("-", 78))
+  message(glue("Filas: {format(nrow(data), big.mark = '.')}"))
+  
+  if ("year" %in% names(data)) {
+    years_available <- data |>
+      distinct(year) |>
+      arrange(year) |>
+      pull(year)
+    
+    message(glue(
+      "Años incluidos: {paste(years_available, collapse = ', ')}"
+    ))
+  }
+  
+  if ("hc_cat2" %in% names(data)) {
+    categories_available <- data |>
+      distinct(hc_cat2) |>
+      arrange(hc_cat2) |>
+      pull(hc_cat2)
+    
+    message(glue(
+      "Categorías hc_cat2 disponibles: {paste(categories_available, collapse = ', ')}"
+    ))
+  }
+  
+  if (!is.null(value_var) && value_var %in% names(data)) {
+    total_value <- sum(data[[value_var]], na.rm = TRUE)
+    
+    message(glue(
+      "Suma total de {value_var}: {format(round(total_value, 2), big.mark = '.')}"
+    ))
+  }
+  
+  message(strrep("=", 78), "\n")
+  
+  invisible(data)
+}
 
-#rm(paises, paises_exp, paises_imp, productos, con, baci, csv_files, f, out, year)
+## 4.1. Participacion regional en exp mundiales ----
+
+# Objetivo:
+#   Visualizar la participación de LAC en las exportaciones mundiales de
+#   productos farma o tec sanitarias, seleccionando por categoria
+#   de producto y comparando tendencias con otras regiones
+
+exports_region_hc_cat2 <- comercio_hc_min |>
+  group_by(year, exp_region, hc_cat2) |>
+  summarise(
+    exports_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  group_by(year, hc_cat2) |>
+  mutate(
+    world_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+    share_exports_value = if_else(
+      world_exports_1000usd > 0,
+      exports_1000usd / world_exports_1000usd,
+      NA_real_
+    )
+  ) |>
+  ungroup() |>
+  arrange(year, hc_cat2, desc(exports_1000usd))
+
+validate_dashboard_base(
+  exports_region_hc_cat2,
+  base_name = "exports_region_hc_cat2",
+  value_var = "exports_1000usd"
+)
+
+save_dashboard_rds(
+  exports_region_hc_cat2,
+  "exports_region_hc_cat2.rds"
+)
+
+## 4.2. Exportaciones, importaciones y balance comercial en LAC ----
+
+# Objetivo:
+#   Alimentar un grafico combinado con:
+#     - barras para exportaciones;
+#     - barras para importaciones;
+#     - linea para balance comercial neto.
+
+# Balance comercial:
+#   balance_1000usd = exports_1000usd - imports_1000usd
+
+### 4.2.1 Exportaciones por pais LAC ----
+exports_lac_country <- comercio_hc_min |>
+  filter(exp_region == "LAC") |>
+  mutate(
+    ref_area_code = exporter,
+    ref_area_name = exp_country_name,
+    ref_area_type = "country",
+    flow_type = "exports_1000usd"
+  ) |>
+  group_by(year, ref_area_code, ref_area_name, ref_area_type, hc_cat2, flow_type) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.2.2 Importaciones por pais LAC ----
+imports_lac_country <- comercio_hc_min |>
+  filter(imp_region == "LAC") |>
+  mutate(
+    ref_area_code = importer,
+    ref_area_name = imp_country_name,
+    ref_area_type = "country",
+    flow_type = "imports_1000usd"
+  ) |>
+  group_by(year, ref_area_code, ref_area_name, ref_area_type, hc_cat2, flow_type) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.2.3 Exportaciones del agregado regional LAC ----
+exports_lac_region <- comercio_hc_min |>
+  filter(exp_region == "LAC") |>
+  mutate(
+    ref_area_code = "LAC",
+    ref_area_name = "Latin America & Caribbean",
+    ref_area_type = "region",
+    flow_type = "exports_1000usd"
+  ) |>
+  group_by(year, ref_area_code, ref_area_name, ref_area_type, hc_cat2, flow_type) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.2.4 Importaciones del agregado regional LAC ----
+imports_lac_region <- comercio_hc_min |>
+  filter(imp_region == "LAC") |>
+  mutate(
+    ref_area_code = "LAC",
+    ref_area_name = "Latin America & Caribbean",
+    ref_area_type = "region",
+    flow_type = "imports_1000usd"
+  ) |>
+  group_by(year, ref_area_code, ref_area_name, ref_area_type, hc_cat2, flow_type) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.2.5 Combinar flujos y pasar a formato wide ----
+trade_balance_lac <- bind_rows(
+  exports_lac_country,
+  imports_lac_country,
+  exports_lac_region,
+  imports_lac_region
+) |>
+  pivot_wider(
+    names_from = flow_type,
+    values_from = value_1000usd,
+    values_fill = list(value_1000usd = 0)
+  ) |>
+  mutate(
+    exports_1000usd = replace_na(exports_1000usd, 0),
+    imports_1000usd = replace_na(imports_1000usd, 0),
+    balance_1000usd = exports_1000usd - imports_1000usd
+  ) |>
+  arrange(ref_area_type, ref_area_name, year, hc_cat2)
+
+validate_dashboard_base(
+  trade_balance_lac,
+  base_name = "trade_balance_lac",
+  value_var = "exports_1000usd"
+)
+
+save_dashboard_rds(
+  trade_balance_lac,
+  "trade_balance_lac.rds"
+)
+
+## 4.3. Origen/destino regional del comercio de LAC en 2024 ----
+
+# Objetivo:
+#   Crear una base para dos barras:
+#     - Exports: distribucion regional de los destinos de exports de LAC.
+#     - Imports: distribucion regional de los orígenes de imports de LAC.
+
+# El usuario podra seleccionar:
+#   - pais LAC o agregado regional LAC;
+#   - categoria hc_cat2.
+
+### 4.3.1 Exportaciones por pais LAC, con destino regional ----
+partner_exports_country_2024 <- comercio_hc_min |>
+  filter(
+    year == target_year_partner,
+    exp_region == "LAC"
+  ) |>
+  mutate(
+    ref_area_code = exporter,
+    ref_area_name = exp_country_name,
+    ref_area_type = "country",
+    flow_type = "Exports",
+    partner_region = imp_region,
+    partner_region_longname = imp_region_longname
+  ) |>
+  group_by(
+    year,
+    ref_area_code,
+    ref_area_name,
+    ref_area_type,
+    hc_cat2,
+    flow_type,
+    partner_region,
+    partner_region_longname
+  ) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.3.2 Importaciones por pais LAC, con origen regional ----
+partner_imports_country_2024 <- comercio_hc_min |>
+  filter(
+    year == target_year_partner,
+    imp_region == "LAC"
+  ) |>
+  mutate(
+    ref_area_code = importer,
+    ref_area_name = imp_country_name,
+    ref_area_type = "country",
+    flow_type = "Imports",
+    partner_region = exp_region,
+    partner_region_longname = exp_region_longname
+  ) |>
+  group_by(
+    year,
+    ref_area_code,
+    ref_area_name,
+    ref_area_type,
+    hc_cat2,
+    flow_type,
+    partner_region,
+    partner_region_longname
+  ) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.3.3 Exportaciones del agregado LAC, con destino regional ----
+partner_exports_region_2024 <- comercio_hc_min |>
+  filter(
+    year == target_year_partner,
+    exp_region == "LAC"
+  ) |>
+  mutate(
+    ref_area_code = "LAC",
+    ref_area_name = "Latin America & Caribbean",
+    ref_area_type = "region",
+    flow_type = "Exports",
+    partner_region = imp_region,
+    partner_region_longname = imp_region_longname
+  ) |>
+  group_by(
+    year,
+    ref_area_code,
+    ref_area_name,
+    ref_area_type,
+    hc_cat2,
+    flow_type,
+    partner_region,
+    partner_region_longname
+  ) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.3.4 Importaciones del agregado LAC, con origen regional ----
+partner_imports_region_2024 <- comercio_hc_min |>
+  filter(
+    year == target_year_partner,
+    imp_region == "LAC"
+  ) |>
+  mutate(
+    ref_area_code = "LAC",
+    ref_area_name = "Latin America & Caribbean",
+    ref_area_type = "region",
+    flow_type = "Imports",
+    partner_region = exp_region,
+    partner_region_longname = exp_region_longname
+  ) |>
+  group_by(
+    year,
+    ref_area_code,
+    ref_area_name,
+    ref_area_type,
+    hc_cat2,
+    flow_type,
+    partner_region,
+    partner_region_longname
+  ) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+### 4.3.5 Combinar y calcular porcentajes dentro de cada barra ----
+partner_region_lac_2024 <- bind_rows(
+  partner_exports_country_2024,
+  partner_imports_country_2024,
+  partner_exports_region_2024,
+  partner_imports_region_2024
+) |>
+  group_by(
+    year,
+    ref_area_code,
+    ref_area_name,
+    ref_area_type,
+    hc_cat2,
+    flow_type
+  ) |>
+  mutate(
+    total_flow_1000usd = sum(value_1000usd, na.rm = TRUE),
+    share_flow_value = if_else(
+      total_flow_1000usd > 0,
+      value_1000usd / total_flow_1000usd,
+      NA_real_
+    )
+  ) |>
+  ungroup() |>
+  arrange(ref_area_type, ref_area_name, hc_cat2, flow_type, desc(value_1000usd))
+
+validate_dashboard_base(
+  partner_region_lac_2024,
+  base_name = "partner_region_lac_2024",
+  value_var = "value_1000usd"
+)
+
+save_dashboard_rds(
+  partner_region_lac_2024,
+  "partner_region_lac_2024.rds"
+)
+
+
+## 4.4. Sankey de comercio intrarregional LAC ----
+
+# Objetivo:
+#   Construir una base para diagramas Sankey donde exportador e importador pertenecen a LAC.
+#   El grosor del flujo se define por value_1000usd.
+
+sankey_intra_lac <- comercio_hc_min |>
+  filter(
+    exp_region == "LAC",
+    imp_region == "LAC",
+    year %in% sankey_years
+  ) |>
+  mutate(
+    source = exporter,
+    source_name = exp_country_name,
+    target = importer,
+    target_name = imp_country_name
+  ) |>
+  group_by(
+    year,
+    hc_cat2,
+    source,
+    source_name,
+    target,
+    target_name
+  ) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(year, hc_cat2, source_name, target_name)
+
+validate_dashboard_base(
+  sankey_intra_lac,
+  base_name = "sankey_intra_lac",
+  value_var = "value_1000usd"
+)
+
+save_dashboard_rds(
+  sankey_intra_lac,
+  "sankey_intra_lac.rds"
+)
+
+# 5. RESUMEN DE ARCHIVOS CREADOS ----
+
+created_files <- tibble(
+  file = list.files(
+    output_dir,
+    pattern = "\\.rds$",
+    full.names = TRUE
+  )
+) |>
+  mutate(
+    file_name = basename(file),
+    size_mb = round(file.info(file)$size / 1024^2, 3)
+  ) |>
+  arrange(file_name)
+
+message("\nArchivos .rds disponibles en la carpeta de salida:")
+print(created_files)
