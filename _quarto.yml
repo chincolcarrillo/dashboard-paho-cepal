@@ -3,22 +3,44 @@ project:
   output-dir: docs
 
 website:
-  title: "Comercio de tecnologías sanitarias en LAC"
+  title: "Dashboard PAHO/CEPAL"
+  description: "Dashboard sobre comercio internacional de productos farmacéuticos y tecnologías sanitarias en América Latina y el Caribe."
   navbar:
     left:
-      - href: index.qmd
-        text: Inicio
-      - href: comercio-global.qmd
-        text: Comercio global
-      - href: comercio-intrarregional.qmd
-        text: Comercio intrarregional
-      - href: paises.qmd
-        text: Países
-      - href: metodologia.qmd
-        text: Metodología
+      - text: "Inicio"
+        href: dashboard/index.qmd
+      - text: "Tendencias globales"
+        href: dashboard/participacion-lac-exportaciones.qmd
+      - text: "Balance comercial"
+        href: dashboard/balance-comercial.qmd
+      - text: "Origen y destino regional"
+        href: dashboard/origen-destino-regional.qmd
+      - text: "Comercio intrarregional"
+        href: dashboard/comercio-intrarregional.qmd
+  page-footer:
+    left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
+    right: "Dashboard PAHO/CEPAL"
+  search: true
+  reader-mode: false
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
     toc: true
-    lang: es
+    toc-depth: 3
+    number-sections: false
+    code-fold: false
+    code-tools: false
+    smooth-scroll: true
+    link-external-newwindow: true
+    df-print: paged
+    self-contained: false
+
+execute:
+  echo: false
+  warning: false
+  message: false
+  freeze: auto
+
+lang: es

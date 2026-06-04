@@ -1,5 +1,350 @@
 ---
-title: "comercio-intrarregional"
-format: html
+title: "Comercio intrarregional"
+format:
+  dashboard:
+    orientation: rows
+    scrolling: true
+execute:
+  echo: false
+  warning: false
+  message: false
+params:
+  top_n_flows: 50
+  min_value_1000usd: 0
+  max_categories: 8
+  include_all_categories: true
+  sankey_height: 520
 ---
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(networkD3)
+library(htmlwidgets)
+library(htmltools)
+library(bslib)
+library(glue)
+
+# Resolver rutas de forma tolerante:
+# - Si se renderiza desde dashboard/: ../r y ../data
+# - Si se renderiza desde la raíz del proyecto: r y data
+resolve_existing_path <- function(...) {
+  paths <- c(...)
+  existing <- paths[file.exists(paths)]
+
+  if (length(existing) == 0) {
+    stop(
+      "No se encontró ninguna de las rutas esperadas:\n",
+      paste0("- ", paths, collapse = "\n"),
+      call. = FALSE
+    )
+  }
+
+  existing[[1]]
+}
+
+functions_path <- resolve_existing_path(
+  "../r/02_functions_plots.R",
+  "r/02_functions_plots.R"
+)
+
+data_path <- resolve_existing_path(
+  "../data/dashboard/sankey_intra_lac.rds",
+  "data/dashboard/sankey_intra_lac.rds"
+)
+
+source(functions_path)
+
+sankey_intra_lac <- readRDS(data_path)
+
+# ------------------------------------------------------------------------------
+# Validaciones mínimas
+# ------------------------------------------------------------------------------
+
+if (!is.data.frame(sankey_intra_lac)) {
+  stop(
+    "El archivo `sankey_intra_lac.rds` se cargó, pero no contiene un data frame válido.",
+    call. = FALSE
+  )
+}
+
+required_cols <- c(
+  "year",
+  "hc_cat2",
+  "source",
+  "source_name",
+  "target",
+  "target_name",
+  "value_1000usd"
+)
+
+check_required_columns(
+  data = sankey_intra_lac,
+  required_cols = required_cols,
+  data_name = "sankey_intra_lac"
+)
+
+if (nrow(sankey_intra_lac) == 0) {
+  stop(
+    "La base `sankey_intra_lac` se cargó correctamente, pero no contiene filas.",
+    call. = FALSE
+  )
+}
+
+available_years <- sankey_intra_lac |>
+  distinct(year) |>
+  arrange(year) |>
+  pull(year)
+
+expected_years <- c(2018, 2021, 2024)
+missing_years <- setdiff(expected_years, available_years)
+extra_years <- setdiff(available_years, expected_years)
+
+if (length(available_years) == 0) {
+  stop("No hay años disponibles en la columna `year`.", call. = FALSE)
+}
+
+if (length(missing_years) > 0) {
+  stop(
+    "La base no contiene todos los años esperados para esta vista. Faltan: ",
+    paste(missing_years, collapse = ", "),
+    ".",
+    call. = FALSE
+  )
+}
+
+available_hc_cat2 <- sankey_intra_lac |>
+  distinct(hc_cat2) |>
+  filter(!is.na(hc_cat2)) |>
+  arrange(hc_cat2) |>
+  pull(hc_cat2)
+
+if (length(available_hc_cat2) == 0) {
+  stop("No hay categorías disponibles en la columna `hc_cat2`.", call. = FALSE)
+}
+
+if (!is.numeric(sankey_intra_lac$value_1000usd)) {
+  stop("La columna `value_1000usd` debe ser numérica.", call. = FALSE)
+}
+
+n_self_flows <- sankey_intra_lac |>
+  filter(source == target) |>
+  nrow()
+
+n_non_positive <- sankey_intra_lac |>
+  filter(is.na(value_1000usd) | value_1000usd <= 0) |>
+  nrow()
+
+# Para Sankey se excluyen flujos fuente == destino y valores no positivos.
+# Esto evita diagramas con bucles o enlaces sin grosor visible.
+sankey_intra_lac_clean <- sankey_intra_lac |>
+  filter(source != target) |>
+  filter(!is.na(value_1000usd), value_1000usd > 0)
+
+if (nrow(sankey_intra_lac_clean) == 0) {
+  stop(
+    "Después de excluir flujos source == target y valores no positivos, no quedan flujos para graficar.",
+    call. = FALSE
+  )
+}
+
+# ------------------------------------------------------------------------------
+# Agregación liviana para Total productos
+# ------------------------------------------------------------------------------
+# La base liviana ya viene procesada para Sankey. Esta agregación sólo suma las
+# categorías disponibles por par exportador-importador-año, sin volver a procesar
+# la base pesada original.
+
+sankey_intra_lac_total <- sankey_intra_lac_clean |>
+  group_by(
+    year,
+    source,
+    source_name,
+    target,
+    target_name
+  ) |>
+  summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(hc_cat2 = "Total productos")
+
+sankey_intra_lac_viz <- bind_rows(
+  sankey_intra_lac_total,
+  sankey_intra_lac_clean
+)
+
+# ------------------------------------------------------------------------------
+# Categorías a renderizar
+# ------------------------------------------------------------------------------
+# Si include_all_categories = TRUE, se muestran todas las categorías disponibles.
+# Si es FALSE, se priorizan las de mayor valor intrarregional acumulado y se
+# limita por max_categories. Siempre se incluye "Total productos".
+
+category_ranking <- sankey_intra_lac_clean |>
+  group_by(hc_cat2) |>
+  summarise(
+    total_value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(total_value_1000usd))
+
+if (isTRUE(params$include_all_categories)) {
+  selected_categories <- category_ranking |>
+    pull(hc_cat2)
+} else {
+  selected_categories <- category_ranking |>
+    slice_head(n = params$max_categories) |>
+    pull(hc_cat2)
+}
+
+categories_to_render <- c("Total productos", selected_categories)
+
+# ------------------------------------------------------------------------------
+# Helpers livianos de presentación
+# ------------------------------------------------------------------------------
+
+safe_id <- function(x) {
+  x |>
+    stringr::str_to_lower() |>
+    stringr::str_replace_all("[^a-z0-9]+", "-") |>
+    stringr::str_replace_all("(^-|-$)", "")
+}
+
+make_alert <- function(text, class = "alert-warning") {
+  div(
+    class = paste("alert", class),
+    role = "alert",
+    text
+  )
+}
+
+make_sankey_widget <- function(category_label, year_value) {
+  tryCatch(
+    {
+      plot_sankey_intra_lac(
+        data = sankey_intra_lac_viz,
+        selected_year = year_value,
+        selected_hc_cat2 = category_label,
+        min_value_1000usd = params$min_value_1000usd,
+        top_n_flows = params$top_n_flows,
+        height = params$sankey_height,
+        width = NULL
+      )
+    },
+    error = function(e) {
+      make_alert(
+        glue(
+          "No fue posible construir el Sankey para {category_label}, año {year_value}. ",
+          "Detalle: {conditionMessage(e)}"
+        )
+      )
+    }
+  )
+}
+
+make_year_navset <- function(category_label) {
+  panels <- purrr::map(
+    expected_years,
+    function(year_value) {
+      bslib::nav_panel(
+        title = as.character(year_value),
+        div(
+          class = "mb-2 text-muted",
+          glue(
+            "Principales flujos intrarregionales LAC-LAC en {year_value}. ",
+            "Se muestran hasta {params$top_n_flows} flujos, con umbral mínimo de ",
+            "{format_usd_millions(params$min_value_1000usd)}."
+          )
+        ),
+        make_sankey_widget(category_label, year_value)
+      )
+    }
+  )
+
+  do.call(
+    bslib::navset_tab,
+    c(panels, list(id = paste0("years-", safe_id(category_label))))
+  )
+}
+
+make_category_panel <- function(category_label) {
+  bslib::nav_panel(
+    title = category_label,
+    div(
+      class = "mb-3",
+      tags$p(
+        if (category_label == "Total productos") {
+          "Flujos agregados para el conjunto de categorías de productos disponibles en la base."
+        } else {
+          glue("Flujos intrarregionales para la categoría: {category_label}.")
+        }
+      )
+    ),
+    make_year_navset(category_label)
+  )
+}
+
+category_navset <- do.call(
+  bslib::navset_tab,
+  c(
+    purrr::map(categories_to_render, make_category_panel),
+    list(id = "category-tabs")
+  )
+)
+
+data_notes <- list()
+
+if (length(extra_years) > 0) {
+  data_notes <- append(
+    data_notes,
+    glue(
+      "La base contiene años adicionales no mostrados en esta vista: ",
+      "{paste(extra_years, collapse = ', ')}. La comparación se restringe a 2018, 2021 y 2024."
+    )
+  )
+}
+
+if (n_self_flows > 0) {
+  data_notes <- append(
+    data_notes,
+    glue("Se excluyeron {n_self_flows} flujos donde el país de origen y destino eran iguales.")
+  )
+}
+
+if (n_non_positive > 0) {
+  data_notes <- append(
+    data_notes,
+    glue("Se excluyeron {n_non_positive} flujos con valor nulo, cero o negativo.")
+  )
+}
+
+notes_widget <- if (length(data_notes) > 0) {
+  div(
+    class = "alert alert-info",
+    tags$strong("Notas de procesamiento de la vista: "),
+    tags$ul(purrr::map(data_notes, tags$li))
+  )
+} else {
+  div(
+    class = "alert alert-success",
+    "La base contiene los años esperados y los flujos disponibles son compatibles con la visualización Sankey."
+  )
+}
+```
+
+
+```{r}
+#| label: data-notes
+notes_widget
+```
+
+
+```{r}
+#| label: sankey-tabs
+category_navset
+```
+
 

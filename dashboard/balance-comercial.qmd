@@ -1,27 +1,350 @@
 ---
 title: "Balance comercial"
 format:
-  html:
-    toc: true
-    code-fold: true
+  dashboard:
+    orientation: rows
+    scrolling: true
+execute:
+  echo: false
+  warning: false
+  message: false
+params:
+  # Controla cuántos países se muestran en la sección "Países seleccionados".
+  # El criterio de selección es el comercio total acumulado: exportaciones + importaciones.
+  max_countries: 12
+  include_country_sections: true
+  include_country_categories: true
 ---
 
 ```{r}
 #| label: setup
 #| include: false
 
-source("../r/02_functions_plots.R")
+library(tidyverse)
+library(plotly)
+library(glue)
+library(htmltools)
+library(stringr)
 
-bases <- load_all_dashboard_data(data_dir = "../data/dashboard")
+# Resolver rutas de forma tolerante:
+# - Al renderizar desde dashboard/: ../r y ../data
+# - Al renderizar desde la raíz del proyecto: r y data
+resolve_existing_path <- function(...) {
+  paths <- c(...)
+  existing <- paths[file.exists(paths)]
+
+  if (length(existing) == 0) {
+    stop(
+      "No se encontró ninguna de las rutas esperadas:\n",
+      paste0("- ", paths, collapse = "\n"),
+      call. = FALSE
+    )
+  }
+
+  existing[[1]]
+}
+
+functions_path <- resolve_existing_path(
+  "../r/02_functions_plots.R",
+  "r/02_functions_plots.R"
+)
+
+data_path <- resolve_existing_path(
+  "../data/dashboard/trade_balance_lac.rds",
+  "data/dashboard/trade_balance_lac.rds"
+)
+
+source(functions_path)
+
+if (!exists("plot_trade_balance")) {
+  stop(
+    "No se encontró la función `plot_trade_balance()` en `r/02_functions_plots.R`.",
+    call. = FALSE
+  )
+}
+
+trade_balance_lac <- readRDS(data_path)
+
+# Validaciones mínimas solicitadas.
+if (!is.data.frame(trade_balance_lac)) {
+  stop(
+    "El archivo `trade_balance_lac.rds` se cargó, pero no contiene un data frame válido.",
+    call. = FALSE
+  )
+}
+
+check_required_columns(
+  data = trade_balance_lac,
+  required_cols = c(
+    "year",
+    "ref_area_code",
+    "ref_area_name",
+    "ref_area_type",
+    "hc_cat2",
+    "exports_1000usd",
+    "imports_1000usd",
+    "balance_1000usd"
+  ),
+  data_name = "trade_balance_lac"
+)
+
+if (nrow(trade_balance_lac) == 0) {
+  stop(
+    "La base `trade_balance_lac` se cargó correctamente, pero no contiene filas.",
+    call. = FALSE
+  )
+}
+
+available_areas <- trade_balance_lac |>
+  distinct(ref_area_code, ref_area_name, ref_area_type) |>
+  filter(!is.na(ref_area_code), !is.na(ref_area_name)) |>
+  arrange(ref_area_name)
+
+if (nrow(available_areas) == 0) {
+  stop(
+    "No hay áreas disponibles en `ref_area_code` / `ref_area_name` para construir el dashboard.",
+    call. = FALSE
+  )
+}
+
+available_hc_cat2 <- trade_balance_lac |>
+  distinct(hc_cat2) |>
+  filter(!is.na(hc_cat2)) |>
+  arrange(hc_cat2) |>
+  pull(hc_cat2)
+
+if (length(available_hc_cat2) == 0) {
+  stop(
+    "No hay categorías disponibles en `hc_cat2` para construir el dashboard.",
+    call. = FALSE
+  )
+}
+
+if (!"LAC" %in% available_areas$ref_area_code) {
+  stop(
+    "No se encontró el agregado regional `LAC` en la columna `ref_area_code`.",
+    call. = FALSE
+  )
+}
+
+# Etiquetas de categorías para tabs. `NULL` se usa para que plot_trade_balance()
+# agregue todas las categorías disponibles; esto equivale a "Total productos".
+category_items <- tibble::tibble(
+  label = c("Total productos", available_hc_cat2),
+  value = c(NA_character_, available_hc_cat2)
+)
+
+# Países seleccionados según comercio total acumulado.
+# Se excluye el agregado LAC para no duplicar la sección regional.
+max_countries <- params$max_countries
+if (is.null(max_countries) || is.na(max_countries) || max_countries < 1) {
+  max_countries <- 12
+}
+
+selected_countries <- trade_balance_lac |>
+  filter(ref_area_code != "LAC") |>
+  group_by(ref_area_code, ref_area_name, ref_area_type) |>
+  summarise(
+    trade_total_1000usd = sum(exports_1000usd + imports_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  arrange(desc(trade_total_1000usd), ref_area_name) |>
+  slice_head(n = max_countries)
+
+# Utilidades locales livianas para construir tabs HTML estáticas.
+# No redefinen la lógica gráfica: sólo organizan widgets ya producidos por
+# plot_trade_balance().
+sanitize_id <- function(x) {
+  x |>
+    stringr::str_to_lower() |>
+    stringr::str_replace_all("[^a-z0-9]+", "-") |>
+    stringr::str_replace_all("^-|-$", "")
+}
+
+safe_plot_trade_balance <- function(area_code, category_value = NA_character_) {
+  selected_hc_cat2 <- if (is.na(category_value)) NULL else category_value
+
+  tryCatch(
+    {
+      plot_trade_balance(
+        data = trade_balance_lac,
+        selected_area = area_code,
+        selected_hc_cat2 = selected_hc_cat2,
+        interactive = TRUE
+      ) |>
+        plotly::config(displaylogo = FALSE, responsive = TRUE)
+    },
+    error = function(e) {
+      div(
+        class = "alert alert-warning",
+        strong("No fue posible construir este gráfico."),
+        br(),
+        "Área: ", area_code,
+        br(),
+        "Categoría: ", ifelse(is.na(category_value), "Total productos", category_value),
+        br(),
+        "Detalle: ", conditionMessage(e)
+      )
+    }
+  )
+}
+
+make_category_tabset <- function(area_code, id_prefix) {
+  tab_ids <- paste0(id_prefix, "-", sanitize_id(category_items$label))
+
+  nav_tabs <- tags$ul(
+    class = "nav nav-tabs",
+    role = "tablist",
+    purrr::pmap(
+      list(category_items$label, tab_ids, seq_along(tab_ids)),
+      function(label, tab_id, i) {
+        tags$li(
+          class = "nav-item",
+          role = "presentation",
+          tags$button(
+            class = paste("nav-link", if (i == 1) "active" else NULL),
+            id = paste0(tab_id, "-tab"),
+            `data-bs-toggle` = "tab",
+            `data-bs-target` = paste0("#", tab_id),
+            type = "button",
+            role = "tab",
+            `aria-controls` = tab_id,
+            `aria-selected` = if (i == 1) "true" else "false",
+            label
+          )
+        )
+      }
+    )
+  )
+
+  tab_content <- tags$div(
+    class = "tab-content pt-3",
+    purrr::pmap(
+      list(category_items$label, category_items$value, tab_ids, seq_along(tab_ids)),
+      function(label, value, tab_id, i) {
+        tags$div(
+          class = paste("tab-pane fade", if (i == 1) "show active" else NULL),
+          id = tab_id,
+          role = "tabpanel",
+          `aria-labelledby` = paste0(tab_id, "-tab"),
+          safe_plot_trade_balance(area_code = area_code, category_value = value)
+        )
+      }
+    )
+  )
+
+  tagList(nav_tabs, tab_content)
+}
+
+make_country_tabset <- function(countries_tbl, include_categories = TRUE) {
+  if (nrow(countries_tbl) == 0) {
+    return(
+      div(
+        class = "alert alert-info",
+        "No se encontraron países distintos del agregado LAC para esta sección."
+      )
+    )
+  }
+
+  country_ids <- paste0("country-", sanitize_id(countries_tbl$ref_area_code))
+
+  nav_tabs <- tags$ul(
+    class = "nav nav-tabs",
+    role = "tablist",
+    purrr::pmap(
+      list(countries_tbl$ref_area_name, country_ids, seq_along(country_ids)),
+      function(country_name, country_id, i) {
+        tags$li(
+          class = "nav-item",
+          role = "presentation",
+          tags$button(
+            class = paste("nav-link", if (i == 1) "active" else NULL),
+            id = paste0(country_id, "-tab"),
+            `data-bs-toggle` = "tab",
+            `data-bs-target` = paste0("#", country_id),
+            type = "button",
+            role = "tab",
+            `aria-controls` = country_id,
+            `aria-selected` = if (i == 1) "true" else "false",
+            country_name
+          )
+        )
+      }
+    )
+  )
+
+  tab_content <- tags$div(
+    class = "tab-content pt-3",
+    purrr::pmap(
+      list(countries_tbl$ref_area_code, countries_tbl$ref_area_name, country_ids, seq_along(country_ids)),
+      function(country_code, country_name, country_id, i) {
+        country_body <- if (isTRUE(include_categories)) {
+          make_category_tabset(
+            area_code = country_code,
+            id_prefix = paste0(country_id, "-cat")
+          )
+        } else {
+          safe_plot_trade_balance(
+            area_code = country_code,
+            category_value = NA_character_
+          )
+        }
+
+        tags$div(
+          class = paste("tab-pane fade", if (i == 1) "show active" else NULL),
+          id = country_id,
+          role = "tabpanel",
+          `aria-labelledby` = paste0(country_id, "-tab"),
+          tags$h4(country_name),
+          country_body
+        )
+      }
+    )
+  )
+
+  tagList(nav_tabs, tab_content)
+}
+
+# Al cambiar de tab, algunos widgets plotly ocultos pueden requerir resize.
+# Este pequeño script fuerza el redimensionamiento al activar una pestaña.
+plotly_tab_resize_js <- tags$script(HTML(
+  paste0(
+    "document.addEventListener(\'shown.bs.tab\', function () {\n",
+    "  window.dispatchEvent(new Event(\'resize\'));\n",
+    "});"
+  )
+))
 ```
-
-Ejemplo mínimo
 
 ```{r}
-plot_trade_balance(
-  data = bases$trade_balance_lac,
-  selected_area = "LAC",
-  selected_hc_cat2 = "Medicamentos"
-)
+#| echo: false
+plotly_tab_resize_js
 ```
+
+## Row
+
+### Column
+
+```{r}
+#| label: lac-category-tabs
+make_category_tabset(area_code = "LAC", id_prefix = "lac")
+```
+
+### Column
+
+```{r}
+#| label: country-tabs
+if (isTRUE(params$include_country_sections)) {
+  make_country_tabset(
+    countries_tbl = selected_countries,
+    include_categories = isTRUE(params$include_country_categories)
+  )
+} else {
+  div(
+    class = "alert alert-info",
+    "La sección de países fue desactivada mediante `params$include_country_sections = false`."
+  )
+}
+```
+
 

@@ -1,16 +1,34 @@
 ---
-title: "Comercio de tecnologías sanitarias en América Latina y el Caribe"
+title: "Inicio"
+format:
+  dashboard:
+    orientation: rows
+    scrolling: true
+execute:
+  echo: false
+  warning: false
+  message: false
 ---
 
-## Presentación
+```{r}
+#| label: setup
+#| include: false
 
-Este dashboard presenta indicadores sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe.
+library(tidyverse)
+library(knitr)
 
-El objetivo es facilitar la exploración de tendencias regionales, participación de LAC en el comercio mundial, comercio intrarregional y patrones por país y categoría de producto.
+```
 
-## Secciones
+El dashboard se construye a partir de la base de comercio internacional [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html). Se trabaja con datos en nomenclatura _HS 2007_ y valores monetarios expresados en miles de dólares estadounidenses.
 
-- **Comercio global:** evolución de la participación de LAC en exportaciones e importaciones mundiales.
-- **Comercio intrarregional:** composición del comercio dentro y fuera de la región.
-- **Países:** perfiles nacionales.
-- **Metodología:** fuentes, clasificación de productos y criterios de procesamiento.
+El universo de análisis corresponde a productos farmacéuticos y tecnologías sanitarias identificados mediante una clasificación experta PAHO/CEPAL. Las categorías consideradas en las visualizaciones son:
+
+- Medicamentos
+- Vacunas humanas
+- Ingredientes farmacéuticos activos (IFAs)
+- Kits diagnósticos
+- Dispositivos médicos
+- Otros productos farmacéuticos
+
+La clasificación regional de los países se orientó según la [clasificación regional del Banco Mundial](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups).
+

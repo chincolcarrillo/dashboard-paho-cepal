@@ -1,0 +1,17 @@
+{
+  "hash": "a40314eb024d22589a4f05f9270b75ed",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Inicio\"\nformat:\n  dashboard:\n    orientation: rows\n    scrolling: true\nexecute:\n  echo: false\n  warning: false\n  message: false\n---\n\n\n\nEl dashboard se construye a partir de la base de comercio internacional [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html). Se trabaja con datos en nomenclatura _HS 2007_ y valores monetarios expresados en miles de dólares estadounidenses.\n\nEl universo de análisis corresponde a productos farmacéuticos y tecnologías sanitarias identificados mediante una clasificación experta PAHO/CEPAL. Las categorías consideradas en las visualizaciones son:\n\n- Medicamentos\n- Vacunas humanas\n- Ingredientes farmacéuticos activos (IFAs)\n- Kits diagnósticos\n- Dispositivos médicos\n- Otros productos farmacéuticos\n\nLa clasificación regional de los países se orientó según la [clasificación regional del Banco Mundial](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups).\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

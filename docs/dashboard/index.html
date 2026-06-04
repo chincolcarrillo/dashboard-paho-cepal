@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Comercio de tecnologías sanitarias en América Latina y el Caribe – Comercio de tecnologías sanitarias en LAC</title>
+<title>Inicio – Dashboard PAHO/CEPAL</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -39,10 +39,22 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-d0ae9245876894da5ac7e18953ecc5cc.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../site_libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="../site_libs/quarto-dashboard/stickythead.js"></script>
+
+
+
+<script src="../site_libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="../site_libs/quarto-dashboard/components.js"></script>
+
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -74,7 +86,8 @@ ul.task-list li input[type="checkbox"] {
 
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="quarto-dashboard nav-fixed fullcontent quarto-light">
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -82,7 +95,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../index.html">
-    <span class="navbar-title">Comercio de tecnologías sanitarias en LAC</span>
+    <span class="navbar-title">Dashboard PAHO/CEPAL</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Buscar"></div>
@@ -92,24 +105,24 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../index.qmd"> 
+    <a class="nav-link active" href="../dashboard/index.html" aria-current="page"> 
 <span class="menu-text">Inicio</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../comercio-global.qmd"> 
-<span class="menu-text">Comercio global</span></a>
+    <a class="nav-link" href="../dashboard/participacion-lac-exportaciones.html"> 
+<span class="menu-text">Tendencias globales</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../comercio-intrarregional.qmd"> 
+    <a class="nav-link" href="../dashboard/balance-comercial.html"> 
+<span class="menu-text">Balance comercial</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../dashboard/origen-destino-regional.html"> 
+<span class="menu-text">Origen y destino regional</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../dashboard/comercio-intrarregional.html"> 
 <span class="menu-text">Comercio intrarregional</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../paises.qmd"> 
-<span class="menu-text">Países</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../metodologia.qmd"> 
-<span class="menu-text">Metodología</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -117,61 +130,61 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-</header>
+<header id="quarto-dashboard-header">
+<nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
+  <div class="navbar-container container-fluid">
+    <button class="navbar-toggler hidden" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+
+
+    <div class="navbar-brand-container">
+
+
+      <div class="navbar-title">
+        <div class="navbar-title-text"><a href="#">Inicio</a></div>
+        
+        
+      </div>
+    </div>
+</div>
+</nav>
+</header></header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar quarto-dashboard-content bslib-gap-spacing html-fill-container dashboard-scrolling">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">En esta página</h2>
-   
-  <ul>
-  <li><a href="#presentación" id="toc-presentación" class="nav-link active" data-scroll-target="#presentación">Presentación</a></li>
-  <li><a href="#secciones" id="toc-secciones" class="nav-link" data-scroll-target="#secciones">Secciones</a></li>
-  </ul>
-</nav>
-    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Comercio de tecnologías sanitarias en América Latina y el Caribe</h1>
+<div class="bslib-grid-item html-fill-item bslib-grid" data-layout="flow" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card bslib-card html-fill-container" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>El dashboard se construye a partir de la base de comercio internacional <a href="https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html">CEPII-BACI</a>. Se trabaja con datos en nomenclatura <em>HS 2007</em> y valores monetarios expresados en miles de dólares estadounidenses.</p>
+<p>El universo de análisis corresponde a productos farmacéuticos y tecnologías sanitarias identificados mediante una clasificación experta PAHO/CEPAL. Las categorías consideradas en las visualizaciones son:</p>
+<ul>
+<li>Medicamentos</li>
+<li>Vacunas humanas</li>
+<li>Ingredientes farmacéuticos activos (IFAs)</li>
+<li>Kits diagnósticos</li>
+<li>Dispositivos médicos</li>
+<li>Otros productos farmacéuticos</li>
+</ul>
+<p>La clasificación regional de los países se orientó según la <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups">clasificación regional del Banco Mundial</a>.</p>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+
+
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden">
+
+</div>
 </div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="presentación" class="level2">
-<h2 class="anchored" data-anchor-id="presentación">Presentación</h2>
-<p>Este dashboard presenta indicadores sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe.</p>
-<p>El objetivo es facilitar la exploración de tendencias regionales, participación de LAC en el comercio mundial, comercio intrarregional y patrones por país y categoría de producto.</p>
-</section>
-<section id="secciones" class="level2">
-<h2 class="anchored" data-anchor-id="secciones">Secciones</h2>
-<ul>
-<li><strong>Comercio global:</strong> evolución de la participación de LAC en exportaciones e importaciones mundiales.</li>
-<li><strong>Comercio intrarregional:</strong> composición del comercio dentro y fuera de la región.</li>
-<li><strong>Países:</strong> perfiles nacionales.</li>
-<li><strong>Metodología:</strong> fuentes, clasificación de productos y criterios de procesamiento.</li>
-</ul>
-
-
-</section>
-
-</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -573,7 +586,28 @@ ul.task-list li input[type="checkbox"] {
   });
   </script>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Dashboard PAHO/CEPAL</p>
+</div>
+  </div>
+</footer>
 
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (_event) {
+  if (window.bslib.Card) {
+    window.bslib.Card.initializeAllCards();
+  }
+}); 
+</script>
+  
 
 
 
