@@ -4,21 +4,18 @@ project:
 
 website:
   title: "Dashboard PAHO/CEPAL"
-  description: "Dashboard sobre comercio internacional de productos farmacéuticos y tecnologías sanitarias en América Latina y el Caribe."
+  description: "Dashboard sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe."
   navbar:
     left:
       - text: "Inicio"
         href: dashboard/index.qmd
-      - text: "Tendencias globales"
-        href: dashboard/participacion-lac-exportaciones.qmd
-      - text: "Balance comercial"
-        href: dashboard/balance-comercial.qmd
-      - text: "Origen y destino regional"
-        href: dashboard/origen-destino-regional.qmd
-      - text: "Comercio intrarregional"
-        href: dashboard/comercio-intrarregional.qmd
-      - text: "Demo estático"
-        href: dashboard/dashboard_salud_lac_estatico.qmd
+      - text: "Productos farmacéuticos"
+        href: dashboard/farma.qmd
+      - text: "Ingredientes farmacéuticos activos"
+        href: dashboard/ifas.qmd
+      - text: "Dispositivos médicos"
+        href: dashboard/dispositivos-medicos.qmd
+
   page-footer:
     left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
     right: "Dashboard PAHO/CEPAL"
