@@ -108,18 +108,41 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link active" href="../dashboard/index.html" aria-current="page"> 
 <span class="menu-text">Inicio</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../dashboard/farma.html"> 
-<span class="menu-text">Productos farmacéuticos</span></a>
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-categorías" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Categorías</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-categorías">    
+        <li>
+    <a class="dropdown-item" href="../dashboard/terapias-avanzadas.html">
+ <span class="dropdown-text">Células, tejidos y terapias avanzadas</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../dashboard/ifas.html"> 
-<span class="menu-text">Ingredientes farmacéuticos activos</span></a>
+        <li>
+    <a class="dropdown-item" href="../dashboard/diagnosticos-in-vitro.html">
+ <span class="dropdown-text">Diagnósticos in vitro</span></a>
   </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="../dashboard/dispositivos-medicos.html"> 
-<span class="menu-text">Dispositivos médicos</span></a>
+        <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-medicos.html">
+ <span class="dropdown-text">Dispositivos médicos</span></a>
   </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/hemoderivados-inmunobiologicos.html">
+ <span class="dropdown-text">Hemoderivados e inmunobiológicos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/ifas.html">
+ <span class="dropdown-text">Ingredientes farmacéuticos activos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/medicamentos.html">
+ <span class="dropdown-text">Medicamentos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/vacunas-humanas.html">
+ <span class="dropdown-text">Vacunas (humanas)</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
           </div> <!-- /navcollapse -->
             <div class="quarto-navbar-tools">
@@ -155,17 +178,17 @@ ul.task-list li input[type="checkbox"] {
 <div class="bslib-grid-item html-fill-item bslib-grid" data-layout="flow" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
 <div class="card bslib-card html-fill-container" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-body html-fill-item html-fill-container">
-<p>El dashboard se construye a partir de la base de comercio internacional <a href="https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html">CEPII-BACI</a>. Se trabaja con datos en nomenclatura <em>HS 2007</em> y valores monetarios expresados en miles de dólares estadounidenses.</p>
-<p>El universo de análisis corresponde a tecnologías sanitarias identificadas mediante una clasificación experta PAHO/CEPAL. Las categorías consideradas en las visualizaciones son:</p>
+<p>El dashboard analiza el comercio internacional de tecnologías sanitarias en América Latina y el Caribe a partir de los datos de <a href="https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html">CEPII-BACI</a>, con nomenclatura HS 2007 y valores monetarios expresados en miles de dólares estadounidenses.</p>
+<p>Los productos se clasificaron en siete categorías, cada una cuenta con una pestaña independiente en el dashboard:</p>
 <ul>
-<li>Medicamentos</li>
-<li>Vacunas humanas</li>
-<li>Kits diagnósticos</li>
-<li>Otros productos farmacéuticos</li>
-<li>Dispositivos médicos</li>
-<li>Ingredientes farmacéuticos activos (IFAs)</li>
+<li>Células humanas, tejidos y productos médicos de terapia avanzada.</li>
+<li>Diagnósticos in vitro.</li>
+<li>Dispositivos médicos.</li>
+<li>Hemoderivados, antisueros y productos inmunobiológicos.</li>
+<li>Ingredientes farmacéuticos activos.</li>
+<li>Medicamentos.</li>
+<li>Vacunas (humanas).</li>
 </ul>
-<p>La clasificación regional de los países se orientó según la <a href="https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups">clasificación regional del Banco Mundial</a>.</p>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>

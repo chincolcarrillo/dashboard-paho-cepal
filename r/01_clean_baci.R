@@ -3,7 +3,9 @@
 # 0. SET-UP ----
 
 # cargar paquetes
-if (!require("pacman")) install.packages("pacman")
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  stop("Instale el paquete 'pacman' antes de ejecutar este script.", call. = FALSE)
+}
 library(pacman)
 p_load(tidyverse,
        glue,
@@ -14,37 +16,16 @@ p_load(tidyverse,
        duckdb,
        arrow)
 
+source("r/00_config.R", encoding = "UTF-8")
+source("r/00_ingest_baci.R", encoding = "UTF-8")
+
 # evitar notacion cientifica
 options(scipen = 999)
 
 # 1. CARGAR DATA BACI ----
 
 # ZIP disponible en "https://www.cepii.fr/DATA_DOWNLOAD/baci/data/BACI_HS07_V202601.zip"
-
-csv_files <- dir_ls("data/raw", regexp = "BACI_HS07_Y.*\\.csv$")
-con <- dbConnect(duckdb(), "data/raw/baci.duckdb")
-
-for (f in csv_files) {
-  year <- stringr::str_extract(path_file(f), "\\d{4}")
-  out <- glue::glue("data/raw/parquet/year={year}/data.parquet")
-  dir_create(path_dir(out))
-  
-  dbExecute(con, glue::glue("
-    COPY (
-      SELECT
-        t::INTEGER AS year,
-        k::VARCHAR AS product,
-        i::INTEGER AS exporter,
-        j::INTEGER AS importer,
-        v::DOUBLE AS value_1000usd,
-        q::DOUBLE AS quantity_tons
-      FROM read_csv_auto('{f}', HEADER = TRUE)
-    )
-    TO '{out}' (FORMAT PARQUET);
-  "))
-}
-
-dbDisconnect(con)
+prepare_baci_parquet()
 
 baci <- open_dataset("data/raw/parquet")
 
@@ -55,7 +36,7 @@ baci <- open_dataset("data/raw/parquet")
 paises <-  read_csv("data/raw/country_codes_V202601.csv")
 
 # World Bank Country and Lending Groups
-regiones <-  read_excel("data/world-bank-country-class.xlsx") |> 
+regiones <- read_excel("data/country-class.xlsx") |>
   clean_names() 
 
 paises <- paises |>
@@ -65,16 +46,30 @@ paises <- paises |>
          region = case_when(region == "Middle East, North Africa, Afghanistan & Pakistan" ~ "MENA",
                             region == "Latin America & Caribbean" ~ "LAC",
                             region == "East Asia & Pacific" ~ "East Asia & Pacific",
-                            region == "Europe & Central Asia" ~ " Europe & Central Asia",
+                            region == "Central Asia" ~ "Central Asia",
+                            region == "Europe" ~ "Europe",
                             region == "North America" ~ "North America",
                             region == "South Asia" ~ "South Asia",
-                            region == "Sub-Saharan Africa" ~ "Sub-Saharan Africa")) |>
+                            region == "Sub-Saharan Africa" ~ "Sub-Saharan Africa",
+                            TRUE ~ unclassified_region)) |>
+  mutate(
+    region = if_else(country_code == 490L, "East Asia & Pacific", region),
+    region_longname = if_else(
+      country_code == 490L, # Proxy de Taiwan
+      "East Asia & Pacific",
+      region_longname
+    ),
+    region_longname = if_else(
+      region == unclassified_region,
+      unclassified_region,
+      region_longname
+    ),
+    region_longname = replace_na(region_longname, unclassified_region)
+  ) |>
   select(country_code, country_name, region, region_longname)
 
-# paises_sin_region <- paises |> filter(is.na(region))
-# 27 paises sin WB region
-# incluye “Asia, not elsewhere specified” (code 490), proxy de Taiwan
-paises[131, 3:4] <- "East Asia & Pacific"
+# paises_no_clasificados <- paises |> filter(region == unclassified_region)
+# Paises sin region WB quedan etiquetados explicitamente para evitar NA en el dashboard.
 
 # Dejar columnas listas para unir con base BACI
 paises_imp <- paises |> rename_with(~ paste0("imp_", .), -country_code)
@@ -85,9 +80,25 @@ paises_exp <- paises |> rename_with(~ paste0("exp_", .), -country_code)
 
 # Categorias acordadas con MEPP (experta PAHO) de acuerdo a HS07
 productos <-  read_excel("data/rev_paho_2026.xlsx", 
-                         sheet = "exportable") 
+                         sheet = "exportable")
+
 productos <- productos |>
-  mutate(code = as.character(code))
+  mutate(
+    code = as.character(code),
+    hc_cat2 = as.character(hc_cat2)
+  ) |>
+  filter(hc == 1, !is.na(hc_cat2))
+
+unexpected_categories <- productos |>
+  distinct(hc_cat2) |>
+  filter(!hc_cat2 %in% hc_cat2_levels) |>
+  pull(hc_cat2)
+
+if (length(unexpected_categories) > 0) {
+  rlang::abort(glue::glue(
+    "Cats hc_cat2 inesperadas: {paste(unexpected_categories, collapse = ', ')}"
+  ))
+}
 
 comercio_hc_world <- baci |> 
   mutate(product = as.character(product)) |>
@@ -99,27 +110,46 @@ comercio_hc_world <- baci |>
 # 4. CREAR DFs PARA DASHBOARD -----
 # >5millones de observaciones, mejor crear data sets parciales y mas livianos para el dashboard
 
-# Anios relevantes para algunas bases
-sankey_years <- c(2018, 2021, 2024)
-target_year_partner <- 2024
+replace_missing_trade_labels <- function(data) {
+  data |>
+    mutate(
+      exp_region = replace_na(as.character(exp_region), unclassified_region),
+      imp_region = replace_na(as.character(imp_region), unclassified_region),
+      exp_region_longname = replace_na(
+        as.character(exp_region_longname),
+        unclassified_region
+      ),
+      imp_region_longname = replace_na(
+        as.character(imp_region_longname),
+        unclassified_region
+      ),
+      exporter = replace_na(as.character(exporter), unclassified_region),
+      importer = replace_na(as.character(importer), unclassified_region),
+      exp_country_name = replace_na(
+        as.character(exp_country_name),
+        unclassified_region
+      ),
+      imp_country_name = replace_na(
+        as.character(imp_country_name),
+        unclassified_region
+      )
+    )
+}
 
 ## Base minima ----
 comercio_hc_min <- comercio_hc_world |>
   select(-quantity_tons, -description, -description_short) |>
+  replace_missing_trade_labels() |>
   mutate(
     year = as.integer(year),
     # Manejo explicito de datos perdidos en variables categoricas clave
-    # Evita que group_by() produzca categorías NA difíciles de interpretar en el dashboard
-    hc_cat2 = replace_na(as.character(hc_cat2), "Unclassified"),
-    exp_region = replace_na(as.character(exp_region), "Unclassified"),
-    imp_region = replace_na(as.character(imp_region), "Unclassified"),
-    exp_region_longname = replace_na(as.character(exp_region_longname), "Unclassified"),
-    imp_region_longname = replace_na(as.character(imp_region_longname), "Unclassified"),
-    exporter = replace_na(as.character(exporter), "Unclassified"),
-    importer = replace_na(as.character(importer), "Unclassified"),
-    exp_country_name = replace_na(as.character(exp_country_name), "Unclassified"),
-    imp_country_name = replace_na(as.character(imp_country_name), "Unclassified")
+    # Evita que group_by() produzca categorias NA difíciles de interpretar en el dashboard
+    hc_cat2 = as.character(hc_cat2)
   )
+
+if (anyNA(comercio_hc_min$hc_cat2)) {
+  rlang::abort("Existen productos de salud sin clasificación hc_cat2.")
+}
 
 ## Fx para guardar .rds ----
 output_dir <- "data/dashboard/"
@@ -130,7 +160,99 @@ save_dashboard_rds <- function(object, file_name, output_dir = "data/dashboard/"
 }
 
 ## Fx para imprimir validaciones simples ----
-validate_dashboard_base <- function(data, base_name, value_var = NULL) {
+validate_dashboard_base <- function(
+  data,
+  base_name,
+  value_var = NULL,
+  key = NULL,
+  share_group = NULL,
+  share_var = NULL,
+  tolerance = 1e-8
+) {
+  if (nrow(data) == 0) {
+    rlang::abort(glue::glue("La base '{base_name}' no contiene observaciones."))
+  }
+
+  if (anyDuplicated(names(data)) > 0) {
+    rlang::abort(glue::glue("La base '{base_name}' contiene columnas duplicadas."))
+  }
+
+  if (!is.null(key)) {
+    missing_key <- setdiff(key, names(data))
+    if (length(missing_key) > 0) {
+      rlang::abort(glue::glue(
+        "La base '{base_name}' no contiene la clave completa: {paste(missing_key, collapse = ', ')}"
+      ))
+    }
+    if (anyDuplicated(data[key]) > 0) {
+      rlang::abort(glue::glue("La clave de '{base_name}' no es única."))
+    }
+  }
+
+  if ("hc_cat2" %in% names(data)) {
+    invalid_categories <- setdiff(unique(data$hc_cat2), hc_cat2_levels)
+    if (length(invalid_categories) > 0) {
+      rlang::abort(glue::glue(
+        "La base '{base_name}' contiene hc_cat2 no válidas: {paste(invalid_categories, collapse = ', ')}"
+      ))
+    }
+  }
+
+  region_columns <- intersect(
+    c("exp_region", "imp_region", "partner_region"),
+    names(data)
+  )
+  region_columns_with_na <- purrr::keep(region_columns, ~ anyNA(data[[.x]]))
+  if (length(region_columns_with_na) > 0) {
+    rlang::abort(glue::glue(
+      "La base '{base_name}' contiene NA en columnas regionales: {paste(region_columns_with_na, collapse = ', ')}"
+    ))
+  }
+
+  invalid_regions <- purrr::map(region_columns, ~ setdiff(unique(data[[.x]]), region_levels)) |>
+    unlist() |>
+    unique()
+  if (length(invalid_regions) > 0) {
+    rlang::abort(glue::glue(
+      "La base '{base_name}' contiene regiones no válidas: {paste(invalid_regions, collapse = ', ')}"
+    ))
+  }
+
+  balance_columns <- c("exports_1000usd", "imports_1000usd", "balance_1000usd")
+  if (all(balance_columns %in% names(data))) {
+    balance_error <- abs(
+      data$balance_1000usd -
+        (data$exports_1000usd - data$imports_1000usd)
+    )
+    if (any(balance_error > tolerance, na.rm = TRUE)) {
+      rlang::abort(glue::glue("El balance comercial no cuadra en '{base_name}'."))
+    }
+  }
+
+  share_columns <- intersect(
+    c("share_exports_value", "share_flow_value"),
+    names(data)
+  )
+
+  invalid_shares <- purrr::some(
+    share_columns,
+    ~ any(data[[.x]] < 0 | data[[.x]] > 1, na.rm = TRUE)
+  )
+  if (invalid_shares) {
+    rlang::abort(glue::glue("La base '{base_name}' contiene participaciones fuera de [0, 1]."))
+  }
+
+  if (!is.null(share_group) && !is.null(share_var)) {
+    share_totals <- data |>
+      group_by(across(all_of(share_group))) |>
+      summarise(share_total = sum(.data[[share_var]], na.rm = TRUE), .groups = "drop")
+    if (any(abs(share_totals$share_total - 1) > tolerance)) {
+      rlang::abort(glue::glue(
+        "Las participaciones de '{share_var}' no suman uno en '{base_name}'."
+      ))
+    }
+  }
+
   message("\n", strrep("=", 78))
   message(glue("Validación: {base_name}"))
   message(strrep("-", 78))
@@ -199,7 +321,10 @@ exports_region_hc_cat2 <- comercio_hc_min |>
 validate_dashboard_base(
   exports_region_hc_cat2,
   base_name = "exports_region_hc_cat2",
-  value_var = "exports_1000usd"
+  value_var = "exports_1000usd",
+  key = c("year", "exp_region", "hc_cat2"),
+  share_group = c("year", "hc_cat2"),
+  share_var = "share_exports_value"
 )
 
 save_dashboard_rds(
@@ -300,7 +425,8 @@ trade_balance_lac <- bind_rows(
 validate_dashboard_base(
   trade_balance_lac,
   base_name = "trade_balance_lac",
-  value_var = "exports_1000usd"
+  value_var = "exports_1000usd",
+  key = c("year", "ref_area_code", "ref_area_type", "hc_cat2")
 )
 
 save_dashboard_rds(
@@ -464,7 +590,15 @@ partner_region_lac_2024 <- bind_rows(
 validate_dashboard_base(
   partner_region_lac_2024,
   base_name = "partner_region_lac_2024",
-  value_var = "value_1000usd"
+  value_var = "value_1000usd",
+  key = c(
+    "year", "ref_area_code", "ref_area_type", "hc_cat2",
+    "flow_type", "partner_region"
+  ),
+  share_group = c(
+    "year", "ref_area_code", "ref_area_type", "hc_cat2", "flow_type"
+  ),
+  share_var = "share_flow_value"
 )
 
 save_dashboard_rds(
@@ -508,7 +642,8 @@ sankey_intra_lac <- comercio_hc_min |>
 validate_dashboard_base(
   sankey_intra_lac,
   base_name = "sankey_intra_lac",
-  value_var = "value_1000usd"
+  value_var = "value_1000usd",
+  key = c("year", "hc_cat2", "source", "target")
 )
 
 save_dashboard_rds(
@@ -516,7 +651,72 @@ save_dashboard_rds(
   "sankey_intra_lac.rds"
 )
 
-## 4.5. Base auxiliar: exportaciones LAC de dispositivos médicos, 2024 ----
+## 4.5. Base auxiliar común: productos exportados por país de origen, último año ----
+
+# Objetivo:
+#   Alimentar tablas de productos HS6 exportados por país LAC de origen para
+#   todas las categorías hc_cat2 del dashboard.
+#
+# Unidad:
+#   - year x hc_cat2 x product x país exportador
+#   - exports_1000usd: miles de USD
+#
+# Nota:
+#   Se usa comercio_hc_world y no comercio_hc_min porque comercio_hc_min
+#   elimina description y description_short.
+
+product_exports_year <- max(comercio_hc_world$year, na.rm = TRUE)
+
+product_exports_lac_2024_by_country <- comercio_hc_world |>
+  replace_missing_trade_labels() |>
+  mutate(
+    year = as.integer(year),
+    product = as.character(product),
+    hc_cat2 = as.character(hc_cat2),
+    exp_region = as.character(exp_region),
+    exporter = as.character(exporter)
+  ) |>
+  filter(
+    year == product_exports_year,
+    exp_region == "LAC"
+  ) |>
+  group_by(
+    year,
+    hc_cat2,
+    product,
+    description,
+    description_short,
+    exporter,
+    exp_country_name
+  ) |>
+  summarise(
+    exports_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  group_by(year, hc_cat2, product, description, description_short) |>
+  mutate(
+    product_exports_1000usd = sum(exports_1000usd, na.rm = TRUE)
+  ) |>
+  ungroup() |>
+  mutate(
+    exports_musd = exports_1000usd / 1000,
+    product_exports_musd = product_exports_1000usd / 1000
+  ) |>
+  arrange(hc_cat2, desc(product_exports_1000usd), desc(exports_1000usd))
+
+validate_dashboard_base(
+  product_exports_lac_2024_by_country,
+  base_name = "product_exports_lac_2024_by_country",
+  value_var = "exports_1000usd",
+  key = c("year", "hc_cat2", "product", "exporter")
+)
+
+save_dashboard_rds(
+  product_exports_lac_2024_by_country,
+  "product_exports_lac_2024_by_country.rds"
+)
+
+## 4.6. Base auxiliar: exportaciones LAC de dispositivos médicos, 2024 ----
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
@@ -531,6 +731,7 @@ save_dashboard_rds(
 #   elimina description y description_short.
 
 medical_devices_lac_exports_2024_product <- comercio_hc_world |>
+  replace_missing_trade_labels() |>
   mutate(
     year = as.integer(year),
     product = as.character(product),
@@ -604,11 +805,11 @@ revisar_exp_meddev <- medical_devices_lac_exports_2024_product |>
   ) |>
   arrange(product, desc(exports_1000usd))
 
-## 4.6. Base auxiliar: importaciones LAC de otros productos farmacéuticos, 2024 ----
+## 4.7. Base auxiliar: importaciones LAC de medicamentos, 2024 ----
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
-#   "Otros productos farmacéuticos" en las importaciones de LAC durante 2024.
+#   "Medicamentos" en las importaciones de LAC durante 2024.
 #
 # Unidad:
 #   - product: código HS07 a 6 dígitos
@@ -618,7 +819,8 @@ revisar_exp_meddev <- medical_devices_lac_exports_2024_product |>
 #   Se usa comercio_hc_world y no comercio_hc_min porque comercio_hc_min
 #   elimina description y description_short.
 
-other_pharma_lac_imports_2024_product <- comercio_hc_world |>
+medicines_lac_imports_2024_product <- comercio_hc_world |>
+  replace_missing_trade_labels() |>
   mutate(
     year = as.integer(year),
     product = as.character(product),
@@ -631,7 +833,7 @@ other_pharma_lac_imports_2024_product <- comercio_hc_world |>
   filter(
     year == 2024,
     imp_region == "LAC",
-    hc_cat2 == "Otros productos farmacéuticos"
+    hc_cat2 == "Medicamentos"
   ) |>
   group_by(
     year,
@@ -661,17 +863,17 @@ other_pharma_lac_imports_2024_product <- comercio_hc_world |>
   arrange(desc(product_imports_1000usd), desc(imports_1000usd))
 
 validate_dashboard_base(
-  other_pharma_lac_imports_2024_product,
-  base_name = "other_pharma_lac_imports_2024_product",
+  medicines_lac_imports_2024_product,
+  base_name = "medicines_lac_imports_2024_product",
   value_var = "imports_1000usd"
 )
 
 save_dashboard_rds(
-  other_pharma_lac_imports_2024_product,
-  "other_pharma_lac_imports_2024_product.rds"
+  medicines_lac_imports_2024_product,
+  "medicines_lac_imports_2024_product.rds"
 )
 
-rev_prods <- other_pharma_lac_imports_2024_product |>
+rev_prods <- medicines_lac_imports_2024_product |>
   distinct(
     product,
     description,
@@ -682,7 +884,7 @@ rev_prods <- other_pharma_lac_imports_2024_product |>
   arrange(desc(product_imports_1000usd)) |>
   slice_head(n = 20)
 
-rev_paises <- other_pharma_lac_imports_2024_product |>
+rev_paises <- medicines_lac_imports_2024_product |>
   group_by(product, description_short, imp_country_name) |>
   summarise(
     imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
@@ -692,11 +894,11 @@ rev_paises <- other_pharma_lac_imports_2024_product |>
   arrange(product, desc(imports_1000usd))
 
 
-## 4.7. Base auxiliar: exportaciones LAC de IFAs, 2024 ----
+## 4.8. Base auxiliar: exportaciones LAC de IFAs, 2024 ----
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
-#   "Dispositivos médicos" en las exportaciones de LAC durante 2024.
+#   "Ingredientes farmacéuticos activos" en las exportaciones de LAC durante 2024.
 #
 # Unidad:
 #   - product: código HS07 a 6 dígitos
@@ -707,6 +909,7 @@ rev_paises <- other_pharma_lac_imports_2024_product |>
 #   elimina description y description_short.
 
 ifas_lac_exports_2024_product <- comercio_hc_world |>
+  replace_missing_trade_labels() |>
   mutate(
     year = as.integer(year),
     product = as.character(product),
@@ -718,7 +921,7 @@ ifas_lac_exports_2024_product <- comercio_hc_world |>
   filter(
     year == 2024,
     exp_region == "LAC",
-    hc_cat2 == "Principios activos"
+    hc_cat2 == "Ingredientes farmacéuticos activos"
   ) |>
   group_by(
     year,
@@ -781,8 +984,11 @@ revisar_exp_ifas <- ifas_lac_exports_2024_product |>
   arrange(product, desc(exports_1000usd))
 
 
+# 5. BASES LIVIANAS SOBRE RCA ----
 
-# 5. RESUMEN DE ARCHIVOS CREADOS ----
+
+
+# 6. RESUMEN DE ARCHIVOS CREADOS ----
 
 created_files <- tibble(
   file = list.files(

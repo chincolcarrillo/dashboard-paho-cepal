@@ -1,0 +1,15 @@
+---
+title: "Hemoderivados, antisueros y productos inmunobiológicos"
+subtitle: "Comercio internacional en América Latina y el Caribe"
+css: category-page.css
+page-layout: full
+params:
+  data_dir: "data/dashboard"
+  category: "Hemoderivados, antisueros y productos inmunobiológicos"
+  max_countries: 15
+  sankey_top_flows: 30
+---
+
+{{< include _category-body.qmd >}}
+
+

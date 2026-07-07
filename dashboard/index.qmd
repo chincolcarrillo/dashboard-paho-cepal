@@ -10,25 +10,16 @@ execute:
   message: false
 ---
 
-```{r}
-#| label: setup
-#| include: false
+El dashboard analiza el comercio internacional de tecnologías sanitarias en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007 y valores monetarios expresados en miles de dólares estadounidenses.
 
-library(tidyverse)
-library(knitr)
+Los productos se clasificaron en siete categorías, cada una cuenta con una pestaña independiente en el dashboard:
 
-```
+- Células humanas, tejidos y productos médicos de terapia avanzada.
+- Diagnósticos in vitro.
+- Dispositivos médicos.
+- Hemoderivados, antisueros y productos inmunobiológicos.
+- Ingredientes farmacéuticos activos.
+- Medicamentos.
+- Vacunas (humanas).
 
-El dashboard se construye a partir de la base de comercio internacional [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html). Se trabaja con datos en nomenclatura _HS 2007_ y valores monetarios expresados en miles de dólares estadounidenses.
-
-El universo de análisis corresponde a tecnologías sanitarias identificadas mediante una clasificación experta PAHO/CEPAL. Las categorías consideradas en las visualizaciones son:
-
-- Medicamentos
-- Vacunas humanas
-- Kits diagnósticos
-- Otros productos farmacéuticos
-- Dispositivos médicos
-- Ingredientes farmacéuticos activos (IFAs)
-
-La clasificación regional de los países se orientó según la [clasificación regional del Banco Mundial](https://datahelpdesk.worldbank.org/knowledgebase/articles/906519-world-bank-country-and-lending-groups).
 

@@ -1,6 +1,9 @@
 # Ignore BACI-HS17 raw data
 data/raw
 
+# Ignore AGENTS set-up
+AGENTS.md
+
 # History files
 .Rhistory
 .Rapp.history

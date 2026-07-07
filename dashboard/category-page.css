@@ -1,0 +1,27 @@
+.dashboard-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 0.8rem;
+  margin: 0.5rem 0 1.5rem;
+}
+
+.dashboard-card {
+  background: #fff;
+  border: 1px solid #dfe3e6;
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.dashboard-card-label {
+  color: #5f6b72;
+  font-size: 0.85rem;
+}
+
+.dashboard-card h3 {
+  margin: 0.3rem 0;
+}
+
+.dashboard-card p {
+  color: #68737d;
+  margin: 0;
+}

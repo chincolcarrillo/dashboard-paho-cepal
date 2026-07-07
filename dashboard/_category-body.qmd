@@ -1,0 +1,323 @@
+```{r}
+#| label: setup-category
+#| include: false
+
+source("r/02_functions_plots.R", encoding = "UTF-8")
+
+category <- params$category
+category_data <- load_category_dashboard_data(
+  category = category,
+  data_dir = params$data_dir
+)
+
+exports_region <- category_data$exports_region_hc_cat2
+trade_balance <- category_data$trade_balance_lac
+partner_region <- category_data$partner_region_lac_2024
+sankey <- category_data$sankey_intra_lac
+product_exports <- load_category_product_exports(
+  category = category,
+  data_dir = params$data_dir
+)
+
+latest_year <- latest_common_year(exports_region, trade_balance)
+has_partner_data <- nrow(partner_region) > 0
+has_sankey_data <- nrow(sankey) > 0
+has_product_exports <- !is.null(product_exports) && nrow(product_exports) > 0
+latest_partner_year <- if (has_partner_data) max(partner_region$year, na.rm = TRUE) else NA_integer_
+latest_sankey_year <- if (has_sankey_data) max(sankey$year, na.rm = TRUE) else NA_integer_
+latest_product_year <- if (has_product_exports) max(product_exports$year, na.rm = TRUE) else NA_integer_
+
+lac_latest <- trade_balance |>
+  dplyr::filter(
+    .data$ref_area_code == "LAC",
+    .data$ref_area_type == "region",
+    .data$year == .env$latest_year
+  ) |>
+  dplyr::slice_head(n = 1) |>
+  dplyr::mutate(
+    exports_musd = to_musd(exports_1000usd),
+    imports_musd = to_musd(imports_1000usd),
+    balance_musd = to_musd(balance_1000usd)
+  )
+
+lac_world_share <- exports_region |>
+  dplyr::filter(.data$exp_region == "LAC", .data$year == .env$latest_year) |>
+  dplyr::slice_head(n = 1) |>
+  dplyr::pull(share_exports_value)
+
+country_latest <- prepare_country_snapshot(trade_balance, latest_year)
+```
+
+
+## Panorama regional
+
+```{r}
+#| label: category-summary-cards
+#| results: asis
+
+htmltools::div(
+  class = "dashboard-card-grid",
+  dashboard_card(
+    "Exportaciones LAC",
+    format_usd_millions(lac_latest$exports_1000usd),
+    latest_year
+  ),
+  dashboard_card(
+    "Importaciones LAC",
+    format_usd_millions(lac_latest$imports_1000usd),
+    latest_year
+  ),
+  dashboard_card(
+    "Balance comercial",
+    format_usd_millions(lac_latest$balance_1000usd),
+    "Exportaciones menos importaciones"
+  ),
+  dashboard_card(
+    "Participación mundial de LAC",
+    format_percent_label(lac_world_share),
+    latest_year
+  )
+)
+```
+
+```{r}
+#| label: category-auto-finding
+#| echo: false
+#| results: asis
+
+top_exporter <- country_latest |>
+  dplyr::slice_max(
+    order_by = exports_1000usd,
+    n = 1,
+    with_ties = FALSE
+  )
+
+top_importer <- country_latest |>
+  dplyr::slice_max(
+    order_by = imports_1000usd,
+    n = 1,
+    with_ties = FALSE
+  )
+
+partner_latest <- partner_region |>
+  dplyr::filter(
+    .data$ref_area_code == "LAC",
+    .data$year == .env$latest_partner_year
+  ) |>
+  dplyr::mutate(
+    flow_type = dplyr::recode(
+      as.character(flow_type),
+      !!!flow_labels,
+      .default = as.character(flow_type)
+    )
+  )
+
+if (!"partner_region_longname" %in% names(partner_latest)) {
+  partner_latest <- partner_latest |>
+    dplyr::mutate(partner_region_longname = recode_region_names(.data$partner_region))
+}
+
+partner_latest_summary <- partner_latest |>
+  dplyr::mutate(
+    partner_region_longname = as.character(partner_region_longname)
+  ) |>
+  dplyr::group_by(flow_type, partner_region_longname) |>
+  dplyr::summarise(
+    value_1000usd = sum(value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+main_export_destination <- partner_latest_summary |>
+  dplyr::filter(.data$flow_type == "Exportaciones") |>
+  dplyr::slice_max(
+    order_by = value_1000usd,
+    n = 1,
+    with_ties = FALSE
+  )
+
+main_import_origin <- partner_latest_summary |>
+  dplyr::filter(.data$flow_type == "Importaciones") |>
+  dplyr::slice_max(
+    order_by = value_1000usd,
+    n = 1,
+    with_ties = FALSE
+  )
+
+if (
+  nrow(lac_latest) > 0 &&
+    nrow(top_exporter) > 0 &&
+    nrow(top_importer) > 0 &&
+    nrow(main_export_destination) > 0 &&
+    nrow(main_import_origin) > 0
+) {
+  finding_text <- glue::glue(
+    "En {latest_year}, América Latina y el Caribe exportó ",
+    "{format_usd_millions(lac_latest$exports_1000usd)} e importó ",
+    "{format_usd_millions(lac_latest$imports_1000usd)} en {category}, ",
+    "con un balance comercial de {format_usd_millions(lac_latest$balance_1000usd)}. ",
+    "Entre los países de la región, el mayor exportador fue ",
+    "{top_exporter$ref_area_name} ({format_usd_millions(top_exporter$exports_1000usd)}) ",
+    "y el mayor importador fue ",
+    "{top_importer$ref_area_name} ({format_usd_millions(top_importer$imports_1000usd)}). ",
+    "En el comercio agregado de la región, el principal destino regional de las ",
+    "exportaciones fue {main_export_destination$partner_region_longname} y el ",
+    "principal origen de las importaciones fue {main_import_origin$partner_region_longname}."
+  )
+
+  htmltools::div(
+    class = "dashboard-card",
+    htmltools::tags$p(finding_text)
+  )
+}
+```
+
+
+
+## 1. Participación de LAC en las exportaciones mundiales
+
+```{r}
+#| label: category-lac-share-world-exports
+#| fig-height: 5.5
+
+plot_lac_world_share_line(
+  exports_region,
+  selected_hc_cat2 = category,
+  interactive = TRUE
+)
+```
+
+## 2. Estructura regional de las exportaciones mundiales
+
+```{r}
+#| label: category-world-region-structure
+#| fig-height: 7
+
+plot_world_exports_region_structure(
+  exports_region,
+  selected_hc_cat2 = category,
+  interactive = TRUE
+)
+```
+
+## 3. Exportaciones, importaciones y balance de LAC
+
+```{r}
+#| label: category-trade-balance
+#| fig-height: 6
+
+plot_trade_balance(
+  trade_balance,
+  selected_area = "LAC",
+  selected_hc_cat2 = category,
+  interactive = TRUE
+)
+```
+
+## 4. Países LAC con mayor comercio
+
+El ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país.
+
+```{r}
+#| label: category-top-countries
+#| fig-height: 7
+
+plot_lac_country_trade_ranking(
+  country_latest,
+  selected_hc_cat2 = category,
+  year = latest_year,
+  max_countries = params$max_countries,
+  interactive = TRUE
+)
+```
+
+## 5. Origen y destino regional del comercio
+
+La composición corresponde a `r if (has_partner_data) latest_partner_year else "el último año disponible"`. En exportaciones se muestra la región de destino y en importaciones la región de origen.
+
+```{r}
+#| label: category-partner-region
+#| fig-height: 6
+
+if (has_partner_data) {
+  plot_partner_region_100pct(
+    partner_region,
+    selected_area = "LAC",
+    selected_hc_cat2 = category,
+    interactive = TRUE
+  )
+} else {
+  htmltools::div(
+    class = "dashboard-card",
+    "No hay información de socios regionales para esta categoría."
+  )
+}
+```
+
+## 6. Comercio intrarregional
+
+La tabla presenta, para `r if (has_sankey_data) latest_sankey_year else "el último año disponible"`, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.
+
+```{r}
+#| label: category-intra-lac-export-share-table
+
+if (has_sankey_data) {
+  render_intra_lac_export_share_table(
+    trade_balance = trade_balance,
+    sankey = sankey,
+    year = latest_sankey_year,
+    selected_hc_cat2 = category
+  )
+} else {
+  htmltools::div(
+    class = "dashboard-card",
+    "No hay flujos intrarregionales para construir la tabla por país."
+  )
+}
+```
+
+### Principales flujos intrarregionales
+El diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para **`r category`**.
+
+```{r}
+#| label: category-sankey
+#| fig-height: 7
+
+if (has_sankey_data) {
+  plot_sankey_intra_lac(
+    sankey,
+    selected_year = latest_sankey_year,
+    selected_hc_cat2 = category,
+    top_n_flows = params$sankey_top_flows,
+    height = 520
+  )
+} else {
+  htmltools::div(
+    class = "dashboard-card",
+    "No hay flujos intrarregionales para esta categoría."
+  )
+}
+```
+
+## 7. Productos exportados por país de origen
+
+La tabla muestra productos HS07, dentro de la categoría **`r category`**, exportados por países de LAC en `r if (has_product_exports) latest_product_year else "el último año disponible"`. Puede buscarse, filtrarse y agruparse por código de producto.
+
+```{r}
+#| label: category-products-country-table
+
+render_product_exports_by_country_table(product_exports)
+```
+
+## 8. Resultados por país
+
+La tabla resume exportaciones, importaciones, balance y comercio total por país para `r latest_year`. Puede ordenarse, filtrarse y buscarse desde el navegador.
+
+```{r}
+#| label: category-country-table
+
+render_country_results_table(country_latest)
+```
+
+## Notas metodológicas
+
+- Fuente: CEPII-BACI, nomenclatura HS 2007.

@@ -3,12 +3,15 @@
 # 0. SET-UP ----
 
 # cargar paquetes
-if (!require("pacman")) install.packages("pacman")
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  stop("Instale el paquete 'pacman' antes de ejecutar este script.", call. = FALSE)
+}
 library(pacman)
 p_load(tidyverse,
        janitor,
        readxl, 
-       writexl)
+       writexl,
+       install = FALSE)
 
 # Fx auxiliar: normalizacion de HS (no he tenido problemas, pero por si acaso)
 normalizar_hs <- function(x) {
@@ -113,6 +116,162 @@ table(base_revision$estatus_asignacion)
 # Algunos principios activos se condensan en una sola categoria (alcaloides)
 
 
-# 03. CONSTRUIR BASE PARA REVISION PAHO ----
+# 03. EXPORTAR BASE PARA REVISION PAHO ----
 
 write_xlsx(base_revision, "data/para_revision_HS2017.xlsx")
+
+
+# 04. CREAR BASE EXTRA PARA SANKEY ----
+
+archivo_hs <- "data/HSCodeandDescription.xlsx"
+
+# Hojas disponibles en el archivo
+hs_versions <- c("HS07", "HS12", "HS17", "HS22")
+
+# 2. Función para leer y estandarizar cada hoja ---------------------------------
+
+read_hs_sheet <- function(sheet_name) {
+  
+  read_excel(
+    path = archivo_hs,
+    sheet = sheet_name,
+    col_types = "text"
+  ) |>
+    clean_names() |>
+    transmute(
+      version = str_to_lower(sheet_name),
+      
+      # Se conserva como texto para evitar perder ceros iniciales.
+      code = str_trim(as.character(code)),
+      description = str_squish(as.character(description)),
+      parent_code = str_trim(as.character(parent_code)),
+      
+      # Estas variables deberían ser estables entre versiones.
+      level = as.integer(level),
+      is_basic_level = as.integer(is_basic_level)
+    ) |>
+    filter(!is.na(code), code != "") |>
+    distinct(version, code, .keep_all = TRUE)
+}
+
+# 3. Leer todas las versiones en formato largo ----------------------------------
+
+hs_long <- map_dfr(hs_versions, read_hs_sheet)
+
+# 4. Crear base ancha para consulta rápida --------------------------------------
+
+hs_lookup <- hs_long |>
+  mutate(
+    available = 1L
+  ) |>
+  select(
+    code,
+    version,
+    level,
+    description,
+    parent_code,
+    is_basic_level,
+    available
+  ) |>
+  pivot_wider(
+    names_from = version,
+    values_from = c(description, available, parent_code, level, is_basic_level),
+    names_glue = "{.value}_{version}"
+  ) |>
+  mutate(
+    across(
+      starts_with("available_"),
+      ~ replace_na(.x, 0L)
+    ),
+    parent_code = coalesce(
+      parent_code_hs07,
+      parent_code_hs12,
+      parent_code_hs17,
+      parent_code_hs22
+    ),
+    level = coalesce(
+      level_hs07,
+      level_hs12,
+      level_hs17,
+      level_hs22
+    ),
+    is_basic_level = coalesce(
+      is_basic_level_hs07,
+      is_basic_level_hs12,
+      is_basic_level_hs17,
+      is_basic_level_hs22
+    )
+  ) |>
+  rowwise() |>
+  mutate(
+    descriptions_difieren = {
+      descs <- c_across(
+        c(
+          description_hs07,
+          description_hs12,
+          description_hs17,
+          description_hs22
+        )
+      )
+      
+      descs <- descs[!is.na(descs)]
+      descs <- unique(descs)
+      
+      length(descs) > 1
+    }
+  ) |>
+  ungroup() |>
+  filter(is_basic_level == 1) |>
+  select(
+    code,
+    parent_code,
+    level,
+    available_hs07,
+    available_hs12,
+    available_hs17,
+    available_hs22,
+    description_hs07,
+    description_hs12,
+    description_hs17,
+    description_hs22,
+    descriptions_difieren,
+    everything(),
+    -starts_with("parent_code_hs"),
+    -starts_with("level_hs"),
+    -starts_with("is_basic_level")
+  ) |>
+  arrange(code)
+
+granpa_codes <- hs_long |>
+  filter(level == 2 & version == "hs22") |>
+  select(
+    code,
+    parent_description=description
+  )
+
+parent_codes <- hs_long |>
+  filter(level == 4 & version == "hs22") |>
+  select(
+    code,
+    description,
+    parent_code
+  ) |>
+  left_join(granpa_codes, by = c("parent_code" = "code")) |>
+  filter(parent_code %in% c("29",
+                            "30",
+                            "34",
+                            "38",
+                            "39",
+                            "40",
+                            "61",
+                            "84"))
+
+
+hs_lookup <- hs_lookup |>
+  inner_join(parent_codes, join_by(parent_code == code))
+
+write_xlsx(hs_lookup, "data/para_revision_versiones_HS.xlsx")
+write_xlsx(parent_codes, "data/parent_codes.xlsx")
+
+
+# REV: -91:99 SI: 90, 87, 84, 61, 40, 39, 38, 34, 30, 29
