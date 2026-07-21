@@ -18,6 +18,7 @@ p_load(tidyverse,
 
 source("r/00_config.R", encoding = "UTF-8")
 source("r/00_ingest_baci.R", encoding = "UTF-8")
+source("r/03_trade_indicators.R", encoding = "UTF-8")
 
 # evitar notacion cientifica
 options(scipen = 999)
@@ -664,8 +665,33 @@ save_dashboard_rds(
 # Nota:
 #   Se usa comercio_hc_world y no comercio_hc_min porque comercio_hc_min
 #   elimina description y description_short.
+#   El RCA Balassa se calcula aparte con el universo completo de productos BACI
+#   y luego se une a esta base PAHO por year x exporter x product.
 
 product_exports_year <- max(comercio_hc_world$year, na.rm = TRUE)
+
+product_country_indicators_2024 <- calculate_product_country_rca(
+  baci_data = baci,
+  indicator_year = product_exports_year,
+  countries_exp = paises_exp
+) |>
+  mutate(
+    exp_region = replace_na(as.character(exp_region), unclassified_region),
+    exp_region_longname = replace_na(as.character(exp_region_longname), unclassified_region),
+    exp_country_name = replace_na(as.character(exp_country_name), unclassified_region)
+  )
+
+validate_dashboard_base(
+  product_country_indicators_2024,
+  base_name = "product_country_indicators_2024",
+  value_var = "exports_1000usd",
+  key = c("year", "exporter", "product")
+)
+
+save_dashboard_rds(
+  product_country_indicators_2024,
+  "product_country_indicators_2024.rds"
+)
 
 product_exports_lac_2024_by_country <- comercio_hc_world |>
   replace_missing_trade_labels() |>
@@ -701,6 +727,21 @@ product_exports_lac_2024_by_country <- comercio_hc_world |>
   mutate(
     exports_musd = exports_1000usd / 1000,
     product_exports_musd = product_exports_1000usd / 1000
+  ) |>
+  left_join(
+    product_country_indicators_2024 |>
+      select(
+        year,
+        exporter,
+        product,
+        country_total_exports_1000usd,
+        world_product_exports_1000usd,
+        world_total_exports_1000usd,
+        country_product_share,
+        world_product_share,
+        rca_balassa
+      ),
+    by = c("year", "exporter", "product")
   ) |>
   arrange(hc_cat2, desc(product_exports_1000usd), desc(exports_1000usd))
 

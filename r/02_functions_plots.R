@@ -502,7 +502,6 @@ plot_trade_balance <- function(
     ) +
     ggplot2::labs(
       title = glue::glue("Exportaciones, importaciones y balance comercial: {unique(base_data$ref_area_name)}"),
-      subtitle = glue::glue("Categoría: {selected_label}"),
       x = NULL,
       y = "Millones de USD",
       caption = "Nota: las importaciones se grafican con signo negativo sólo para visualización. El balance corresponde a exportaciones menos importaciones."
@@ -634,7 +633,6 @@ plot_partner_region_100pct <- function(
     ) +
     ggplot2::labs(
       title = glue::glue("Composición regional del comercio: {unique(plot_data$ref_area_name)}"),
-      subtitle = glue::glue("Categoría: {selected_label}"),
       x = "Participación del flujo total",
       y = NULL,
       caption = "Nota: en exportaciones la región contraparte corresponde al destino; en importaciones corresponde al origen."
@@ -1693,6 +1691,11 @@ render_product_exports_by_country_table <- function(product_exports) {
     ))
   }
 
+  if (!"rca_balassa" %in% names(product_exports)) {
+    product_exports <- product_exports |>
+      dplyr::mutate(rca_balassa = NA_real_)
+  }
+
   table_data <- product_exports |>
     dplyr::mutate(
       description_full = dplyr::coalesce(
@@ -1705,7 +1708,11 @@ render_product_exports_by_country_table <- function(product_exports) {
     dplyr::summarise(
       exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
       exports_musd = exports_1000usd / 1000,
+      rca_balassa = mean(rca_balassa, na.rm = TRUE),
       .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      rca_balassa = dplyr::if_else(is.nan(rca_balassa), NA_real_, rca_balassa)
     ) |>
     dplyr::mutate(
       producto_hs07 = glue::glue("{product} — {description_full}") |>
@@ -1750,9 +1757,14 @@ render_product_exports_by_country_table <- function(product_exports) {
         show = FALSE
       ),
       share_product = reactable::colDef(
-        name = "Participación dentro del producto",
+        name = "% de la exportación regional",
         align = "right",
         format = reactable::colFormat(percent = TRUE, digits = 1)
+      ),
+      rca_balassa = reactable::colDef(
+        name = "RCA (Balassa)",
+        align = "right",
+        format = reactable::colFormat(digits = 2, separators = TRUE)
       )
     ),
     theme = reactable::reactableTheme(

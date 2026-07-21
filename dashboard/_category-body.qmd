@@ -302,6 +302,13 @@ if (has_sankey_data) {
 
 La tabla muestra productos HS07, dentro de la categoría **`r category`**, exportados por países de LAC en `r if (has_product_exports) latest_product_year else "el último año disponible"`. Puede buscarse, filtrarse y agruparse por código de producto.
 
+Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría **`r category`**. Dentro de cada producto, las columnas muestran:
+
+- **País exportador**: país de LAC que registra exportaciones del producto.
+- **Exportaciones, USD millones**: valor exportado por el país en ese producto, en `r if (has_product_exports) latest_product_year else "el último año disponible"`.
+- **% de la exportación regional**: proporción del país en las exportaciones regionales de LAC de ese producto.
+- **RCA Balassa**: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA > 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.
+
 ```{r}
 #| label: category-products-country-table
 

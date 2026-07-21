@@ -12,4 +12,3 @@ params:
 
 {{< include _category-body.qmd >}}
 
-
