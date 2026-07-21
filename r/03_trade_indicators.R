@@ -1,9 +1,15 @@
 #  ----------- INDICADORES DE COMERCIO PARA DASHBOARD -----------
 
 # Este script contiene funciones para calcular indicadores derivados a partir
-# del universo completo de BACI. La idea es mantener estos cálculos separados
+# del universo completo de BACI. La idea es mantener estos calculos separados
 # de las bases PAHO, porque varios indicadores de especialización/complejidad
 # requieren comparar productos de salud contra la canasta exportadora completa.
+
+# RCA_cp = (X_cp / X_c) / (X_wp / X_w)
+#   X_cp son las exportaciones del country c del producto p
+#   X_c total exportado por c
+#   X_wp exports world del producto p
+#   X_w total exports world
 
 calculate_product_country_rca <- function(
   baci_data,
@@ -18,8 +24,8 @@ calculate_product_country_rca <- function(
     ))
   }
 
-  product_country_exports <- baci_data |>
-    dplyr::filter(.data$year == .env$indicator_year) |>
+  product_country_exports <- baci_data |> # X_cp
+    dplyr::filter(.data$year == .env$indicator_year) |> # Se filtra el anio de interes
     dplyr::mutate(
       year = as.integer(year),
       exporter = as.character(exporter),
@@ -32,21 +38,21 @@ calculate_product_country_rca <- function(
     ) |>
     dplyr::collect()
 
-  country_totals <- product_country_exports |>
+  country_totals <- product_country_exports |> # X_c
     dplyr::group_by(year, exporter) |>
     dplyr::summarise(
       country_total_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
       .groups = "drop"
     )
 
-  world_product_totals <- product_country_exports |>
+  world_product_totals <- product_country_exports |> # X_wp
     dplyr::group_by(year, product) |>
     dplyr::summarise(
       world_product_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
       .groups = "drop"
     )
 
-  world_totals <- product_country_exports |>
+  world_totals <- product_country_exports |> # X_w
     dplyr::group_by(year) |>
     dplyr::summarise(
       world_total_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
@@ -76,7 +82,7 @@ calculate_product_country_rca <- function(
     )
 
   if (!is.null(countries_exp)) {
-    indicators <- indicators |>
+    indicators <- indicators |> # agrega columnas de contexto
       dplyr::left_join(
         countries_exp |>
           dplyr::mutate(exporter = as.character(country_code)),

@@ -652,7 +652,7 @@ save_dashboard_rds(
   "sankey_intra_lac.rds"
 )
 
-## 4.5. Base auxiliar común: productos exportados por país de origen, último año ----
+## 4.5. Base auxiliar: productos exportados por país de origen, último año ----
 
 # Objetivo:
 #   Alimentar tablas de productos HS6 exportados por país LAC de origen para
