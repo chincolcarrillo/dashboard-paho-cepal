@@ -42,347 +42,102 @@
     "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
   },
   {
+    "objectID": "dashboard/vacunas-humanas.html#resultados-por-país",
+    "href": "dashboard/vacunas-humanas.html#resultados-por-país",
+    "title": "Vacunas (humanas)",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
     "objectID": "dashboard/vacunas-humanas.html#origen-y-destino-regional-del-comercio",
     "href": "dashboard/vacunas-humanas.html#origen-y-destino-regional-del-comercio",
     "title": "Vacunas (humanas)",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
   },
   {
     "objectID": "dashboard/vacunas-humanas.html#comercio-intrarregional",
     "href": "dashboard/vacunas-humanas.html#comercio-intrarregional",
     "title": "Vacunas (humanas)",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Vacunas (humanas)."
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Vacunas (humanas)."
   },
   {
     "objectID": "dashboard/vacunas-humanas.html#productos-exportados-por-país-de-origen",
     "href": "dashboard/vacunas-humanas.html#productos-exportados-por-país-de-origen",
     "title": "Vacunas (humanas)",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Vacunas (humanas), exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Vacunas (humanas). Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA Balassa: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial."
-  },
-  {
-    "objectID": "dashboard/vacunas-humanas.html#resultados-por-país",
-    "href": "dashboard/vacunas-humanas.html#resultados-por-país",
-    "title": "Vacunas (humanas)",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Vacunas (humanas), exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Vacunas (humanas). Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
   },
   {
     "objectID": "dashboard/vacunas-humanas.html#notas-metodológicas",
     "href": "dashboard/vacunas-humanas.html#notas-metodológicas",
     "title": "Vacunas (humanas)",
     "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá."
   },
   {
-    "objectID": "dashboard/medicamentos.html",
-    "href": "dashboard/medicamentos.html",
-    "title": "Medicamentos",
+    "objectID": "dashboard/panorama-regional.html",
+    "href": "dashboard/panorama-regional.html",
+    "title": "Panorama regional",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.263,3 millones e importó US$ 22.557,0 millones en Medicamentos, con un balance comercial de -US$ 16.293,7 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 2.078,7 millones) y el mayor importador fue Brazil (US$ 5.504,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+    "text": "Esta hoja resume patrones generales de comercio para el conjunto de tecnologías sanitarias e insumos incluidos en la clasificación PAHO/CEPAL. A diferencia de las hojas por categoría, aquí se presentan resultados agregados para comparar la evolución global y regional, así como la composición reciente del comercio de los países de América Latina y el Caribe."
   },
   {
-    "objectID": "dashboard/medicamentos.html#panorama-regional",
-    "href": "dashboard/medicamentos.html#panorama-regional",
-    "title": "Medicamentos",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.263,3 millones e importó US$ 22.557,0 millones en Medicamentos, con un balance comercial de -US$ 16.293,7 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 2.078,7 millones) y el mayor importador fue Brazil (US$ 5.504,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+    "objectID": "dashboard/panorama-regional.html#tendencias-de-exportaciones",
+    "href": "dashboard/panorama-regional.html#tendencias-de-exportaciones",
+    "title": "Panorama regional",
+    "section": "1. Tendencias de exportaciones",
+    "text": "1. Tendencias de exportaciones\nLos gráficos muestran la evolución de las exportaciones entre 2007 y 2024. En cada pestaña se comparan las tendencias mundiales y las de América Latina y el Caribe.\n\nTodos los productosTecnologías sanitariasInsumos"
   },
   {
-    "objectID": "dashboard/medicamentos.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "href": "dashboard/medicamentos.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "title": "Medicamentos",
-    "section": "1. Participación de LAC en las exportaciones mundiales",
-    "text": "1. Participación de LAC en las exportaciones mundiales"
+    "objectID": "dashboard/panorama-regional.html#crecimiento-interanual-de-las-exportaciones",
+    "href": "dashboard/panorama-regional.html#crecimiento-interanual-de-las-exportaciones",
+    "title": "Panorama regional",
+    "section": "2. Crecimiento interanual de las exportaciones",
+    "text": "2. Crecimiento interanual de las exportaciones\nEstos gráficos muestran la variación porcentual de las exportaciones respecto del año inmediatamente anterior. La línea horizontal en 0% separa años de crecimiento y años de caída.\n\nTodos los productosTecnologías sanitariasInsumos"
   },
   {
-    "objectID": "dashboard/medicamentos.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/medicamentos.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Medicamentos",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
+    "objectID": "dashboard/panorama-regional.html#cagr-de-las-exportaciones-a-5-años",
+    "href": "dashboard/panorama-regional.html#cagr-de-las-exportaciones-a-5-años",
+    "title": "Panorama regional",
+    "section": "3. CAGR de las exportaciones a 5 años",
+    "text": "3. CAGR de las exportaciones a 5 años\nEstos gráficos muestran la tasa de crecimiento anual compuesta (CAGR) respecto de cinco años antes. Esta lectura anualiza el cambio acumulado y facilita comparar ritmos de crecimiento de mediano plazo entre series.\n\nTodos los productosTecnologías sanitariasInsumos"
   },
   {
-    "objectID": "dashboard/medicamentos.html#exportaciones-importaciones-y-balance-de-lac",
-    "href": "dashboard/medicamentos.html#exportaciones-importaciones-y-balance-de-lac",
-    "title": "Medicamentos",
-    "section": "3. Exportaciones, importaciones y balance de LAC",
-    "text": "3. Exportaciones, importaciones y balance de LAC"
-  },
-  {
-    "objectID": "dashboard/medicamentos.html#países-lac-con-mayor-comercio",
-    "href": "dashboard/medicamentos.html#países-lac-con-mayor-comercio",
-    "title": "Medicamentos",
+    "objectID": "dashboard/panorama-regional.html#países-lac-con-mayor-comercio",
+    "href": "dashboard/panorama-regional.html#países-lac-con-mayor-comercio",
+    "title": "Panorama regional",
     "section": "4. Países LAC con mayor comercio",
-    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+    "text": "4. Países LAC con mayor comercio\nEl ranking ordena los países por comercio total de tecnologías sanitarias e insumos en 2024. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial."
   },
   {
-    "objectID": "dashboard/medicamentos.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/medicamentos.html#origen-y-destino-regional-del-comercio",
-    "title": "Medicamentos",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+    "objectID": "dashboard/panorama-regional.html#importaciones-por-país-y-categoría",
+    "href": "dashboard/panorama-regional.html#importaciones-por-país-y-categoría",
+    "title": "Panorama regional",
+    "section": "5. Importaciones por país y categoría",
+    "text": "5. Importaciones por país y categoría\nEl gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado."
   },
   {
-    "objectID": "dashboard/medicamentos.html#comercio-intrarregional",
-    "href": "dashboard/medicamentos.html#comercio-intrarregional",
-    "title": "Medicamentos",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Medicamentos."
+    "objectID": "dashboard/panorama-regional.html#distribución-de-importaciones-por-categoría",
+    "href": "dashboard/panorama-regional.html#distribución-de-importaciones-por-categoría",
+    "title": "Panorama regional",
+    "section": "6. Distribución de importaciones por categoría",
+    "text": "6. Distribución de importaciones por categoría\nComo lectura alternativa al gráfico anterior, este gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país. Cada barra suma 100% y permite comparar el peso relativo de cada categoría dentro de las importaciones totales del país."
   },
   {
-    "objectID": "dashboard/medicamentos.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/medicamentos.html#productos-exportados-por-país-de-origen",
-    "title": "Medicamentos",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Medicamentos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Medicamentos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA Balassa: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial."
+    "objectID": "dashboard/panorama-regional.html#exportaciones-por-país-y-categoría",
+    "href": "dashboard/panorama-regional.html#exportaciones-por-país-y-categoría",
+    "title": "Panorama regional",
+    "section": "7. Exportaciones por país y categoría",
+    "text": "7. Exportaciones por país y categoría\nEl gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado."
   },
   {
-    "objectID": "dashboard/medicamentos.html#resultados-por-país",
-    "href": "dashboard/medicamentos.html#resultados-por-país",
-    "title": "Medicamentos",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/medicamentos.html#notas-metodológicas",
-    "href": "dashboard/medicamentos.html#notas-metodológicas",
-    "title": "Medicamentos",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
-  },
-  {
-    "objectID": "dashboard/ifas.html",
-    "href": "dashboard/ifas.html",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,8 millones e importó US$ 6.460,6 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.706,8 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brazil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
-  },
-  {
-    "objectID": "dashboard/ifas.html#panorama-regional",
-    "href": "dashboard/ifas.html#panorama-regional",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,8 millones e importó US$ 6.460,6 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.706,8 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brazil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
-  },
-  {
-    "objectID": "dashboard/ifas.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "href": "dashboard/ifas.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "1. Participación de LAC en las exportaciones mundiales",
-    "text": "1. Participación de LAC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/ifas.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/ifas.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/ifas.html#exportaciones-importaciones-y-balance-de-lac",
-    "href": "dashboard/ifas.html#exportaciones-importaciones-y-balance-de-lac",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "3. Exportaciones, importaciones y balance de LAC",
-    "text": "3. Exportaciones, importaciones y balance de LAC"
-  },
-  {
-    "objectID": "dashboard/ifas.html#países-lac-con-mayor-comercio",
-    "href": "dashboard/ifas.html#países-lac-con-mayor-comercio",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "4. Países LAC con mayor comercio",
-    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/ifas.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/ifas.html#origen-y-destino-regional-del-comercio",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/ifas.html#comercio-intrarregional",
-    "href": "dashboard/ifas.html#comercio-intrarregional",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Ingredientes farmacéuticos activos."
-  },
-  {
-    "objectID": "dashboard/ifas.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/ifas.html#productos-exportados-por-país-de-origen",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Ingredientes farmacéuticos activos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Ingredientes farmacéuticos activos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA Balassa: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial."
-  },
-  {
-    "objectID": "dashboard/ifas.html#resultados-por-país",
-    "href": "dashboard/ifas.html#resultados-por-país",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/ifas.html#notas-metodológicas",
-    "href": "dashboard/ifas.html#notas-metodológicas",
-    "title": "Ingredientes farmacéuticos activos",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html",
-    "href": "dashboard/dispositivos-medicos.html",
-    "title": "Dispositivos médicos",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 42.494,3 millones e importó US$ 21.643,9 millones en Dispositivos médicos, con un balance comercial de US$ 20.850,4 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 27.564,1 millones) y el mayor importador fue Mexico (US$ 9.107,7 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#panorama-regional",
-    "href": "dashboard/dispositivos-medicos.html#panorama-regional",
-    "title": "Dispositivos médicos",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 42.494,3 millones e importó US$ 21.643,9 millones en Dispositivos médicos, con un balance comercial de US$ 20.850,4 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 27.564,1 millones) y el mayor importador fue Mexico (US$ 9.107,7 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "href": "dashboard/dispositivos-medicos.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "title": "Dispositivos médicos",
-    "section": "1. Participación de LAC en las exportaciones mundiales",
-    "text": "1. Participación de LAC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/dispositivos-medicos.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Dispositivos médicos",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#exportaciones-importaciones-y-balance-de-lac",
-    "href": "dashboard/dispositivos-medicos.html#exportaciones-importaciones-y-balance-de-lac",
-    "title": "Dispositivos médicos",
-    "section": "3. Exportaciones, importaciones y balance de LAC",
-    "text": "3. Exportaciones, importaciones y balance de LAC"
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#países-lac-con-mayor-comercio",
-    "href": "dashboard/dispositivos-medicos.html#países-lac-con-mayor-comercio",
-    "title": "Dispositivos médicos",
-    "section": "4. Países LAC con mayor comercio",
-    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/dispositivos-medicos.html#origen-y-destino-regional-del-comercio",
-    "title": "Dispositivos médicos",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#comercio-intrarregional",
-    "href": "dashboard/dispositivos-medicos.html#comercio-intrarregional",
-    "title": "Dispositivos médicos",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos médicos."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/dispositivos-medicos.html#productos-exportados-por-país-de-origen",
-    "title": "Dispositivos médicos",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Dispositivos médicos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#resultados-por-país",
-    "href": "dashboard/dispositivos-medicos.html#resultados-por-país",
-    "title": "Dispositivos médicos",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/dispositivos-medicos.html#notas-metodológicas",
-    "href": "dashboard/dispositivos-medicos.html#notas-metodológicas",
-    "title": "Dispositivos médicos",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html",
-    "href": "dashboard/diagnosticos-in-vitro.html",
-    "title": "Diagnósticos in vitro",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 235,3 millones e importó US$ 2.793,9 millones en Diagnósticos in vitro, con un balance comercial de -US$ 2.558,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 152,6 millones) y el mayor importador fue Mexico (US$ 769,6 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#panorama-regional",
-    "href": "dashboard/diagnosticos-in-vitro.html#panorama-regional",
-    "title": "Diagnósticos in vitro",
-    "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 235,3 millones e importó US$ 2.793,9 millones en Diagnósticos in vitro, con un balance comercial de -US$ 2.558,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 152,6 millones) y el mayor importador fue Mexico (US$ 769,6 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "href": "dashboard/diagnosticos-in-vitro.html#participación-de-lac-en-las-exportaciones-mundiales",
-    "title": "Diagnósticos in vitro",
-    "section": "1. Participación de LAC en las exportaciones mundiales",
-    "text": "1. Participación de LAC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/diagnosticos-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Diagnósticos in vitro",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#exportaciones-importaciones-y-balance-de-lac",
-    "href": "dashboard/diagnosticos-in-vitro.html#exportaciones-importaciones-y-balance-de-lac",
-    "title": "Diagnósticos in vitro",
-    "section": "3. Exportaciones, importaciones y balance de LAC",
-    "text": "3. Exportaciones, importaciones y balance de LAC"
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#países-lac-con-mayor-comercio",
-    "href": "dashboard/diagnosticos-in-vitro.html#países-lac-con-mayor-comercio",
-    "title": "Diagnósticos in vitro",
-    "section": "4. Países LAC con mayor comercio",
-    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/diagnosticos-in-vitro.html#origen-y-destino-regional-del-comercio",
-    "title": "Diagnósticos in vitro",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#comercio-intrarregional",
-    "href": "dashboard/diagnosticos-in-vitro.html#comercio-intrarregional",
-    "title": "Diagnósticos in vitro",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Diagnósticos in vitro."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/diagnosticos-in-vitro.html#productos-exportados-por-país-de-origen",
-    "title": "Diagnósticos in vitro",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Diagnósticos in vitro, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Diagnósticos in vitro. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA Balassa: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#resultados-por-país",
-    "href": "dashboard/diagnosticos-in-vitro.html#resultados-por-país",
-    "title": "Diagnósticos in vitro",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/diagnosticos-in-vitro.html#notas-metodológicas",
-    "href": "dashboard/diagnosticos-in-vitro.html#notas-metodológicas",
-    "title": "Diagnósticos in vitro",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
+    "objectID": "dashboard/panorama-regional.html#distribución-de-exportaciones-por-categoría",
+    "href": "dashboard/panorama-regional.html#distribución-de-exportaciones-por-categoría",
+    "title": "Panorama regional",
+    "section": "8. Distribución de exportaciones por categoría",
+    "text": "8. Distribución de exportaciones por categoría\nComo lectura alternativa al gráfico anterior, este gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país. Cada barra suma 100% y permite comparar el peso relativo de cada categoría dentro de las exportaciones totales del país."
   },
   {
     "objectID": "dashboard/hemoderivados-inmunobiologicos.html",
@@ -427,39 +182,347 @@
     "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
   },
   {
+    "objectID": "dashboard/hemoderivados-inmunobiologicos.html#resultados-por-país",
+    "href": "dashboard/hemoderivados-inmunobiologicos.html#resultados-por-país",
+    "title": "Hemoderivados, antisueros y productos inmunobiológicos",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
     "objectID": "dashboard/hemoderivados-inmunobiologicos.html#origen-y-destino-regional-del-comercio",
     "href": "dashboard/hemoderivados-inmunobiologicos.html#origen-y-destino-regional-del-comercio",
     "title": "Hemoderivados, antisueros y productos inmunobiológicos",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
   },
   {
     "objectID": "dashboard/hemoderivados-inmunobiologicos.html#comercio-intrarregional",
     "href": "dashboard/hemoderivados-inmunobiologicos.html#comercio-intrarregional",
     "title": "Hemoderivados, antisueros y productos inmunobiológicos",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Hemoderivados, antisueros y productos inmunobiológicos."
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Hemoderivados, antisueros y productos inmunobiológicos."
   },
   {
     "objectID": "dashboard/hemoderivados-inmunobiologicos.html#productos-exportados-por-país-de-origen",
     "href": "dashboard/hemoderivados-inmunobiologicos.html#productos-exportados-por-país-de-origen",
     "title": "Hemoderivados, antisueros y productos inmunobiológicos",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Hemoderivados, antisueros y productos inmunobiológicos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Hemoderivados, antisueros y productos inmunobiológicos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA Balassa: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial."
-  },
-  {
-    "objectID": "dashboard/hemoderivados-inmunobiologicos.html#resultados-por-país",
-    "href": "dashboard/hemoderivados-inmunobiologicos.html#resultados-por-país",
-    "title": "Hemoderivados, antisueros y productos inmunobiológicos",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Hemoderivados, antisueros y productos inmunobiológicos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Hemoderivados, antisueros y productos inmunobiológicos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
   },
   {
     "objectID": "dashboard/hemoderivados-inmunobiologicos.html#notas-metodológicas",
     "href": "dashboard/hemoderivados-inmunobiologicos.html#notas-metodológicas",
     "title": "Hemoderivados, antisueros y productos inmunobiológicos",
     "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html",
+    "href": "dashboard/diagnosticos-in-vitro.html",
+    "title": "Diagnósticos in vitro",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 235,3 millones e importó US$ 2.793,9 millones en Diagnósticos in vitro, con un balance comercial de -US$ 2.558,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 152,6 millones) y el mayor importador fue Mexico (US$ 769,6 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#panorama-regional",
+    "href": "dashboard/diagnosticos-in-vitro.html#panorama-regional",
+    "title": "Diagnósticos in vitro",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 235,3 millones e importó US$ 2.793,9 millones en Diagnósticos in vitro, con un balance comercial de -US$ 2.558,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 152,6 millones) y el mayor importador fue Mexico (US$ 769,6 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "href": "dashboard/diagnosticos-in-vitro.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "title": "Diagnósticos in vitro",
+    "section": "1. Participación de LAC en las exportaciones mundiales",
+    "text": "1. Participación de LAC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/diagnosticos-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Diagnósticos in vitro",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#exportaciones-importaciones-y-balance-de-lac",
+    "href": "dashboard/diagnosticos-in-vitro.html#exportaciones-importaciones-y-balance-de-lac",
+    "title": "Diagnósticos in vitro",
+    "section": "3. Exportaciones, importaciones y balance de LAC",
+    "text": "3. Exportaciones, importaciones y balance de LAC"
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#países-lac-con-mayor-comercio",
+    "href": "dashboard/diagnosticos-in-vitro.html#países-lac-con-mayor-comercio",
+    "title": "Diagnósticos in vitro",
+    "section": "4. Países LAC con mayor comercio",
+    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#resultados-por-país",
+    "href": "dashboard/diagnosticos-in-vitro.html#resultados-por-país",
+    "title": "Diagnósticos in vitro",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/diagnosticos-in-vitro.html#origen-y-destino-regional-del-comercio",
+    "title": "Diagnósticos in vitro",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#comercio-intrarregional",
+    "href": "dashboard/diagnosticos-in-vitro.html#comercio-intrarregional",
+    "title": "Diagnósticos in vitro",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Diagnósticos in vitro."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/diagnosticos-in-vitro.html#productos-exportados-por-país-de-origen",
+    "title": "Diagnósticos in vitro",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Diagnósticos in vitro, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Diagnósticos in vitro. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/diagnosticos-in-vitro.html#notas-metodológicas",
+    "href": "dashboard/diagnosticos-in-vitro.html#notas-metodológicas",
+    "title": "Diagnósticos in vitro",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html",
+    "href": "dashboard/dispositivos-medicos.html",
+    "title": "Dispositivos médicos",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 42.494,3 millones e importó US$ 21.643,9 millones en Dispositivos médicos, con un balance comercial de US$ 20.850,4 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 27.564,1 millones) y el mayor importador fue Mexico (US$ 9.107,7 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#panorama-regional",
+    "href": "dashboard/dispositivos-medicos.html#panorama-regional",
+    "title": "Dispositivos médicos",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 42.494,3 millones e importó US$ 21.643,9 millones en Dispositivos médicos, con un balance comercial de US$ 20.850,4 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 27.564,1 millones) y el mayor importador fue Mexico (US$ 9.107,7 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "href": "dashboard/dispositivos-medicos.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "title": "Dispositivos médicos",
+    "section": "1. Participación de LAC en las exportaciones mundiales",
+    "text": "1. Participación de LAC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/dispositivos-medicos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Dispositivos médicos",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#exportaciones-importaciones-y-balance-de-lac",
+    "href": "dashboard/dispositivos-medicos.html#exportaciones-importaciones-y-balance-de-lac",
+    "title": "Dispositivos médicos",
+    "section": "3. Exportaciones, importaciones y balance de LAC",
+    "text": "3. Exportaciones, importaciones y balance de LAC"
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#países-lac-con-mayor-comercio",
+    "href": "dashboard/dispositivos-medicos.html#países-lac-con-mayor-comercio",
+    "title": "Dispositivos médicos",
+    "section": "4. Países LAC con mayor comercio",
+    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#resultados-por-país",
+    "href": "dashboard/dispositivos-medicos.html#resultados-por-país",
+    "title": "Dispositivos médicos",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/dispositivos-medicos.html#origen-y-destino-regional-del-comercio",
+    "title": "Dispositivos médicos",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#comercio-intrarregional",
+    "href": "dashboard/dispositivos-medicos.html#comercio-intrarregional",
+    "title": "Dispositivos médicos",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos médicos."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/dispositivos-medicos.html#productos-exportados-por-país-de-origen",
+    "title": "Dispositivos médicos",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Dispositivos médicos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos médicos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos.html#notas-metodológicas",
+    "href": "dashboard/dispositivos-medicos.html#notas-metodológicas",
+    "title": "Dispositivos médicos",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/ifas.html",
+    "href": "dashboard/ifas.html",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,8 millones e importó US$ 6.460,6 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.706,8 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brazil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+  },
+  {
+    "objectID": "dashboard/ifas.html#panorama-regional",
+    "href": "dashboard/ifas.html#panorama-regional",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,8 millones e importó US$ 6.460,6 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.706,8 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brazil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+  },
+  {
+    "objectID": "dashboard/ifas.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "href": "dashboard/ifas.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "1. Participación de LAC en las exportaciones mundiales",
+    "text": "1. Participación de LAC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/ifas.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/ifas.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/ifas.html#exportaciones-importaciones-y-balance-de-lac",
+    "href": "dashboard/ifas.html#exportaciones-importaciones-y-balance-de-lac",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "3. Exportaciones, importaciones y balance de LAC",
+    "text": "3. Exportaciones, importaciones y balance de LAC"
+  },
+  {
+    "objectID": "dashboard/ifas.html#países-lac-con-mayor-comercio",
+    "href": "dashboard/ifas.html#países-lac-con-mayor-comercio",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "4. Países LAC con mayor comercio",
+    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/ifas.html#resultados-por-país",
+    "href": "dashboard/ifas.html#resultados-por-país",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/ifas.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/ifas.html#origen-y-destino-regional-del-comercio",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/ifas.html#comercio-intrarregional",
+    "href": "dashboard/ifas.html#comercio-intrarregional",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Ingredientes farmacéuticos activos."
+  },
+  {
+    "objectID": "dashboard/ifas.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/ifas.html#productos-exportados-por-país-de-origen",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Ingredientes farmacéuticos activos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Ingredientes farmacéuticos activos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/ifas.html#notas-metodológicas",
+    "href": "dashboard/ifas.html#notas-metodológicas",
+    "title": "Ingredientes farmacéuticos activos",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html",
+    "href": "dashboard/medicamentos.html",
+    "title": "Medicamentos",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.263,3 millones e importó US$ 22.557,0 millones en Medicamentos, con un balance comercial de -US$ 16.293,7 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 2.078,7 millones) y el mayor importador fue Brazil (US$ 5.504,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#panorama-regional",
+    "href": "dashboard/medicamentos.html#panorama-regional",
+    "title": "Medicamentos",
+    "section": "",
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.263,3 millones e importó US$ 22.557,0 millones en Medicamentos, con un balance comercial de -US$ 16.293,7 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 2.078,7 millones) y el mayor importador fue Brazil (US$ 5.504,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "href": "dashboard/medicamentos.html#participación-de-lac-en-las-exportaciones-mundiales",
+    "title": "Medicamentos",
+    "section": "1. Participación de LAC en las exportaciones mundiales",
+    "text": "1. Participación de LAC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/medicamentos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Medicamentos",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#exportaciones-importaciones-y-balance-de-lac",
+    "href": "dashboard/medicamentos.html#exportaciones-importaciones-y-balance-de-lac",
+    "title": "Medicamentos",
+    "section": "3. Exportaciones, importaciones y balance de LAC",
+    "text": "3. Exportaciones, importaciones y balance de LAC"
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#países-lac-con-mayor-comercio",
+    "href": "dashboard/medicamentos.html#países-lac-con-mayor-comercio",
+    "title": "Medicamentos",
+    "section": "4. Países LAC con mayor comercio",
+    "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#resultados-por-país",
+    "href": "dashboard/medicamentos.html#resultados-por-país",
+    "title": "Medicamentos",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/medicamentos.html#origen-y-destino-regional-del-comercio",
+    "title": "Medicamentos",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#comercio-intrarregional",
+    "href": "dashboard/medicamentos.html#comercio-intrarregional",
+    "title": "Medicamentos",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Medicamentos."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/medicamentos.html#productos-exportados-por-país-de-origen",
+    "title": "Medicamentos",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Medicamentos, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Medicamentos. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/medicamentos.html#notas-metodológicas",
+    "href": "dashboard/medicamentos.html#notas-metodológicas",
+    "title": "Medicamentos",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
   },
   {
     "objectID": "dashboard/terapias-avanzadas.html",
@@ -504,38 +567,38 @@
     "text": "4. Países LAC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
   },
   {
+    "objectID": "dashboard/terapias-avanzadas.html#resultados-por-país",
+    "href": "dashboard/terapias-avanzadas.html#resultados-por-país",
+    "title": "Células, tejidos y terapias avanzadas",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
     "objectID": "dashboard/terapias-avanzadas.html#origen-y-destino-regional-del-comercio",
     "href": "dashboard/terapias-avanzadas.html#origen-y-destino-regional-del-comercio",
     "title": "Células, tejidos y terapias avanzadas",
-    "section": "5. Origen y destino regional del comercio",
-    "text": "5. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
   },
   {
     "objectID": "dashboard/terapias-avanzadas.html#comercio-intrarregional",
     "href": "dashboard/terapias-avanzadas.html#comercio-intrarregional",
     "title": "Células, tejidos y terapias avanzadas",
-    "section": "6. Comercio intrarregional",
-    "text": "6. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Células humanas, tejidos y productos médicos de terapia avanzada."
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de LAC.\n% exportado hacia LAC: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.\nExportaciones a LAC, USD millones: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de LAC: país de LAC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Células humanas, tejidos y productos médicos de terapia avanzada."
   },
   {
     "objectID": "dashboard/terapias-avanzadas.html#productos-exportados-por-país-de-origen",
     "href": "dashboard/terapias-avanzadas.html#productos-exportados-por-país-de-origen",
     "title": "Células, tejidos y terapias avanzadas",
-    "section": "7. Productos exportados por país de origen",
-    "text": "7. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Células humanas, tejidos y productos médicos de terapia avanzada, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Células humanas, tejidos y productos médicos de terapia avanzada. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA Balassa: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial."
-  },
-  {
-    "objectID": "dashboard/terapias-avanzadas.html#resultados-por-país",
-    "href": "dashboard/terapias-avanzadas.html#resultados-por-país",
-    "title": "Células, tejidos y terapias avanzadas",
-    "section": "8. Resultados por país",
-    "text": "8. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nLa tabla muestra productos HS07, dentro de la categoría Células humanas, tejidos y productos médicos de terapia avanzada, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Células humanas, tejidos y productos médicos de terapia avanzada. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de LAC que registra exportaciones del producto.\nExportaciones, USD millones: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de LAC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
   },
   {
     "objectID": "dashboard/terapias-avanzadas.html#notas-metodológicas",
     "href": "dashboard/terapias-avanzadas.html#notas-metodológicas",
     "title": "Células, tejidos y terapias avanzadas",
     "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nFuente: CEPII-BACI, nomenclatura HS 2007."
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
   }
 ]

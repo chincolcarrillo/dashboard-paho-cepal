@@ -34,6 +34,11 @@ dashboard_files <- list(
   sankey_intra_lac = "sankey_intra_lac.rds"
 )
 
+overview_dashboard_files <- list(
+  overview_exports_trends = "overview_exports_trends.rds",
+  overview_lac_country_category_trade = "overview_lac_country_category_trade.rds"
+)
+
 # Orden de regiones para mantener consistencia entre graficos.
 region_order <- region_levels
 
@@ -50,6 +55,27 @@ flow_labels <- c(
   "Imports" = "Importaciones",
   "export" = "Exportaciones",
   "import" = "Importaciones"
+)
+
+hc_cat2_palette <- c(
+  "Células humanas, tejidos y productos médicos de terapia avanzada" = "#8DD3C7",
+  "Diagnósticos in vitro" = "#BEBADA",
+  "Dispositivos médicos" = "#FB8072",
+  "Hemoderivados, antisueros y productos inmunobiológicos" = "#80B1D3",
+  "Ingredientes farmacéuticos activos" = "#FDB462",
+  "Medicamentos" = "#B3DE69",
+  "Vacunas (humanas)" = "#FCCDE5"
+)
+
+overview_line_palette <- c(
+  "Mundo - Todos los productos" = "#4C78A8",
+  "LAC - Todos los productos" = "#4C78A8",
+  "Mundo - Tecnologías sanitarias" = "#4C78A8",
+  "LAC - Tecnologías sanitarias" = "#4C78A8",
+  "Mundo - Dispositivos médicos" = "#F58518",
+  "LAC - Dispositivos médicos" = "#F58518",
+  "Mundo - Ingredientes farmacéuticos activos" = "#9467BD",
+  "LAC - Ingredientes farmacéuticos activos" = "#9467BD"
 )
 
 # 2. FXS AUXILIARES DE CARGA ----
@@ -873,12 +899,12 @@ plot_sankey_intra_lac <- function(
 
   links_raw <- plot_data |>
     dplyr::transmute(
-      source_node = paste0("Exportador: ", source_name),
-      target_node = paste0("Importador: ", target_name),
+      source_node = paste0("Exp: ", source_name),
+      target_node = paste0("Imp: ", target_name),
       value = value_musd,
       tooltip = glue::glue(
-        "Exportador: {source_name}<br>",
-        "Importador: {target_name}<br>",
+        "Exp: {source_name}<br>",
+        "Imp: {target_name}<br>",
         "Valor: {scales::label_number(accuracy = 0.1, big.mark = '.', decimal.mark = ',')(value_musd)} millones USD"
       )
     )
@@ -904,7 +930,7 @@ plot_sankey_intra_lac <- function(
   nodes <- dplyr::bind_rows(source_nodes, target_nodes) |>
     dplyr::mutate(
       node_type = dplyr::if_else(
-        stringr::str_starts(name, "Exportador: "),
+        stringr::str_starts(name, "Exp: "),
         "source",
         "target"
       )
@@ -1057,6 +1083,29 @@ load_category_dashboard_data <- function(
   purrr::map(data, ~ dplyr::filter(.x, .data$hc_cat2 == .env$category))
 }
 
+load_overview_dashboard_data <- function(data_dir = dashboard_data_dir) {
+  resolved_dir <- resolve_dashboard_data_dir(data_dir)
+
+  data <- purrr::imap(
+    overview_dashboard_files,
+    ~ load_dashboard_data(file_name = .x, data_dir = resolved_dir)
+  )
+
+  check_required_columns(
+    data$overview_exports_trends,
+    c("year", "overview_tab", "region_scope", "product_group", "line_label", "exports_1000usd"),
+    "overview_exports_trends"
+  )
+
+  check_required_columns(
+    data$overview_lac_country_category_trade,
+    c("year", "ref_area_code", "ref_area_name", "hc_cat2", "flow_type", "value_1000usd"),
+    "overview_lac_country_category_trade"
+  )
+
+  data
+}
+
 to_musd <- function(x) {
   x / 1000
 }
@@ -1078,6 +1127,247 @@ dashboard_card <- function(label, value, note = NULL) {
     htmltools::tags$h3(value),
     htmltools::tags$p(note)
   )
+}
+
+format_landing_kpi_value <- function(value, type = c("money", "percent")) {
+  type <- rlang::arg_match(type)
+
+  if (length(value) == 0 || is.na(value) || !is.finite(value)) {
+    return("n/d")
+  }
+
+  if (type == "money") {
+    return(format_usd_billions(value, accuracy = 0.1))
+  }
+
+  format_percent_label(value, accuracy = 0.1)
+}
+
+calculate_cagr <- function(value_start, value_end, years) {
+  if (
+    length(value_start) == 0 ||
+      length(value_end) == 0 ||
+      is.na(value_start) ||
+      is.na(value_end) ||
+      value_start <= 0 ||
+      years <= 0
+  ) {
+    return(NA_real_)
+  }
+
+  (value_end / value_start)^(1 / years) - 1
+}
+
+prepare_landing_category_kpis <- function(
+  exports_region,
+  trade_balance,
+  category_links,
+  cagr_window = 5
+) {
+  check_required_columns(
+    exports_region,
+    c("year", "exp_region", "hc_cat2", "exports_1000usd"),
+    "exports_region_hc_cat2"
+  )
+  check_required_columns(
+    trade_balance,
+    c(
+      "year", "ref_area_code", "ref_area_type", "hc_cat2",
+      "exports_1000usd", "imports_1000usd"
+    ),
+    "trade_balance_lac"
+  )
+
+  world_exports <- exports_region |>
+    dplyr::group_by(year, hc_cat2) |>
+    dplyr::summarise(
+      world_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  latest_year <- max(world_exports$year, na.rm = TRUE)
+  first_year <- min(world_exports$year, na.rm = TRUE)
+  cagr_start_year <- latest_year - cagr_window
+
+  world_latest <- world_exports |>
+    dplyr::filter(.data$year == .env$latest_year) |>
+    dplyr::select(hc_cat2, market_total_global_1000usd = world_exports_1000usd)
+
+  world_first <- world_exports |>
+    dplyr::filter(.data$year == .env$first_year) |>
+    dplyr::select(hc_cat2, first_world_exports_1000usd = world_exports_1000usd)
+
+  world_cagr_start <- world_exports |>
+    dplyr::filter(.data$year == .env$cagr_start_year) |>
+    dplyr::select(hc_cat2, cagr_5y_world_exports_1000usd = world_exports_1000usd)
+
+  lac_latest <- trade_balance |>
+    dplyr::filter(
+      .data$ref_area_code == "LAC",
+      .data$ref_area_type == "region",
+      .data$year == .env$latest_year
+    ) |>
+    dplyr::group_by(hc_cat2) |>
+    dplyr::summarise(
+      lac_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      lac_imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  tibble::tibble(hc_cat2 = hc_cat2_levels) |>
+    dplyr::left_join(world_latest, by = "hc_cat2") |>
+    dplyr::left_join(world_first, by = "hc_cat2") |>
+    dplyr::left_join(world_cagr_start, by = "hc_cat2") |>
+    dplyr::left_join(lac_latest, by = "hc_cat2") |>
+    dplyr::mutate(
+      category_link = unname(category_links[hc_cat2]),
+      first_year = .env$first_year,
+      latest_year = .env$latest_year,
+      cagr_start_year = .env$cagr_start_year,
+      cagr_all_years = purrr::pmap_dbl(
+        list(first_world_exports_1000usd, market_total_global_1000usd),
+        ~ calculate_cagr(..1, ..2, .env$latest_year - .env$first_year)
+      ),
+      cagr_5y = purrr::pmap_dbl(
+        list(cagr_5y_world_exports_1000usd, market_total_global_1000usd),
+        ~ calculate_cagr(..1, ..2, .env$cagr_window)
+      )
+    )
+}
+
+landing_category_kpi_card <- function(row) {
+  category_name <- row$hc_cat2[[1]]
+  category_link <- row$category_link[[1]]
+  if (length(category_link) == 0 || is.na(category_link)) {
+    category_link <- "#"
+  }
+
+  landing_kpi_metric <- function(label, value, class = NULL) {
+    htmltools::div(
+      class = paste(c("landing-kpi-metric", class), collapse = " "),
+      htmltools::tags$span(label, class = "landing-kpi-metric-label"),
+      htmltools::tags$strong(value, class = "landing-kpi-metric-value")
+    )
+  }
+
+  htmltools::div(
+    class = "landing-kpi-card",
+    htmltools::tags$h3(
+      htmltools::tags$a(
+        href = category_link,
+        category_name
+      )
+    ),
+    htmltools::div(
+      class = "landing-kpi-grid",
+      htmltools::div(
+        class = "landing-kpi-row landing-kpi-row-top",
+        landing_kpi_metric(
+          "Mercado total global",
+          format_landing_kpi_value(row$market_total_global_1000usd, "money")
+        ),
+        landing_kpi_metric(
+          glue::glue("CAGR {row$first_year}-{row$latest_year}"),
+          format_landing_kpi_value(row$cagr_all_years, "percent")
+        ),
+        landing_kpi_metric(
+          "CAGR últimos 5 años",
+          format_landing_kpi_value(row$cagr_5y, "percent")
+        )
+      ),
+      htmltools::div(
+        class = "landing-kpi-row landing-kpi-row-bottom",
+        landing_kpi_metric(
+          glue::glue("Importaciones LAC {row$latest_year}"),
+          format_landing_kpi_value(row$lac_imports_1000usd, "money"),
+          class = "landing-kpi-metric-lac"
+        ),
+        landing_kpi_metric(
+          glue::glue("Exportaciones LAC {row$latest_year}"),
+          format_landing_kpi_value(row$lac_exports_1000usd, "money"),
+          class = "landing-kpi-metric-lac"
+        )
+      )
+    )
+  )
+}
+
+render_landing_kpi_cards <- function(kpi_data) {
+  medical_devices_category <- "Dispositivos médicos"
+  inputs_category <- "Ingredientes farmacéuticos activos"
+
+  health_left <- kpi_data |>
+    dplyr::filter(!.data$hc_cat2 %in% c(.env$medical_devices_category, .env$inputs_category))
+
+  medical_devices <- kpi_data |>
+    dplyr::filter(.data$hc_cat2 == .env$medical_devices_category)
+
+  inputs <- kpi_data |>
+    dplyr::filter(.data$hc_cat2 == .env$inputs_category)
+
+  health_left_cards <- htmltools::tagList(
+    purrr::map(seq_len(nrow(health_left)), ~ landing_category_kpi_card(health_left[.x, ]))
+  )
+  medical_devices_cards <- htmltools::tagList(
+    purrr::map(seq_len(nrow(medical_devices)), ~ landing_category_kpi_card(medical_devices[.x, ]))
+  )
+  inputs_cards <- htmltools::tagList(
+    purrr::map(seq_len(nrow(inputs)), ~ landing_category_kpi_card(inputs[.x, ]))
+  )
+
+  htmltools::tagList(
+    htmltools::tags$section(
+      class = "landing-kpi-section",
+      htmltools::tags$h2("Tecnologías sanitarias"),
+      htmltools::div(
+        class = "landing-kpi-two-column",
+        htmltools::div(
+          class = "landing-kpi-column landing-kpi-column-wide",
+          health_left_cards
+        ),
+        htmltools::div(
+          class = "landing-kpi-column landing-kpi-column-narrow",
+          medical_devices_cards
+        )
+      )
+    ),
+    htmltools::tags$section(
+      class = "landing-kpi-section",
+      htmltools::tags$h2("Insumos"),
+      htmltools::div(
+        class = "landing-kpi-one-column",
+        inputs_cards
+      )
+    )
+  )
+}
+
+complete_hc_cat2_palette <- function(category_names) {
+  observed_categories <- unique(as.character(category_names))
+  missing_categories <- setdiff(observed_categories, names(hc_cat2_palette))
+
+  if (length(missing_categories) == 0) {
+    return(hc_cat2_palette)
+  }
+
+  fallback_values <- scales::hue_pal()(length(missing_categories))
+  names(fallback_values) <- missing_categories
+
+  c(hc_cat2_palette, fallback_values)
+}
+
+complete_overview_line_palette <- function(line_names) {
+  observed_lines <- unique(as.character(line_names))
+  missing_lines <- setdiff(observed_lines, names(overview_line_palette))
+
+  if (length(missing_lines) == 0) {
+    return(overview_line_palette)
+  }
+
+  fallback_values <- scales::hue_pal()(length(missing_lines))
+  names(fallback_values) <- missing_lines
+
+  c(overview_line_palette, fallback_values)
 }
 
 latest_common_year <- function(...) {
@@ -1160,6 +1450,575 @@ load_category_product_exports <- function(
 
   product_exports |>
     dplyr::filter(.data$hc_cat2 == .env$category)
+}
+
+plot_overview_exports_trends <- function(
+  data,
+  selected_tab,
+  interactive = TRUE
+) {
+  required_cols <- c(
+    "year", "overview_tab", "region_scope", "product_group",
+    "line_label", "exports_1000usd"
+  )
+  check_required_columns(data, required_cols, "overview_exports_trends")
+
+  plot_data <- data |>
+    dplyr::filter(.data$overview_tab == .env$selected_tab) |>
+    dplyr::mutate(
+      exports_musd = to_musd(exports_1000usd),
+      line_label = as.character(line_label),
+      tooltip = make_tooltip(
+        glue::glue("<b>Año:</b> {year}"),
+        glue::glue("<b>Ámbito:</b> {region_scope}"),
+        glue::glue("<b>Grupo:</b> {product_group}"),
+        glue::glue("<b>Exportaciones:</b> {format_usd_millions(exports_1000usd)}")
+      )
+    ) |>
+    dplyr::arrange(line_label, year)
+
+  if (nrow(plot_data) == 0) {
+    rlang::abort(glue::glue("No hay datos para overview_tab = '{selected_tab}'."))
+  }
+
+  line_palette <- complete_overview_line_palette(plot_data$line_label)
+
+  if (isTRUE(interactive)) {
+    plot_widget <- plotly::plot_ly()
+    line_names <- unique(plot_data$line_label)
+
+    for (line_name in line_names) {
+      line_data <- plot_data |>
+        dplyr::filter(.data$line_label == .env$line_name)
+
+      line_dash <- if (all(unique(line_data$region_scope) == "Mundo")) {
+        "dash"
+      } else {
+        "solid"
+      }
+
+      plot_widget <- plot_widget |>
+        plotly::add_trace(
+          data = line_data,
+          x = ~year,
+          y = ~exports_musd,
+          type = "scatter",
+          mode = "lines+markers",
+          name = line_name,
+          text = ~tooltip,
+          hovertemplate = "%{text}<extra></extra>",
+          line = list(
+            color = unname(line_palette[[line_name]]),
+            width = 2.4,
+            dash = line_dash
+          ),
+          marker = list(
+            color = unname(line_palette[[line_name]]),
+            size = 6
+          )
+        )
+    }
+
+    return(plot_widget |>
+             plotly::layout(
+               xaxis = list(title = ""),
+               yaxis = list(
+                 title = "Exportaciones, USD millones",
+                 rangemode = "tozero"
+               ),
+               legend = list(orientation = "h", x = 0, y = -0.2),
+               margin = list(l = 75, r = 25, t = 25, b = 80)
+             ))
+  }
+
+  plot_data |>
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = year,
+        y = exports_musd,
+        color = line_label,
+        linetype = region_scope,
+        group = line_label,
+        text = tooltip
+      )
+    ) +
+    ggplot2::geom_line(linewidth = 0.9) +
+    ggplot2::geom_point(size = 1.6) +
+    ggplot2::scale_color_manual(values = line_palette) +
+    ggplot2::scale_y_continuous(
+      labels = scales::label_number(
+        prefix = "US$ ",
+        suffix = " M",
+        big.mark = ".",
+        decimal.mark = ","
+      )
+    ) +
+    ggplot2::labs(
+      x = NULL,
+      y = "Exportaciones",
+      color = NULL,
+      linetype = NULL
+    ) +
+    theme_trade()
+}
+
+plot_overview_exports_growth_trends <- function(
+  data,
+  selected_tab,
+  lag_years = 1,
+  annualized = FALSE,
+  interactive = TRUE
+) {
+  required_cols <- c(
+    "year", "overview_tab", "region_scope", "product_group",
+    "line_label", "exports_1000usd"
+  )
+  check_required_columns(data, required_cols, "overview_exports_trends")
+
+  plot_data <- data |>
+    dplyr::filter(.data$overview_tab == .env$selected_tab) |>
+    dplyr::mutate(line_label = as.character(line_label)) |>
+    dplyr::arrange(line_label, year) |>
+    dplyr::group_by(line_label) |>
+    dplyr::mutate(
+      exports_lag_1000usd = dplyr::lag(exports_1000usd, n = lag_years),
+      growth_rate = dplyr::if_else(
+        exports_lag_1000usd > 0,
+        exports_1000usd / exports_lag_1000usd - 1,
+        NA_real_
+      ),
+      growth_rate = dplyr::if_else(
+        annualized & !is.na(growth_rate),
+        (1 + growth_rate)^(1 / lag_years) - 1,
+        growth_rate
+      )
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::filter(!is.na(growth_rate)) |>
+    dplyr::mutate(
+      exports_musd = to_musd(exports_1000usd)
+    )
+
+  if (nrow(plot_data) == 0) {
+    rlang::abort(glue::glue(
+      "No hay datos suficientes para calcular crecimiento con rezago de {lag_years} año/s en '{selected_tab}'."
+    ))
+  }
+
+  line_palette <- complete_overview_line_palette(plot_data$line_label)
+  y_axis_title <- if (lag_years == 1) {
+    "Crecimiento interanual de exportaciones"
+  } else if (isTRUE(annualized)) {
+    glue::glue("CAGR de exportaciones a {lag_years} años")
+  } else {
+    glue::glue("Crecimiento de exportaciones a {lag_years} años")
+  }
+  growth_label <- if (lag_years == 1) {
+    "Crecimiento interanual"
+  } else if (isTRUE(annualized)) {
+    glue::glue("CAGR a {lag_years} años")
+  } else {
+    glue::glue("Crecimiento a {lag_years} años")
+  }
+
+  plot_data <- plot_data |>
+    dplyr::mutate(
+      tooltip = make_tooltip(
+        glue::glue("<b>Año:</b> {year}"),
+        glue::glue("<b>Ámbito:</b> {region_scope}"),
+        glue::glue("<b>Grupo:</b> {product_group}"),
+        glue::glue("<b>Exportaciones:</b> {format_usd_millions(exports_1000usd)}"),
+        glue::glue("<b>{growth_label}:</b> {format_percent_label(growth_rate)}")
+      )
+    )
+
+  if (isTRUE(interactive)) {
+    plot_widget <- plotly::plot_ly()
+    line_names <- unique(plot_data$line_label)
+
+    for (line_name in line_names) {
+      line_data <- plot_data |>
+        dplyr::filter(.data$line_label == .env$line_name)
+
+      line_dash <- if (all(unique(line_data$region_scope) == "Mundo")) {
+        "dash"
+      } else {
+        "solid"
+      }
+
+      plot_widget <- plot_widget |>
+        plotly::add_trace(
+          data = line_data,
+          x = ~year,
+          y = ~growth_rate,
+          type = "scatter",
+          mode = "lines+markers",
+          name = line_name,
+          text = ~tooltip,
+          hovertemplate = "%{text}<extra></extra>",
+          line = list(
+            color = unname(line_palette[[line_name]]),
+            width = 2.4,
+            dash = line_dash
+          ),
+          marker = list(
+            color = unname(line_palette[[line_name]]),
+            size = 6
+          )
+        )
+    }
+
+    return(plot_widget |>
+             plotly::layout(
+               shapes = list(
+                 list(
+                   type = "line",
+                   x0 = min(plot_data$year, na.rm = TRUE),
+                   x1 = max(plot_data$year, na.rm = TRUE),
+                   y0 = 0,
+                   y1 = 0,
+                   line = list(color = "rgba(80,80,80,0.45)", width = 1)
+                 )
+               ),
+               xaxis = list(title = ""),
+               yaxis = list(
+                 title = y_axis_title,
+                 tickformat = ".1%"
+               ),
+               legend = list(orientation = "h", x = 0, y = -0.2),
+               margin = list(l = 75, r = 25, t = 25, b = 80)
+             ))
+  }
+
+  plot_data |>
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = year,
+        y = growth_rate,
+        color = line_label,
+        linetype = region_scope,
+        group = line_label,
+        text = tooltip
+      )
+    ) +
+    ggplot2::geom_hline(yintercept = 0, linewidth = 0.35, color = "grey55") +
+    ggplot2::geom_line(linewidth = 0.9) +
+    ggplot2::geom_point(size = 1.6) +
+    ggplot2::scale_color_manual(values = line_palette) +
+    ggplot2::scale_y_continuous(
+      labels = scales::label_percent(accuracy = 0.1, decimal.mark = ",")
+    ) +
+    ggplot2::labs(
+      x = NULL,
+      y = y_axis_title,
+      color = NULL,
+      linetype = NULL
+    ) +
+    theme_trade()
+}
+
+plot_overview_lac_country_category_trade <- function(
+  data,
+  flow_type,
+  max_countries = NULL,
+  interactive = TRUE
+) {
+  required_cols <- c(
+    "year", "ref_area_code", "ref_area_name", "hc_cat2",
+    "flow_type", "value_1000usd"
+  )
+  check_required_columns(data, required_cols, "overview_lac_country_category_trade")
+
+  plot_data <- data |>
+    dplyr::filter(.data$flow_type == .env$flow_type) |>
+    dplyr::mutate(
+      hc_cat2 = factor(as.character(hc_cat2), levels = hc_cat2_levels),
+      value_musd = to_musd(value_1000usd)
+    )
+
+  if (nrow(plot_data) == 0) {
+    rlang::abort(glue::glue("No hay datos para flow_type = '{flow_type}'."))
+  }
+
+  country_order <- plot_data |>
+    dplyr::group_by(ref_area_name) |>
+    dplyr::summarise(
+      total_value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::arrange(dplyr::desc(total_value_1000usd), ref_area_name)
+
+  if (!is.null(max_countries)) {
+    country_order <- country_order |>
+      dplyr::slice_head(n = max_countries)
+
+    plot_data <- plot_data |>
+      dplyr::filter(.data$ref_area_name %in% country_order$ref_area_name)
+  }
+
+  country_levels <- country_order |>
+    dplyr::pull(ref_area_name)
+
+  plot_data <- plot_data |>
+    dplyr::mutate(
+      ref_area_name = factor(ref_area_name, levels = country_levels),
+      tooltip = make_tooltip(
+        glue::glue("<b>País:</b> {ref_area_name}"),
+        glue::glue("<b>Categoría:</b> {hc_cat2}"),
+        glue::glue("<b>Flujo:</b> {flow_type}"),
+        glue::glue("<b>Valor:</b> {format_usd_millions(value_1000usd)}")
+      )
+    ) |>
+    dplyr::arrange(ref_area_name, hc_cat2)
+
+  plot_palette <- complete_hc_cat2_palette(plot_data$hc_cat2)
+
+  if (isTRUE(interactive)) {
+    plot_widget <- plotly::plot_ly()
+    category_names <- hc_cat2_levels[hc_cat2_levels %in% as.character(plot_data$hc_cat2)]
+
+    for (category_name in category_names) {
+      category_data <- plot_data |>
+        dplyr::filter(as.character(.data$hc_cat2) == .env$category_name)
+
+      plot_widget <- plot_widget |>
+        plotly::add_trace(
+          data = category_data,
+          x = ~value_musd,
+          y = ~ref_area_name,
+          type = "bar",
+          orientation = "h",
+          name = category_name,
+          marker = list(color = unname(plot_palette[[category_name]])),
+          customdata = ~tooltip,
+          hovertemplate = "%{customdata}<extra></extra>"
+        )
+    }
+
+    return(plot_widget |>
+             plotly::layout(
+               barmode = "stack",
+               xaxis = list(title = glue::glue("{flow_type}, USD millones")),
+               yaxis = list(
+                 title = "",
+                 categoryorder = "array",
+                 categoryarray = rev(country_levels)
+               ),
+               legend = list(orientation = "h", x = 0, y = -0.2),
+               margin = list(l = 155, r = 25, t = 25, b = 120)
+             ))
+  }
+
+  plot_data |>
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = value_musd,
+        y = forcats::fct_rev(ref_area_name),
+        fill = hc_cat2,
+        text = tooltip
+      )
+    ) +
+    ggplot2::geom_col(width = 0.7) +
+    ggplot2::scale_fill_manual(values = plot_palette, drop = FALSE) +
+    ggplot2::labs(
+      x = glue::glue("{flow_type}, USD millones"),
+      y = NULL,
+      fill = NULL
+    ) +
+    theme_trade()
+}
+
+plot_overview_lac_country_category_share <- function(
+  data,
+  flow_type,
+  max_countries = NULL,
+  interactive = TRUE
+) {
+  required_cols <- c(
+    "year", "ref_area_code", "ref_area_name", "hc_cat2",
+    "flow_type", "value_1000usd"
+  )
+  check_required_columns(data, required_cols, "overview_lac_country_category_trade")
+
+  plot_data <- data |>
+    dplyr::filter(.data$flow_type == .env$flow_type) |>
+    dplyr::mutate(
+      hc_cat2 = factor(as.character(hc_cat2), levels = hc_cat2_levels),
+      value_musd = to_musd(value_1000usd)
+    )
+
+  if (nrow(plot_data) == 0) {
+    rlang::abort(glue::glue("No hay datos para flow_type = '{flow_type}'."))
+  }
+
+  country_order <- plot_data |>
+    dplyr::group_by(ref_area_name) |>
+    dplyr::summarise(
+      total_value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::arrange(dplyr::desc(total_value_1000usd), ref_area_name)
+
+  if (!is.null(max_countries)) {
+    country_order <- country_order |>
+      dplyr::slice_head(n = max_countries)
+
+    plot_data <- plot_data |>
+      dplyr::filter(.data$ref_area_name %in% country_order$ref_area_name)
+  }
+
+  country_levels <- country_order |>
+    dplyr::pull(ref_area_name)
+
+  plot_data <- plot_data |>
+    dplyr::group_by(ref_area_name) |>
+    dplyr::mutate(
+      total_value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      share_value = dplyr::if_else(
+        total_value_1000usd > 0,
+        value_1000usd / total_value_1000usd,
+        NA_real_
+      )
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::mutate(
+      ref_area_name = factor(ref_area_name, levels = country_levels),
+      tooltip = make_tooltip(
+        glue::glue("<b>País:</b> {ref_area_name}"),
+        glue::glue("<b>Categoría:</b> {hc_cat2}"),
+        glue::glue("<b>Flujo:</b> {flow_type}"),
+        glue::glue("<b>Participación:</b> {format_percent_label(share_value)}"),
+        glue::glue("<b>Valor:</b> {format_usd_millions(value_1000usd)}")
+      )
+    ) |>
+    dplyr::arrange(ref_area_name, hc_cat2)
+
+  plot_palette <- complete_hc_cat2_palette(plot_data$hc_cat2)
+
+  if (isTRUE(interactive)) {
+    plot_widget <- plotly::plot_ly()
+    category_names <- hc_cat2_levels[hc_cat2_levels %in% as.character(plot_data$hc_cat2)]
+
+    for (category_name in category_names) {
+      category_data <- plot_data |>
+        dplyr::filter(as.character(.data$hc_cat2) == .env$category_name)
+
+      plot_widget <- plot_widget |>
+        plotly::add_trace(
+          data = category_data,
+          x = ~share_value,
+          y = ~ref_area_name,
+          type = "bar",
+          orientation = "h",
+          name = category_name,
+          marker = list(color = unname(plot_palette[[category_name]])),
+          customdata = ~tooltip,
+          hovertemplate = "%{customdata}<extra></extra>"
+        )
+    }
+
+    return(plot_widget |>
+             plotly::layout(
+               barmode = "stack",
+               xaxis = list(
+                 title = glue::glue("Distribución de {tolower(flow_type)}"),
+                 range = c(0, 1),
+                 tickformat = ".0%"
+               ),
+               yaxis = list(
+                 title = "",
+                 categoryorder = "array",
+                 categoryarray = rev(country_levels)
+               ),
+               legend = list(orientation = "h", x = 0, y = -0.2),
+               margin = list(l = 155, r = 25, t = 25, b = 120)
+             ))
+  }
+
+  plot_data |>
+    ggplot2::ggplot(
+      ggplot2::aes(
+        x = share_value,
+        y = forcats::fct_rev(ref_area_name),
+        fill = hc_cat2,
+        text = tooltip
+      )
+    ) +
+    ggplot2::geom_col(width = 0.7) +
+    ggplot2::scale_fill_manual(values = plot_palette, drop = FALSE) +
+    ggplot2::scale_x_continuous(
+      labels = scales::percent_format(accuracy = 1),
+      limits = c(0, 1)
+    ) +
+    ggplot2::labs(
+      x = glue::glue("Distribución de {tolower(flow_type)}"),
+      y = NULL,
+      fill = NULL
+    ) +
+    theme_trade()
+}
+
+prepare_overview_country_trade_snapshot <- function(data) {
+  required_cols <- c(
+    "year", "ref_area_code", "ref_area_name", "flow_type", "value_1000usd"
+  )
+  check_required_columns(data, required_cols, "overview_lac_country_category_trade")
+
+  snapshot_year <- max(data$year, na.rm = TRUE)
+
+  data |>
+    dplyr::filter(.data$year == .env$snapshot_year) |>
+    dplyr::group_by(year, ref_area_code, ref_area_name, flow_type) |>
+    dplyr::summarise(
+      value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    tidyr::pivot_wider(
+      names_from = flow_type,
+      values_from = value_1000usd,
+      values_fill = list(value_1000usd = 0)
+    ) |>
+    dplyr::mutate(
+      ref_area_type = "country",
+      exports_1000usd = tidyr::replace_na(Exportaciones, 0),
+      imports_1000usd = tidyr::replace_na(Importaciones, 0),
+      balance_1000usd = exports_1000usd - imports_1000usd,
+      exports_musd = to_musd(exports_1000usd),
+      imports_musd = to_musd(imports_1000usd),
+      balance_musd = to_musd(balance_1000usd),
+      total_trade_musd = exports_musd + imports_musd
+    ) |>
+    dplyr::select(
+      year,
+      ref_area_code,
+      ref_area_name,
+      ref_area_type,
+      exports_1000usd,
+      imports_1000usd,
+      balance_1000usd,
+      exports_musd,
+      imports_musd,
+      balance_musd,
+      total_trade_musd
+    ) |>
+    dplyr::arrange(dplyr::desc(total_trade_musd), ref_area_name)
+}
+
+plot_overview_lac_country_trade_ranking <- function(
+  data,
+  max_countries = 15,
+  interactive = TRUE
+) {
+  country_snapshot <- prepare_overview_country_trade_snapshot(data)
+  year <- unique(country_snapshot$year)
+
+  plot_lac_country_trade_ranking(
+    country_snapshot,
+    selected_hc_cat2 = "tecnologías sanitarias e insumos",
+    year = year,
+    max_countries = max_countries,
+    interactive = interactive
+  )
 }
 
 plot_lac_world_share_line <- function(
@@ -1598,11 +2457,18 @@ prepare_intra_lac_export_share <- function(
     ) |>
     dplyr::mutate(
       intra_lac_exports_1000usd = tidyr::replace_na(intra_lac_exports_1000usd, 0),
+      main_lac_destination_1000usd = tidyr::replace_na(main_lac_destination_1000usd, 0),
       intra_lac_exports_musd = intra_lac_exports_1000usd / 1000,
+      main_lac_destination_musd = main_lac_destination_1000usd / 1000,
       total_exports_musd = total_exports_1000usd / 1000,
       intra_lac_export_share = dplyr::if_else(
         total_exports_1000usd > 0,
         intra_lac_exports_1000usd / total_exports_1000usd,
+        NA_real_
+      ),
+      main_lac_destination_share = dplyr::if_else(
+        total_exports_1000usd > 0,
+        main_lac_destination_1000usd / total_exports_1000usd,
         NA_real_
       ),
       main_lac_destination = tidyr::replace_na(
@@ -1615,7 +2481,7 @@ prepare_intra_lac_export_share <- function(
     dplyr::arrange(dplyr::desc(intra_lac_export_share), dplyr::desc(total_exports_1000usd))
 }
 
-render_intra_lac_export_share_table <- function(
+render_intra_lac_export_share_table <- function( # Esta es la de la seccion 6. Comercio intrarregional
   trade_balance,
   sankey,
   year,
@@ -1637,8 +2503,10 @@ render_intra_lac_export_share_table <- function(
     dplyr::transmute(
       pais = ref_area_name,
       proporcion_exportaciones_lac = intra_lac_export_share,
-      principal_destino_lac = main_lac_destination,
       exportaciones_lac_musd = intra_lac_exports_musd,
+      principal_destino_lac = main_lac_destination,
+      proporcion_principal_destino_lac = main_lac_destination_share,
+      exportaciones_principal_destino_lac_musd = main_lac_destination_musd,
       exportaciones_totales_musd = total_exports_musd
     )
 
@@ -1664,11 +2532,21 @@ render_intra_lac_export_share_table <- function(
       exportaciones_lac_musd = reactable::colDef(
         name = "Exportaciones a LAC, USD millones",
         align = "right",
-        format = reactable::colFormat(digits = 1, separators = TRUE),
-        show = FALSE
+        format = reactable::colFormat(digits = 1, separators = TRUE)
       ),
       exportaciones_totales_musd = reactable::colDef(
         name = "Exportaciones totales, USD millones",
+        align = "right",
+        format = reactable::colFormat(digits = 1, separators = TRUE),
+        show = FALSE
+      ),
+      proporcion_principal_destino_lac = reactable::colDef(
+        name = "% hacia principal destino",
+        align = "right",
+        format = reactable::colFormat(percent = TRUE, digits = 1)
+      ),
+      exportaciones_principal_destino_lac_musd = reactable::colDef(
+        name = "Exportaciones al principal destino, USD millones",
         align = "right",
         format = reactable::colFormat(digits = 1, separators = TRUE),
         show = FALSE
@@ -1723,6 +2601,9 @@ render_product_exports_by_country_table <- function(product_exports) {
     dplyr::mutate(
       share_product = exports_1000usd / sum(exports_1000usd, na.rm = TRUE)
     ) |>
+    dplyr::filter(
+      rca_balassa > 1 | exports_musd > 1
+    ) |>
     dplyr::ungroup()
 
   reactable::reactable(
@@ -1762,7 +2643,7 @@ render_product_exports_by_country_table <- function(product_exports) {
         format = reactable::colFormat(percent = TRUE, digits = 1)
       ),
       rca_balassa = reactable::colDef(
-        name = "RCA (Balassa)",
+        name = "RCA",
         align = "right",
         format = reactable::colFormat(digits = 2, separators = TRUE)
       )

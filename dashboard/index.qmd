@@ -1,5 +1,6 @@
 ---
 title: "Inicio"
+css: category-page.css
 format:
   dashboard:
     orientation: rows
@@ -10,9 +11,42 @@ execute:
   message: false
 ---
 
-El dashboard analiza el comercio internacional de tecnologías sanitarias en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007 y valores monetarios expresados en miles de dólares estadounidenses.
+```{r}
+#| label: setup-landing
+#| include: false
 
-Los productos se clasificaron en siete categorías, cada una cuenta con una pestaña independiente en el dashboard:
+source("r/02_functions_plots.R", encoding = "UTF-8")
+
+exports_region <- load_dashboard_data(
+  "exports_region_hc_cat2.rds",
+  data_dir = "data/dashboard"
+)
+
+trade_balance <- load_dashboard_data(
+  "trade_balance_lac.rds",
+  data_dir = "data/dashboard"
+)
+
+category_links <- c(
+  "Células humanas, tejidos y productos médicos de terapia avanzada" = "terapias-avanzadas.html",
+  "Diagnósticos in vitro" = "diagnosticos-in-vitro.html",
+  "Dispositivos médicos" = "dispositivos-medicos.html",
+  "Hemoderivados, antisueros y productos inmunobiológicos" = "hemoderivados-inmunobiologicos.html",
+  "Ingredientes farmacéuticos activos" = "ifas.html",
+  "Medicamentos" = "medicamentos.html",
+  "Vacunas (humanas)" = "vacunas-humanas.html"
+)
+
+landing_kpis <- prepare_landing_category_kpis(
+  exports_region = exports_region,
+  trade_balance = trade_balance,
+  category_links = category_links
+)
+```
+
+El dashboard analiza el comercio internacional de tecnologías sanitarias en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007.
+
+Los productos se clasificaron en siete categorías de uso común en la industria, cada una cuenta con una pestaña independiente en el dashboard:
 
 - Células humanas, tejidos y productos médicos de terapia avanzada.
 - Diagnósticos in vitro.
@@ -21,5 +55,13 @@ Los productos se clasificaron en siete categorías, cada una cuenta con una pest
 - Ingredientes farmacéuticos activos.
 - Medicamentos.
 - Vacunas (humanas).
+
+
+```{r}
+#| label: landing-category-kpis
+#| results: asis
+
+render_landing_kpi_cards(landing_kpis)
+```
 
 

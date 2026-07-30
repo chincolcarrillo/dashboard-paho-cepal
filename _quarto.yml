@@ -10,6 +10,8 @@ website:
     left:
       - text: "Inicio"
         href: dashboard/index.qmd
+      - text: "Panorama regional"
+        href: dashboard/panorama-regional.qmd
       - text: "Categorías"
         menu:
           - text: "Células, tejidos y terapias avanzadas"

@@ -230,7 +230,17 @@ plot_lac_country_trade_ranking(
 )
 ```
 
-## 5. Origen y destino regional del comercio
+## 5. Resultados por país
+
+La tabla resume exportaciones, importaciones, balance y comercio total por país para `r latest_year`. Puede ordenarse, filtrarse y buscarse desde el navegador.
+
+```{r}
+#| label: category-country-table
+
+render_country_results_table(country_latest)
+```
+
+## 6. Origen y destino regional del comercio
 
 La composición corresponde a `r if (has_partner_data) latest_partner_year else "el último año disponible"`. En exportaciones se muestra la región de destino y en importaciones la región de origen.
 
@@ -253,9 +263,17 @@ if (has_partner_data) {
 }
 ```
 
-## 6. Comercio intrarregional
+## 7. Comercio intrarregional
 
 La tabla presenta, para `r if (has_sankey_data) latest_sankey_year else "el último año disponible"`, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.
+
+Las columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:
+
+- **País**: país exportador de LAC.
+- **% exportado hacia LAC**: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.
+- **Exportaciones a LAC, USD millones**: valor de esas exportaciones intrarregionales.
+- **Principal destino dentro de LAC**: país de LAC que recibe el mayor flujo exportado por ese país.
+- **% hacia principal destino**: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.
 
 ```{r}
 #| label: category-intra-lac-export-share-table
@@ -298,7 +316,7 @@ if (has_sankey_data) {
 }
 ```
 
-## 7. Productos exportados por país de origen
+## 8. Productos exportados por país de origen
 
 La tabla muestra productos HS07, dentro de la categoría **`r category`**, exportados por países de LAC en `r if (has_product_exports) latest_product_year else "el último año disponible"`. Puede buscarse, filtrarse y agruparse por código de producto.
 
@@ -307,7 +325,9 @@ Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría *
 - **País exportador**: país de LAC que registra exportaciones del producto.
 - **Exportaciones, USD millones**: valor exportado por el país en ese producto, en `r if (has_product_exports) latest_product_year else "el último año disponible"`.
 - **% de la exportación regional**: proporción del país en las exportaciones regionales de LAC de ese producto.
-- **RCA Balassa**: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA > 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.
+- **RCA**: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA > 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.
+
+Para concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene **RCA > 1** o exportaciones del producto superiores a **US$ 1 millón**.
 
 ```{r}
 #| label: category-products-country-table
@@ -315,16 +335,23 @@ Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría *
 render_product_exports_by_country_table(product_exports)
 ```
 
-## 8. Resultados por país
-
-La tabla resume exportaciones, importaciones, balance y comercio total por país para `r latest_year`. Puede ordenarse, filtrarse y buscarse desde el navegador.
-
-```{r}
-#| label: category-country-table
-
-render_country_results_table(country_latest)
-```
-
 ## Notas metodológicas
 
-- Fuente: CEPII-BACI, nomenclatura HS 2007.
+- Todos los análisis presentados se basan en los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007.
+- La base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.
+- A pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.
+
+```{r}
+#| label: category-methodology-animal-human-note
+#| echo: false
+#| results: asis
+
+if (category != "Vacunas (humanas)") {
+  cat(
+    "- Otra limitación relevante es que, para esta categoría, la clasificación HS07 ",
+    "no permite distinguir si los productos exportados o importados tienen uso final ",
+    "en medicina humana o animal.\n",
+    sep = ""
+  )
+}
+```

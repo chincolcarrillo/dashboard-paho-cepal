@@ -333,6 +333,99 @@ save_dashboard_rds(
   "exports_region_hc_cat2.rds"
 )
 
+## 4.1.1. Panorama regional: tendencias de exportaciones Mundo/LAC ----
+
+# Objetivo:
+#   Alimentar la hoja de panorama regional con series de exportaciones para:
+#   - todos los productos PAHO;
+#   - tecnologías sanitarias, distinguiendo dispositivos médicos;
+#   - insumos, identificados como ingredientes farmacéuticos activos.
+
+health_technology_categories <- c(
+  "Células humanas, tejidos y productos médicos de terapia avanzada",
+  "Diagnósticos in vitro",
+  "Hemoderivados, antisueros y productos inmunobiológicos",
+  "Medicamentos",
+  "Vacunas (humanas)"
+)
+
+overview_exports_by_scope_hc <- bind_rows(
+  exports_region_hc_cat2 |>
+    filter(exp_region == "LAC") |>
+    group_by(year, hc_cat2) |>
+    summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    mutate(region_scope = "LAC"),
+  exports_region_hc_cat2 |>
+    group_by(year, hc_cat2) |>
+    summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    mutate(region_scope = "Mundo")
+) |>
+  group_by(year, region_scope, hc_cat2) |>
+  summarise(
+    exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  mutate(
+    product_group = case_when(
+      hc_cat2 %in% health_technology_categories ~ "Tecnologías sanitarias",
+      hc_cat2 == "Dispositivos médicos" ~ "Dispositivos médicos",
+      hc_cat2 == "Ingredientes farmacéuticos activos" ~ "Ingredientes farmacéuticos activos",
+      TRUE ~ "Otros productos"
+    )
+  )
+
+overview_exports_trends <- bind_rows(
+  overview_exports_by_scope_hc |>
+    group_by(year, region_scope) |>
+    summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    mutate(
+      overview_tab = "Todos los productos",
+      product_group = "Todos los productos"
+    ),
+  overview_exports_by_scope_hc |>
+    filter(hc_cat2 %in% c(health_technology_categories, "Dispositivos médicos")) |>
+    group_by(year, region_scope, product_group) |>
+    summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    mutate(overview_tab = "Tecnologías sanitarias"),
+  overview_exports_by_scope_hc |>
+    filter(hc_cat2 == "Ingredientes farmacéuticos activos") |>
+    group_by(year, region_scope, product_group) |>
+    summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    mutate(overview_tab = "Insumos")
+) |>
+  mutate(
+    exports_musd = exports_1000usd / 1000,
+    line_label = paste(region_scope, product_group, sep = " - ")
+  ) |>
+  arrange(overview_tab, product_group, region_scope, year)
+
+validate_dashboard_base(
+  overview_exports_trends,
+  base_name = "overview_exports_trends",
+  value_var = "exports_1000usd",
+  key = c("year", "overview_tab", "region_scope", "product_group")
+)
+
+save_dashboard_rds(
+  overview_exports_trends,
+  "overview_exports_trends.rds"
+)
+
 ## 4.2. Exportaciones, importaciones y balance comercial en LAC ----
 
 # Objetivo:
@@ -433,6 +526,54 @@ validate_dashboard_base(
 save_dashboard_rds(
   trade_balance_lac,
   "trade_balance_lac.rds"
+)
+
+## 4.2.6. Panorama regional: comercio por país y categoría, último año ----
+
+# Objetivo:
+#   Alimentar gráficos de barras apiladas para importaciones y exportaciones
+#   por país LAC, coloreadas por categoría hc_cat2.
+
+overview_country_category_year <- max(trade_balance_lac$year, na.rm = TRUE)
+
+overview_lac_country_category_trade <- trade_balance_lac |>
+  filter(
+    ref_area_type == "country",
+    year == overview_country_category_year
+  ) |>
+  select(
+    year,
+    ref_area_code,
+    ref_area_name,
+    hc_cat2,
+    exports_1000usd,
+    imports_1000usd
+  ) |>
+  pivot_longer(
+    cols = c(exports_1000usd, imports_1000usd),
+    names_to = "flow_type",
+    values_to = "value_1000usd"
+  ) |>
+  mutate(
+    flow_type = recode(
+      flow_type,
+      exports_1000usd = "Exportaciones",
+      imports_1000usd = "Importaciones"
+    ),
+    value_musd = value_1000usd / 1000
+  ) |>
+  arrange(flow_type, ref_area_name, hc_cat2)
+
+validate_dashboard_base(
+  overview_lac_country_category_trade,
+  base_name = "overview_lac_country_category_trade",
+  value_var = "value_1000usd",
+  key = c("year", "ref_area_code", "hc_cat2", "flow_type")
+)
+
+save_dashboard_rds(
+  overview_lac_country_category_trade,
+  "overview_lac_country_category_trade.rds"
 )
 
 ## 4.3. Origen/destino regional del comercio de LAC en 2024 ----
