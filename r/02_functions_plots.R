@@ -70,8 +70,8 @@ hc_cat2_palette <- c(
 overview_line_palette <- c(
   "Mundo - Todos los productos" = "#4C78A8",
   "LAC - Todos los productos" = "#4C78A8",
-  "Mundo - Tecnologías sanitarias" = "#4C78A8",
-  "LAC - Tecnologías sanitarias" = "#4C78A8",
+  "Mundo - Otras tecnologías sanitarias" = "#4C78A8",
+  "LAC - Otras tecnologías sanitarias" = "#4C78A8",
   "Mundo - Dispositivos médicos" = "#F58518",
   "LAC - Dispositivos médicos" = "#F58518",
   "Mundo - Ingredientes farmacéuticos activos" = "#9467BD",
@@ -1370,6 +1370,18 @@ complete_overview_line_palette <- function(line_names) {
   c(overview_line_palette, fallback_values)
 }
 
+normalize_overview_product_groups <- function(data) {
+  data |>
+    dplyr::mutate(
+      product_group = dplyr::case_when(
+        .data$overview_tab == "Tecnologías sanitarias" &
+          .data$product_group == "Tecnologías sanitarias" ~ "Otras tecnologías sanitarias",
+        TRUE ~ as.character(.data$product_group)
+      ),
+      line_label = paste(.data$region_scope, .data$product_group, sep = " - ")
+    )
+}
+
 latest_common_year <- function(...) {
   years <- purrr::map(list(...), ~ unique(.x$year))
   common_years <- purrr::reduce(years, intersect)
@@ -1464,6 +1476,7 @@ plot_overview_exports_trends <- function(
   check_required_columns(data, required_cols, "overview_exports_trends")
 
   plot_data <- data |>
+    normalize_overview_product_groups() |>
     dplyr::filter(.data$overview_tab == .env$selected_tab) |>
     dplyr::mutate(
       exports_musd = to_musd(exports_1000usd),
@@ -1576,6 +1589,7 @@ plot_overview_exports_growth_trends <- function(
   check_required_columns(data, required_cols, "overview_exports_trends")
 
   plot_data <- data |>
+    normalize_overview_product_groups() |>
     dplyr::filter(.data$overview_tab == .env$selected_tab) |>
     dplyr::mutate(line_label = as.character(line_label)) |>
     dplyr::arrange(line_label, year) |>

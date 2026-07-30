@@ -338,7 +338,7 @@ save_dashboard_rds(
 # Objetivo:
 #   Alimentar la hoja de panorama regional con series de exportaciones para:
 #   - todos los productos PAHO;
-#   - tecnologías sanitarias, distinguiendo dispositivos médicos;
+#   - otras tecnologías sanitarias, distinguiendo dispositivos médicos;
 #   - insumos, identificados como ingredientes farmacéuticos activos.
 
 health_technology_categories <- c(
@@ -373,7 +373,7 @@ overview_exports_by_scope_hc <- bind_rows(
   ) |>
   mutate(
     product_group = case_when(
-      hc_cat2 %in% health_technology_categories ~ "Tecnologías sanitarias",
+      hc_cat2 %in% health_technology_categories ~ "Otras tecnologías sanitarias",
       hc_cat2 == "Dispositivos médicos" ~ "Dispositivos médicos",
       hc_cat2 == "Ingredientes farmacéuticos activos" ~ "Ingredientes farmacéuticos activos",
       TRUE ~ "Otros productos"

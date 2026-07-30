@@ -95,49 +95,42 @@
     "href": "dashboard/panorama-regional.html#crecimiento-interanual-de-las-exportaciones",
     "title": "Panorama regional",
     "section": "2. Crecimiento interanual de las exportaciones",
-    "text": "2. Crecimiento interanual de las exportaciones\nEstos gráficos muestran la variación porcentual de las exportaciones respecto del año inmediatamente anterior. La línea horizontal en 0% separa años de crecimiento y años de caída.\n\nTodos los productosTecnologías sanitariasInsumos"
-  },
-  {
-    "objectID": "dashboard/panorama-regional.html#cagr-de-las-exportaciones-a-5-años",
-    "href": "dashboard/panorama-regional.html#cagr-de-las-exportaciones-a-5-años",
-    "title": "Panorama regional",
-    "section": "3. CAGR de las exportaciones a 5 años",
-    "text": "3. CAGR de las exportaciones a 5 años\nEstos gráficos muestran la tasa de crecimiento anual compuesta (CAGR) respecto de cinco años antes. Esta lectura anualiza el cambio acumulado y facilita comparar ritmos de crecimiento de mediano plazo entre series.\n\nTodos los productosTecnologías sanitariasInsumos"
+    "text": "2. Crecimiento interanual de las exportaciones\nLos siguientes gráficos muestran la variación porcentual de las exportaciones respecto del año anterior.\n\nTodos los productosTecnologías sanitariasInsumos"
   },
   {
     "objectID": "dashboard/panorama-regional.html#países-lac-con-mayor-comercio",
     "href": "dashboard/panorama-regional.html#países-lac-con-mayor-comercio",
     "title": "Panorama regional",
-    "section": "4. Países LAC con mayor comercio",
-    "text": "4. Países LAC con mayor comercio\nEl ranking ordena los países por comercio total de tecnologías sanitarias e insumos en 2024. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial."
+    "section": "3. Países LAC con mayor comercio",
+    "text": "3. Países LAC con mayor comercio\nEl ranking ordena los países por comercio total de tecnologías sanitarias e insumos en 2024. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial."
   },
   {
     "objectID": "dashboard/panorama-regional.html#importaciones-por-país-y-categoría",
     "href": "dashboard/panorama-regional.html#importaciones-por-país-y-categoría",
     "title": "Panorama regional",
-    "section": "5. Importaciones por país y categoría",
-    "text": "5. Importaciones por país y categoría\nEl gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado."
+    "section": "4. Importaciones por país y categoría",
+    "text": "4. Importaciones por país y categoría\nEl gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado."
   },
   {
     "objectID": "dashboard/panorama-regional.html#distribución-de-importaciones-por-categoría",
     "href": "dashboard/panorama-regional.html#distribución-de-importaciones-por-categoría",
     "title": "Panorama regional",
-    "section": "6. Distribución de importaciones por categoría",
-    "text": "6. Distribución de importaciones por categoría\nComo lectura alternativa al gráfico anterior, este gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país. Cada barra suma 100% y permite comparar el peso relativo de cada categoría dentro de las importaciones totales del país."
+    "section": "5. Distribución de importaciones por categoría",
+    "text": "5. Distribución de importaciones por categoría\nEl siguiente gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país."
   },
   {
     "objectID": "dashboard/panorama-regional.html#exportaciones-por-país-y-categoría",
     "href": "dashboard/panorama-regional.html#exportaciones-por-país-y-categoría",
     "title": "Panorama regional",
-    "section": "7. Exportaciones por país y categoría",
-    "text": "7. Exportaciones por país y categoría\nEl gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado."
+    "section": "6. Exportaciones por país y categoría",
+    "text": "6. Exportaciones por país y categoría\nEl gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado."
   },
   {
     "objectID": "dashboard/panorama-regional.html#distribución-de-exportaciones-por-categoría",
     "href": "dashboard/panorama-regional.html#distribución-de-exportaciones-por-categoría",
     "title": "Panorama regional",
-    "section": "8. Distribución de exportaciones por categoría",
-    "text": "8. Distribución de exportaciones por categoría\nComo lectura alternativa al gráfico anterior, este gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país. Cada barra suma 100% y permite comparar el peso relativo de cada categoría dentro de las exportaciones totales del país."
+    "section": "7. Distribución de exportaciones por categoría",
+    "text": "7. Distribución de exportaciones por categoría\nEl siguiente gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país."
   },
   {
     "objectID": "dashboard/hemoderivados-inmunobiologicos.html",

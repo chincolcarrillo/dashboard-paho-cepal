@@ -75,7 +75,7 @@ plot_overview_exports_trends(
 
 ## 2. Crecimiento interanual de las exportaciones
 
-Estos gráficos muestran la variación porcentual de las exportaciones respecto del año inmediatamente anterior. La línea horizontal en 0% separa años de crecimiento y años de caída.
+Los siguientes gráficos muestran la variación porcentual de las exportaciones respecto del año anterior. 
 
 ::: {.panel-tabset}
 
@@ -123,60 +123,7 @@ plot_overview_exports_growth_trends(
 
 :::
 
-## 3. CAGR de las exportaciones a 5 años
-
-Estos gráficos muestran la tasa de crecimiento anual compuesta (CAGR) respecto de cinco años antes. Esta lectura anualiza el cambio acumulado y facilita comparar ritmos de crecimiento de mediano plazo entre series.
-
-::: {.panel-tabset}
-
-### Todos los productos
-
-```{r}
-#| label: overview-export-5y-growth-all
-#| fig-height: 5.8
-
-plot_overview_exports_growth_trends(
-  overview_exports_trends,
-  selected_tab = "Todos los productos",
-  lag_years = 5,
-  annualized = TRUE,
-  interactive = TRUE
-)
-```
-
-### Tecnologías sanitarias
-
-```{r}
-#| label: overview-export-5y-growth-health-tech
-#| fig-height: 5.8
-
-plot_overview_exports_growth_trends(
-  overview_exports_trends,
-  selected_tab = "Tecnologías sanitarias",
-  lag_years = 5,
-  annualized = TRUE,
-  interactive = TRUE
-)
-```
-
-### Insumos
-
-```{r}
-#| label: overview-export-5y-growth-inputs
-#| fig-height: 5.8
-
-plot_overview_exports_growth_trends(
-  overview_exports_trends,
-  selected_tab = "Insumos",
-  lag_years = 5,
-  annualized = TRUE,
-  interactive = TRUE
-)
-```
-
-:::
-
-## 4. Países LAC con mayor comercio
+## 3. Países LAC con mayor comercio
 
 El ranking ordena los países por comercio total de tecnologías sanitarias e insumos en `r overview_year`. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial.
 
@@ -191,7 +138,7 @@ plot_overview_lac_country_trade_ranking(
 )
 ```
 
-## 5. Importaciones por país y categoría
+## 4. Importaciones por país y categoría
 
 El gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en `r overview_year`, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado.
 
@@ -207,9 +154,9 @@ plot_overview_lac_country_category_trade(
 )
 ```
 
-## 6. Distribución de importaciones por categoría
+## 5. Distribución de importaciones por categoría
 
-Como lectura alternativa al gráfico anterior, este gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país. Cada barra suma 100% y permite comparar el peso relativo de cada categoría dentro de las importaciones totales del país.
+El siguiente gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país.
 
 ```{r}
 #| label: overview-country-imports-share
@@ -223,7 +170,7 @@ plot_overview_lac_country_category_share(
 )
 ```
 
-## 7. Exportaciones por país y categoría
+## 6. Exportaciones por país y categoría
 
 El gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en `r overview_year`, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado.
 
@@ -239,9 +186,9 @@ plot_overview_lac_country_category_trade(
 )
 ```
 
-## 8. Distribución de exportaciones por categoría
+## 7. Distribución de exportaciones por categoría
 
-Como lectura alternativa al gráfico anterior, este gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país. Cada barra suma 100% y permite comparar el peso relativo de cada categoría dentro de las exportaciones totales del país.
+El siguiente gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país.
 
 ```{r}
 #| label: overview-country-exports-share
