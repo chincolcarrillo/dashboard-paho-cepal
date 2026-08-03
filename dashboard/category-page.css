@@ -26,6 +26,17 @@
   margin: 0;
 }
 
+.landing-category-diagram {
+  text-align: center;
+  margin: 1rem auto 1.75rem;
+}
+
+.landing-category-diagram img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .landing-kpi-section {
   margin: 0.75rem 0 2rem;
 }
@@ -64,6 +75,7 @@
 .landing-kpi-card {
   background: #fff;
   border: 1px solid #dfe3e6;
+  border-left: 6px solid #8dd3c7;
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(24, 39, 75, 0.04);
   padding: 1rem 1rem 1.05rem;

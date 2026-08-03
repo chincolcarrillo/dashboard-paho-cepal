@@ -1162,6 +1162,7 @@ prepare_landing_category_kpis <- function(
   exports_region,
   trade_balance,
   category_links,
+  category_groups = NULL,
   cagr_window = 5
 ) {
   check_required_columns(
@@ -1214,13 +1215,38 @@ prepare_landing_category_kpis <- function(
       .groups = "drop"
     )
 
+  if (is.null(category_groups)) {
+    category_groups <- tibble::tibble(
+      hc_cat2 = hc_cat2_levels,
+      landing_kpi_group = dplyr::case_when(
+        .data$hc_cat2 == hc_cat2_levels[[3]] ~ "devices",
+        .data$hc_cat2 == hc_cat2_levels[[5]] ~ "inputs",
+        TRUE ~ "other_health"
+      ),
+      landing_kpi_color = dplyr::case_when(
+        .data$landing_kpi_group == "devices" ~ "#fb8072",
+        .data$landing_kpi_group == "inputs" ~ "#fdb462",
+        TRUE ~ "#8dd3c7"
+      )
+    )
+  } else {
+    check_required_columns(
+      category_groups,
+      c("hc_cat2", "landing_kpi_group", "landing_kpi_color"),
+      "category_groups"
+    )
+  }
+
   tibble::tibble(hc_cat2 = hc_cat2_levels) |>
     dplyr::left_join(world_latest, by = "hc_cat2") |>
     dplyr::left_join(world_first, by = "hc_cat2") |>
     dplyr::left_join(world_cagr_start, by = "hc_cat2") |>
     dplyr::left_join(lac_latest, by = "hc_cat2") |>
+    dplyr::left_join(category_groups, by = "hc_cat2") |>
     dplyr::mutate(
       category_link = unname(category_links[hc_cat2]),
+      landing_kpi_group = tidyr::replace_na(.data$landing_kpi_group, "other_health"),
+      landing_kpi_color = tidyr::replace_na(.data$landing_kpi_color, "#8dd3c7"),
       first_year = .env$first_year,
       latest_year = .env$latest_year,
       cagr_start_year = .env$cagr_start_year,
@@ -1241,6 +1267,10 @@ landing_category_kpi_card <- function(row) {
   if (length(category_link) == 0 || is.na(category_link)) {
     category_link <- "#"
   }
+  landing_kpi_color <- row$landing_kpi_color[[1]]
+  if (length(landing_kpi_color) == 0 || is.na(landing_kpi_color)) {
+    landing_kpi_color <- "#8dd3c7"
+  }
 
   landing_kpi_metric <- function(label, value, class = NULL) {
     htmltools::div(
@@ -1252,6 +1282,7 @@ landing_category_kpi_card <- function(row) {
 
   htmltools::div(
     class = "landing-kpi-card",
+    style = htmltools::css(border_left_color = landing_kpi_color),
     htmltools::tags$h3(
       htmltools::tags$a(
         href = category_link,
@@ -1263,7 +1294,7 @@ landing_category_kpi_card <- function(row) {
       htmltools::div(
         class = "landing-kpi-row landing-kpi-row-top",
         landing_kpi_metric(
-          "Mercado total global",
+          "Comercio total global",
           format_landing_kpi_value(row$market_total_global_1000usd, "money")
         ),
         landing_kpi_metric(
@@ -1293,26 +1324,32 @@ landing_category_kpi_card <- function(row) {
 }
 
 render_landing_kpi_cards <- function(kpi_data) {
-  medical_devices_category <- "Dispositivos médicos"
-  inputs_category <- "Ingredientes farmacéuticos activos"
-
   health_left <- kpi_data |>
-    dplyr::filter(!.data$hc_cat2 %in% c(.env$medical_devices_category, .env$inputs_category))
+    dplyr::filter(.data$landing_kpi_group == "other_health")
 
   medical_devices <- kpi_data |>
-    dplyr::filter(.data$hc_cat2 == .env$medical_devices_category)
+    dplyr::filter(.data$landing_kpi_group == "devices")
 
   inputs <- kpi_data |>
-    dplyr::filter(.data$hc_cat2 == .env$inputs_category)
+    dplyr::filter(.data$landing_kpi_group == "inputs")
 
   health_left_cards <- htmltools::tagList(
-    purrr::map(seq_len(nrow(health_left)), ~ landing_category_kpi_card(health_left[.x, ]))
+    purrr::map(
+      seq_len(nrow(health_left)),
+      ~ landing_category_kpi_card(health_left[.x, ])
+    )
   )
   medical_devices_cards <- htmltools::tagList(
-    purrr::map(seq_len(nrow(medical_devices)), ~ landing_category_kpi_card(medical_devices[.x, ]))
+    purrr::map(
+      seq_len(nrow(medical_devices)),
+      ~ landing_category_kpi_card(medical_devices[.x, ])
+    )
   )
   inputs_cards <- htmltools::tagList(
-    purrr::map(seq_len(nrow(inputs)), ~ landing_category_kpi_card(inputs[.x, ]))
+    purrr::map(
+      seq_len(nrow(inputs)),
+      ~ landing_category_kpi_card(inputs[.x, ])
+    )
   )
 
   htmltools::tagList(
