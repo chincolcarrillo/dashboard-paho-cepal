@@ -35,7 +35,3 @@ Para modificar la clasificación:
 4. Renderice personalmente el dashboard.
 
 No agregue etiquetas alternativas directamente en los `.qmd`.
-
-## Validación y entorno reproducible
-
-Después de reconstruir las bases, puede ejecutar personalmente `tests/testthat.R`. Las pruebas comprueban la taxonomía, la separación regional, las claves, los balances y las participaciones.
