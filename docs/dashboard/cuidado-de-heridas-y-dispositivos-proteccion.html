@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Cuidado de heridas y dispositivos de protección – Dashboard PAHO/CEPAL</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+<script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="../site_libs/plotly-binding-4.12.0/plotly.js"></script>
+
+<script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+<link href="../site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="../site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
+<script src="../site_libs/core-js-2.5.3/shim.min.js"></script>
+
+<script src="../site_libs/react-18.2.0/react.min.js"></script>
+
+<script src="../site_libs/react-18.2.0/react-dom.min.js"></script>
+
+<script src="../site_libs/reactwidget-2.0.0/react-tools.js"></script>
+
+<link href="../site_libs/reactable-0.4.5/reactable.css" rel="stylesheet">
+
+<script src="../site_libs/reactable-binding-0.4.5/reactable.js"></script>
+
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+
+<link rel="stylesheet" href="category-page.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">Dashboard PAHO/CEPAL</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../dashboard/index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../dashboard/panorama-regional.html"> 
+<span class="menu-text">Panorama regional</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-categorías" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">Categorías</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-categorías">    
+        <li class="dropdown-header">── IFAs ──</li>
+        <li>
+    <a class="dropdown-item" href="../dashboard/ifas.html">
+ <span class="dropdown-text">Ingredientes farmacéuticos activos</span></a>
+  </li>  
+        <li class="dropdown-header">── Medicamentos y otras tecnologías sanitarias ──</li>
+        <li>
+    <a class="dropdown-item" href="../dashboard/celulas-tejidos.html">
+ <span class="dropdown-text">Células, tejidos y sustancias terapéuticas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/medicamentos.html">
+ <span class="dropdown-text">Medicamentos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/hemoderivados.html">
+ <span class="dropdown-text">Sangre, inmunoglobulinas y antisueros</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/vacunas-humanas.html">
+ <span class="dropdown-text">Vacunas (humanas)</span></a>
+  </li>  
+        <li class="dropdown-header">── Dispositivos médicos ──</li>
+        <li>
+    <a class="dropdown-item" href="../dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html">
+ <span class="dropdown-text">Cuidado de heridas y dispositivos de protección</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-cardiovasculares.html">
+ <span class="dropdown-text">Dispositivos cardiovasculares</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/diagnostico-in-vitro.html">
+ <span class="dropdown-text">Dispositivos de diagnóstico in vitro y laboratorio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/diagnostico-por-imagen.html">
+ <span class="dropdown-text">Dispositivos de diagnóstico por imagen</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-esterilizacion.html">
+ <span class="dropdown-text">Dispositivos de esterilización y desinfección</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-odontologicos.html">
+ <span class="dropdown-text">Dispositivos odontológicos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-rehabilitacion.html">
+ <span class="dropdown-text">Dispositivos para rehabilitación y asistencia</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-quirurgicos.html">
+ <span class="dropdown-text">Dispositivos quirúrgicos e invasivos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/equipos-diagnostico.html">
+ <span class="dropdown-text">Equipos de diagnóstico y monitoreo</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/equipos-laboratorio.html">
+ <span class="dropdown-text">Equipos de laboratorio</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/equipos-terapeuticos.html">
+ <span class="dropdown-text">Equipos terapéuticos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/insumos-medicos-y-suministros.html">
+ <span class="dropdown-text">Insumos médicos y suministros para pacientes</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../dashboard/mobiliario-medico.html">
+ <span class="dropdown-text">Mobiliario médico y elementos de soporte</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#panorama-regional" id="toc-panorama-regional" class="nav-link active" data-scroll-target="#panorama-regional">Panorama regional</a></li>
+  <li><a href="#participación-de-lac-en-las-exportaciones-mundiales" id="toc-participación-de-lac-en-las-exportaciones-mundiales" class="nav-link" data-scroll-target="#participación-de-lac-en-las-exportaciones-mundiales">1. Participación de LAC en las exportaciones mundiales</a></li>
+  <li><a href="#estructura-regional-de-las-exportaciones-mundiales" id="toc-estructura-regional-de-las-exportaciones-mundiales" class="nav-link" data-scroll-target="#estructura-regional-de-las-exportaciones-mundiales">2. Estructura regional de las exportaciones mundiales</a></li>
+  <li><a href="#exportaciones-importaciones-y-balance-de-lac" id="toc-exportaciones-importaciones-y-balance-de-lac" class="nav-link" data-scroll-target="#exportaciones-importaciones-y-balance-de-lac">3. Exportaciones, importaciones y balance de LAC</a></li>
+  <li><a href="#países-lac-con-mayor-comercio" id="toc-países-lac-con-mayor-comercio" class="nav-link" data-scroll-target="#países-lac-con-mayor-comercio">4. Países LAC con mayor comercio</a></li>
+  <li><a href="#resultados-por-país" id="toc-resultados-por-país" class="nav-link" data-scroll-target="#resultados-por-país">5. Resultados por país</a></li>
+  <li><a href="#origen-y-destino-regional-del-comercio" id="toc-origen-y-destino-regional-del-comercio" class="nav-link" data-scroll-target="#origen-y-destino-regional-del-comercio">6. Origen y destino regional del comercio</a></li>
+  <li><a href="#comercio-intrarregional" id="toc-comercio-intrarregional" class="nav-link" data-scroll-target="#comercio-intrarregional">7. Comercio intrarregional</a>
+  <ul class="collapse">
+  <li><a href="#principales-flujos-intrarregionales" id="toc-principales-flujos-intrarregionales" class="nav-link" data-scroll-target="#principales-flujos-intrarregionales">Principales flujos intrarregionales</a></li>
+  </ul></li>
+  <li><a href="#productos-exportados-por-país-de-origen" id="toc-productos-exportados-por-país-de-origen" class="nav-link" data-scroll-target="#productos-exportados-por-país-de-origen">8. Productos exportados por país de origen</a></li>
+  <li><a href="#notas-metodológicas" id="toc-notas-metodológicas" class="nav-link" data-scroll-target="#notas-metodológicas">Notas metodológicas</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Cuidado de heridas y dispositivos de protección</h1>
+<p class="subtitle lead">Comercio internacional en América Latina y el Caribe</p>
+</div>
+
+
+
+<div class="quarto-title-meta column-page-left">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="panorama-regional" class="level2">
+<h2 class="anchored" data-anchor-id="panorama-regional">Panorama regional</h2>
+<div class="dashboard-card-grid">
+<div class="dashboard-card">
+<span class="dashboard-card-label">Exportaciones LAC</span>
+<h3 class="anchored">US$ 482,7 millones</h3>
+<p>2024</p>
+</div>
+<div class="dashboard-card">
+<span class="dashboard-card-label">Importaciones LAC</span>
+<h3 class="anchored">US$ 1.286,6 millones</h3>
+<p>2024</p>
+</div>
+<div class="dashboard-card">
+<span class="dashboard-card-label">Balance comercial</span>
+<h3 class="anchored">-US$ 803,9 millones</h3>
+<p>Exportaciones menos importaciones</p>
+</div>
+<div class="dashboard-card">
+<span class="dashboard-card-label">Participación mundial de LAC</span>
+<h3 class="anchored">3,0%</h3>
+<p>2024</p>
+</div>
+</div>
+<div class="dashboard-card">
+<p>En 2024, América Latina y el Caribe exportó US$ 482,7 millones e importó US$ 1.286,6 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 803,9 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 258,0 millones) y el mayor importador fue Mexico (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia &amp; Pacific.</p>
+</div>
+</section>
+<section id="participación-de-lac-en-las-exportaciones-mundiales" class="level2">
+<h2 class="anchored" data-anchor-id="participación-de-lac-en-las-exportaciones-mundiales">1. Participación de LAC en las exportaciones mundiales</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-b5865755d6dfde8f89e1" style="width:100%;height:510px;"></div>
+<script type="application/json" data-for="htmlwidget-b5865755d6dfde8f89e1">{"x":{"visdat":{"7b5421143af7":["function () ","plotlyVisDat"]},"cur_data":"7b5421143af7","attrs":{"7b5421143af7":{"x":{},"y":{},"mode":"lines+markers","text":{},"hovertemplate":"%{text}<extra><\/extra>","line":{"color":"#1B9E77","width":2.5},"marker":{"color":"#1B9E77","size":7},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"}},"layout":{"margin":{"b":45,"l":70,"t":85,"r":25},"title":{"text":"Participación de LAC en las exportaciones mundiales de Cuidado de heridas y dispositivos de protección"},"xaxis":{"domain":[0,1],"automargin":true,"title":"","tickmode":"array","tickvals":[2005,2010,2015,2020,2025]},"yaxis":{"domain":[0,1],"automargin":true,"title":"Participación en exportaciones mundiales","range":[0,0.12],"tickformat":".1%"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[0.03369973264223565,0.03367475438114579,0.037538426368944146,0.040117064541128164,0.033704866661570548,0.031975129611001255,0.033548661837567467,0.030535581313638305,0.032817764163399321,0.029330520823963355,0.031493984600218176,0.036628378695259048,0.038178873213490325,0.029771311284581135,0.027513504625851771,0.023132882587141131,0.028183426857366578,0.030177334431278256],"mode":"lines+markers","text":["<b>Año:<\/b> 2007<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,4%","<b>Año:<\/b> 2008<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,4%","<b>Año:<\/b> 2009<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,8%","<b>Año:<\/b> 2010<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 4,0%","<b>Año:<\/b> 2011<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,4%","<b>Año:<\/b> 2012<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,2%","<b>Año:<\/b> 2013<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,4%","<b>Año:<\/b> 2014<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,1%","<b>Año:<\/b> 2015<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,3%","<b>Año:<\/b> 2016<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 2,9%","<b>Año:<\/b> 2017<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,1%","<b>Año:<\/b> 2018<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,7%","<b>Año:<\/b> 2019<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,8%","<b>Año:<\/b> 2020<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,0%","<b>Año:<\/b> 2021<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 2,8%","<b>Año:<\/b> 2022<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 2,3%","<b>Año:<\/b> 2023<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 2,8%","<b>Año:<\/b> 2024<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Participación LAC:<\/b> 3,0%"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"line":{"color":"#1B9E77","width":2.5},"marker":{"color":"#1B9E77","size":7,"line":{"color":"rgba(31,119,180,1)"}},"type":"scatter","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="estructura-regional-de-las-exportaciones-mundiales" class="level2">
+<h2 class="anchored" data-anchor-id="estructura-regional-de-las-exportaciones-mundiales">2. Estructura regional de las exportaciones mundiales</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-fb0c758dd9405e9b1ff0" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="htmlwidget-fb0c758dd9405e9b1ff0">{"x":{"visdat":{"7b54470a7cf":["function () ","plotlyVisDat"],"7b5425b6420e":["function () ","data"],"7b546cb3775":["function () ","data"],"7b544462f14":["function () ","data"],"7b5431d73b36":["function () ","data"],"7b54588e48d6":["function () ","data"],"7b5410057b1":["function () ","data"],"7b544784807":["function () ","data"],"7b54137e5348":["function () ","data"],"7b5451cd2f3e":["function () ","data"]},"cur_data":"7b5451cd2f3e","attrs":{"7b5425b6420e":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"No clasificada","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#999999","line":{"width":0},"inherit":true},"7b546cb3775":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"Sub-Saharan Africa","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#1F78B4","line":{"width":0},"inherit":true},"7b544462f14":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"Central Asia","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#E6AB02","line":{"width":0},"inherit":true},"7b5431d73b36":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"Middle East, North Africa, Afghanistan & Pakistan","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#A6761D","line":{"width":0},"inherit":true},"7b54588e48d6":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"South Asia","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#66A61E","line":{"width":0},"inherit":true},"7b5410057b1":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"Latin America & Caribbean","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#1B9E77","line":{"width":0},"inherit":true},"7b544784807":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"North America","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#7570B3","line":{"width":0},"inherit":true},"7b54137e5348":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"Europe","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#D95F02","line":{"width":0},"inherit":true},"7b5451cd2f3e":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"scatter","mode":"lines","stackgroup":"exports","name":"East Asia & Pacific","text":{},"hovertemplate":"%{text}<extra><\/extra>","fillcolor":"#E7298A","line":{"width":0},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":{"text":"Exportaciones de Cuidado de heridas y dispositivos de protección, por región exportadora"},"xaxis":{"domain":[0,1],"automargin":true,"title":""},"yaxis":{"domain":[0,1],"automargin":true,"title":"Exportaciones","rangemode":"tozero"},"hovermode":"closest","legend":{"orientation":"h","x":0,"y":-0.20000000000000001},"showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[0.006587,0.048994000000000003,0.080228000000000008,0.36036900000000005,0.018317999999999997,0.00041999999999999996,0.016510999999999998,0.010327999999999999,0.048517000000000005,0.114373,0.025395000000000001,0.027708000000000003,0.037863999999999995,0.84663700000000008,0.16344400000000001,0.299396,0.13251500000000002,0.013544],"type":"scatter","mode":"lines","stackgroup":"exports","name":"No clasificada","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,1 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,4 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,1 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,8 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,2 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,3 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,1 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> No clasificada<br><b>Exportaciones:<\/b> US$ 0,0 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#999999","line":{"color":"rgba(31,119,180,1)","width":0},"marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[36.052717999999999,28.708239999999996,28.623545000000004,31.565322999999999,37.516483000000001,33.726911999999999,34.546144999999996,34.751187000000002,45.865339999999996,29.567377,33.951445999999997,37.715986999999998,35.668008,33.662371,42.405332999999999,38.666072,38.436273,43.978671999999996],"type":"scatter","mode":"lines","stackgroup":"exports","name":"Sub-Saharan Africa","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 36,1 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 28,7 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 28,6 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 31,6 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 37,5 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 33,7 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 34,5 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 34,8 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 45,9 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 29,6 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 34,0 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 37,7 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 35,7 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 33,7 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 42,4 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 38,7 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 38,4 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> Sub-Saharan Africa<br><b>Exportaciones:<\/b> US$ 44,0 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#1F78B4","line":{"color":"rgba(255,127,14,1)","width":0},"marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[32.423639000000001,42.169038,43.142892000000003,64.276956999999996,68.882619000000005,60.026180000000004,64.613063999999994,59.564298999999998,54.212440000000001,42.178002999999997,46.779186000000003,62.759343000000001,54.488214999999997,92.332456000000008,109.49950100000001,81.208873000000011,72.801958999999997,65.742388999999989],"type":"scatter","mode":"lines","stackgroup":"exports","name":"Central Asia","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 32,4 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 42,2 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 43,1 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 64,3 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 68,9 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 60,0 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 64,6 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 59,6 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 54,2 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 42,2 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 46,8 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 62,8 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 54,5 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 92,3 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 109,5 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 81,2 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 72,8 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> Central Asia<br><b>Exportaciones:<\/b> US$ 65,7 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#E6AB02","line":{"color":"rgba(44,160,44,1)","width":0},"marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[59.391533000000003,105.41290100000001,101.47554600000001,103.32917500000001,120.23323500000001,167.438714,140.62469000000002,147.46773999999999,126.95011500000001,116.25761100000001,137.84806700000001,142.66306499999999,151.991872,149.85876099999999,183.67445000000001,186.15418299999999,174.71782000000002,124.902089],"type":"scatter","mode":"lines","stackgroup":"exports","name":"Middle East, North Africa, Afghanistan & Pakistan","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 59,4 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 105,4 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 101,5 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 103,3 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 120,2 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 167,4 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 140,6 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 147,5 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 127,0 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 116,3 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 137,8 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 142,7 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 152,0 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 149,9 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 183,7 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 186,2 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 174,7 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Exportaciones:<\/b> US$ 124,9 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#A6761D","line":{"color":"rgba(214,39,40,1)","width":0},"marker":{"color":"rgba(214,39,40,1)","line":{"color":"rgba(214,39,40,1)"}},"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[79.828561000000008,99.626756999999998,109.35518499999999,114.906847,152.84614499999998,141.34338,146.21847700000001,138.50101100000001,132.93945000000002,134.40041200000002,162.444289,165.89501000000001,192.50375500000001,206.25064399999999,262.91001799999998,310.245632,239.48900899999998,254.88511700000001],"type":"scatter","mode":"lines","stackgroup":"exports","name":"South Asia","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 79,8 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 99,6 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 109,4 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 114,9 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 152,8 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 141,3 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 146,2 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 138,5 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 132,9 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 134,4 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 162,4 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 165,9 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 192,5 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 206,3 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 262,9 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 310,2 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 239,5 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> South Asia<br><b>Exportaciones:<\/b> US$ 254,9 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#66A61E","line":{"color":"rgba(148,103,189,1)","width":0},"marker":{"color":"rgba(148,103,189,1)","line":{"color":"rgba(148,103,189,1)"}},"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[201.48253700000001,238.05438199999998,266.28222399999999,298.518325,285.16074800000001,266.32496100000003,296.01852000000002,280.72418499999998,293.28510999999997,270.63360600000004,301.03104599999995,371.48271500000004,404.41663599999998,368.45766200000003,417.22126000000003,392.38383199999998,414.29744799999997,482.733968],"type":"scatter","mode":"lines","stackgroup":"exports","name":"Latin America & Caribbean","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 201,5 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 238,1 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 266,3 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 298,5 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 285,2 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 266,3 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 296,0 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 280,7 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 293,3 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 270,6 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 301,0 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 371,5 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 404,4 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 368,5 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 417,2 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 392,4 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 414,3 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> Latin America & Caribbean<br><b>Exportaciones:<\/b> US$ 482,7 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#1B9E77","line":{"color":"rgba(140,86,75,1)","width":0},"marker":{"color":"rgba(140,86,75,1)","line":{"color":"rgba(140,86,75,1)"}},"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[685.69859099999996,749.43463899999995,776.77462000000003,752.21535900000003,760.28209699999991,835.22597699999994,907.76353099999994,913.20845299999996,924.48195900000007,918.29769700000008,871.45218399999999,897.61658200000011,911.81459299999995,863.02586100000008,957.93353400000001,1079.2376810000001,1139.2636729999999,1191.6398980000001],"type":"scatter","mode":"lines","stackgroup":"exports","name":"North America","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 685,7 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 749,4 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 776,8 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 752,2 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 760,3 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 835,2 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 907,8 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 913,2 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 924,5 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 918,3 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 871,5 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 897,6 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 911,8 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 863,0 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 957,9 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 1.079,2 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 1.139,3 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> North America<br><b>Exportaciones:<\/b> US$ 1.191,6 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#7570B3","line":{"color":"rgba(227,119,194,1)","width":0},"marker":{"color":"rgba(227,119,194,1)","line":{"color":"rgba(227,119,194,1)"}},"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[3001.2438539999998,3420.214007,3323.083787,3379.3972999999996,3775.1902149999996,3460.5953749999999,3781.0405139999998,4066.0444709999997,3726.5920780000001,4050.0176149999998,4081.3475780000003,4218.482129,4364.9944639999994,4548.8756140000005,5245.5402299999996,5216.5782549999994,5304.358365,5281.4433980000003],"type":"scatter","mode":"lines","stackgroup":"exports","name":"Europe","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.001,2 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.420,2 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.323,1 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.379,4 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.775,2 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.460,6 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.781,0 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 4.066,0 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 3.726,6 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 4.050,0 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 4.081,3 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 4.218,5 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 4.365,0 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 4.548,9 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 5.245,5 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 5.216,6 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 5.304,4 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> Europe<br><b>Exportaciones:<\/b> US$ 5.281,4 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#D95F02","line":{"color":"rgba(127,127,127,1)","width":0},"marker":{"color":"rgba(127,127,127,1)","line":{"color":"rgba(127,127,127,1)"}},"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[1882.629709,2385.5550459999999,2444.7724550000003,2696.6110099999996,3260.3916090000002,3364.446508,3452.7152500000002,3553.0750029999999,3632.404125,3665.563662,3923.4872659999996,4245.294621,4476.7658839999995,6112.9558049999996,7944.8876,9657.3936970000013,7316.5410169999996,8551.235079],"type":"scatter","mode":"lines","stackgroup":"exports","name":"East Asia & Pacific","text":["<b>Año:<\/b> 2007<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 1.882,6 millones","<b>Año:<\/b> 2008<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 2.385,6 millones","<b>Año:<\/b> 2009<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 2.444,8 millones","<b>Año:<\/b> 2010<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 2.696,6 millones","<b>Año:<\/b> 2011<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.260,4 millones","<b>Año:<\/b> 2012<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.364,4 millones","<b>Año:<\/b> 2013<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.452,7 millones","<b>Año:<\/b> 2014<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.553,1 millones","<b>Año:<\/b> 2015<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.632,4 millones","<b>Año:<\/b> 2016<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.665,6 millones","<b>Año:<\/b> 2017<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 3.923,5 millones","<b>Año:<\/b> 2018<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 4.245,3 millones","<b>Año:<\/b> 2019<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 4.476,8 millones","<b>Año:<\/b> 2020<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 6.113,0 millones","<b>Año:<\/b> 2021<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 7.944,9 millones","<b>Año:<\/b> 2022<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 9.657,4 millones","<b>Año:<\/b> 2023<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 7.316,5 millones","<b>Año:<\/b> 2024<br><b>Región exportadora:<\/b> East Asia & Pacific<br><b>Exportaciones:<\/b> US$ 8.551,2 millones"],"hovertemplate":["%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>","%{text}<extra><\/extra>"],"fillcolor":"#E7298A","line":{"color":"rgba(188,189,34,1)","width":0},"marker":{"color":"rgba(188,189,34,1)","line":{"color":"rgba(188,189,34,1)"}},"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="exportaciones-importaciones-y-balance-de-lac" class="level2">
+<h2 class="anchored" data-anchor-id="exportaciones-importaciones-y-balance-de-lac">3. Exportaciones, importaciones y balance de LAC</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-b05f43c872f872dc321b" style="width:100%;height:557px;"></div>
+<script type="application/json" data-for="htmlwidget-b05f43c872f872dc321b">{"x":{"data":[{"orientation":"v","width":[0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[201.48253700000001,238.05438199999998,266.28222399999999,298.518325,285.16074800000001,266.32496100000003,296.01852000000002,280.72418499999998,293.28510999999997,270.63360600000004,301.03104599999995,371.48271500000004,404.41663599999998,368.45766200000003,417.22126000000003,392.38383199999998,414.29744799999997,482.733968],"text":["<b>Año:<\/b> 2007<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 201,5 millones","<b>Año:<\/b> 2008<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 238,1 millones","<b>Año:<\/b> 2009<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 266,3 millones","<b>Año:<\/b> 2010<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 298,5 millones","<b>Año:<\/b> 2011<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 285,2 millones","<b>Año:<\/b> 2012<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 266,3 millones","<b>Año:<\/b> 2013<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 296,0 millones","<b>Año:<\/b> 2014<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 280,7 millones","<b>Año:<\/b> 2015<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 293,3 millones","<b>Año:<\/b> 2016<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 270,6 millones","<b>Año:<\/b> 2017<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 301,0 millones","<b>Año:<\/b> 2018<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 371,5 millones","<b>Año:<\/b> 2019<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 404,4 millones","<b>Año:<\/b> 2020<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 368,5 millones","<b>Año:<\/b> 2021<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 417,2 millones","<b>Año:<\/b> 2022<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 392,4 millones","<b>Año:<\/b> 2023<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 414,3 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exports<br><b>Valor:<\/b> US$ 482,7 millones"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(27,158,119,0.85)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Exports","legendgroup":"Exports","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","mode":"","frame":null},{"orientation":"v","width":[0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75,0.75],"base":[-225.82633900000002,-314.96665999999999,-339.21693399999998,-381.944164,-452.55902299999997,-505.92700600000001,-564.945108,-542.26560600000005,-596.55746299999998,-560.07633599999997,-578.84473100000002,-612.14628099999993,-705.42997000000003,-727.28504099999998,-850.66408100000001,-1135.1146859999999,-1150.0489520000001,-1286.6045079999999],"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[225.82633900000002,314.96665999999999,339.21693399999998,381.944164,452.55902299999997,505.92700600000001,564.945108,542.26560600000005,596.55746299999998,560.07633599999997,578.84473100000002,612.14628099999993,705.42997000000003,727.28504099999998,850.66408100000001,1135.1146859999999,1150.0489520000001,1286.6045079999999],"text":["<b>Año:<\/b> 2007<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 225,8 millones","<b>Año:<\/b> 2008<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 315,0 millones","<b>Año:<\/b> 2009<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 339,2 millones","<b>Año:<\/b> 2010<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 381,9 millones","<b>Año:<\/b> 2011<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 452,6 millones","<b>Año:<\/b> 2012<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 505,9 millones","<b>Año:<\/b> 2013<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 564,9 millones","<b>Año:<\/b> 2014<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 542,3 millones","<b>Año:<\/b> 2015<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 596,6 millones","<b>Año:<\/b> 2016<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 560,1 millones","<b>Año:<\/b> 2017<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 578,8 millones","<b>Año:<\/b> 2018<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 612,1 millones","<b>Año:<\/b> 2019<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 705,4 millones","<b>Año:<\/b> 2020<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 727,3 millones","<b>Año:<\/b> 2021<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 850,7 millones","<b>Año:<\/b> 2022<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 1.135,1 millones","<b>Año:<\/b> 2023<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 1.150,0 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Imports<br><b>Valor:<\/b> US$ 1.286,6 millones"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(217,95,2,0.85)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Imports","legendgroup":"Imports","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","mode":"","frame":null},{"x":[2005.7375,2025.2625],"y":[0,0],"text":"","type":"scatter","mode":"lines","line":{"width":1.5118110236220474,"color":"rgba(89,89,89,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024],"y":[-24.343801999999997,-76.912277999999986,-72.934710000000024,-83.425838999999982,-167.39827499999996,-239.60204499999998,-268.92658799999998,-261.54142100000001,-303.27235300000001,-289.44272999999998,-277.81368500000008,-240.66356599999995,-301.01333399999999,-358.82737899999995,-433.44282099999998,-742.73085400000002,-735.75150400000007,-803.87053999999989],"text":["<b>Año:<\/b> 2007<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 24,3 millones","<b>Año:<\/b> 2008<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 76,9 millones","<b>Año:<\/b> 2009<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 72,9 millones","<b>Año:<\/b> 2010<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 83,4 millones","<b>Año:<\/b> 2011<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 167,4 millones","<b>Año:<\/b> 2012<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 239,6 millones","<b>Año:<\/b> 2013<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 268,9 millones","<b>Año:<\/b> 2014<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 261,5 millones","<b>Año:<\/b> 2015<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 303,3 millones","<b>Año:<\/b> 2016<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 289,4 millones","<b>Año:<\/b> 2017<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 277,8 millones","<b>Año:<\/b> 2018<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 240,7 millones","<b>Año:<\/b> 2019<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 301,0 millones","<b>Año:<\/b> 2020<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 358,8 millones","<b>Año:<\/b> 2021<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 433,4 millones","<b>Año:<\/b> 2022<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 742,7 millones","<b>Año:<\/b> 2023<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 735,8 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Balance comercial:<\/b> -US$ 803,9 millones"],"type":"scatter","mode":"lines+markers","line":{"width":4.1574803149606305,"color":"rgba(38,38,38,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","marker":{"autocolorscale":false,"color":"rgba(38,38,38,1)","opacity":1,"size":8.3149606299212611,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(38,38,38,1)"}},"frame":null}],"layout":{"margin":{"t":43.098381070983812,"r":7.9701120797011216,"b":24.707347447073481,"l":104.40846824408473},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243},"title":{"text":"Exportaciones, importaciones y balance comercial: Latin America & Caribbean","font":{"color":"rgba(0,0,0,1)","family":"","size":19.128268991282692},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[2005.7375,2025.2625],"tickmode":"array","ticktext":["2010","2015","2020","2025"],"tickvals":[2010,2015,2020,2025],"categoryorder":"array","categoryarray":["2010","2015","2020","2025"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-1375.0714317999998,571.20089180000002],"tickmode":"array","ticktext":["-US$ 1.000 M","-US$ 500 M","US$ 0 M","US$ 500 M"],"tickvals":[-1000,-500,0,500],"categoryorder":"array","categoryarray":["-US$ 1.000 M","-US$ 500 M","US$ 0 M","US$ 500 M"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"x","title":{"text":"Millones de USD","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}},"hoverformat":".2f"},"shapes":[],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218},"orientation":"h","x":0,"y":-0.20000000000000001,"xanchor":"center","yanchor":"top","title":{"text":"Flujo","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"7b5446c43f21":{"x":{},"y":{},"fill":{},"text":{},"type":"bar"},"7b54dd3f5f":{"yintercept":{}},"7b542c26129a":{"x":{},"y":{},"text":{}},"7b5427d8617e":{"x":{},"y":{},"text":{}}},"cur_data":"7b5446c43f21","visdat":{"7b5446c43f21":["function (y) ","x"],"7b54dd3f5f":["function (y) ","x"],"7b542c26129a":["function (y) ","x"],"7b5427d8617e":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="países-lac-con-mayor-comercio" class="level2">
+<h2 class="anchored" data-anchor-id="países-lac-con-mayor-comercio">4. Países LAC con mayor comercio</h2>
+<p>El ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-848fd805ec429201e885" style="width:100%;height:650px;"></div>
+<script type="application/json" data-for="htmlwidget-848fd805ec429201e885">{"x":{"data":[{"orientation":"h","width":[0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999947,0.65000000000000036,0.65000000000000036,0.65000000000000036,0.65000000000000036,0.65000000000000036,0.65000000000000013,0.64999999999999991],"base":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],"x":[257.99590499999999,73.608003999999994,32.673206,102.238603,0.78153399999999995,1.0457689999999999,0.87774700000000005,3.4289800000000001,0.315998,3.7387419999999998,1.174652,0.036378000000000001,1.6298600000000001,0.56426699999999996,0.47915500000000005],"y":[15,14,13,12,11,10,9,8,7,6,5,4,3,2,1],"text":["country: Mexico<br />value_musd:  257.995905<br />flow: Exportaciones","country: Brazil<br />value_musd:   73.608004<br />flow: Exportaciones","country: Colombia<br />value_musd:   32.673206<br />flow: Exportaciones","country: Dominican Rep.<br />value_musd:  102.238603<br />flow: Exportaciones","country: Chile<br />value_musd:    0.781534<br />flow: Exportaciones","country: Argentina<br />value_musd:    1.045769<br />flow: Exportaciones","country: Peru<br />value_musd:    0.877747<br />flow: Exportaciones","country: Costa Rica<br />value_musd:    3.428980<br />flow: Exportaciones","country: Ecuador<br />value_musd:    0.315998<br />flow: Exportaciones","country: Guatemala<br />value_musd:    3.738742<br />flow: Exportaciones","country: Panama<br />value_musd:    1.174652<br />flow: Exportaciones","country: Venezuela<br />value_musd:    0.036378<br />flow: Exportaciones","country: El Salvador<br />value_musd:    1.629860<br />flow: Exportaciones","country: Uruguay<br />value_musd:    0.564267<br />flow: Exportaciones","country: Paraguay<br />value_musd:    0.479155<br />flow: Exportaciones"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(27,158,119,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Exportaciones","legendgroup":"Exportaciones","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"h","width":[0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999858,0.64999999999999947,0.65000000000000036,0.65000000000000036,0.65000000000000036,0.65000000000000036,0.65000000000000036,0.65000000000000013,0.64999999999999991],"base":[-547.14167099999997,-234.58428000000001,-103.83194,-31.752316,-85.219649000000004,-71.191863999999995,-45.898450000000004,-19.303271000000002,-22.067858000000001,-16.780199,-18.533134,-17.158227999999998,-11.788792000000001,-10.346318999999999,-8.7853520000000014],"x":[547.14167099999997,234.58428000000001,103.83194,31.752316,85.219649000000004,71.191863999999995,45.898450000000004,19.303271000000002,22.067858000000001,16.780199,18.533134,17.158227999999998,11.788792000000001,10.346318999999999,8.7853520000000014],"y":[15,14,13,12,11,10,9,8,7,6,5,4,3,2,1],"text":["country: Mexico<br />value_musd: -547.141671<br />flow: Importaciones","country: Brazil<br />value_musd: -234.584280<br />flow: Importaciones","country: Colombia<br />value_musd: -103.831940<br />flow: Importaciones","country: Dominican Rep.<br />value_musd:  -31.752316<br />flow: Importaciones","country: Chile<br />value_musd:  -85.219649<br />flow: Importaciones","country: Argentina<br />value_musd:  -71.191864<br />flow: Importaciones","country: Peru<br />value_musd:  -45.898450<br />flow: Importaciones","country: Costa Rica<br />value_musd:  -19.303271<br />flow: Importaciones","country: Ecuador<br />value_musd:  -22.067858<br />flow: Importaciones","country: Guatemala<br />value_musd:  -16.780199<br />flow: Importaciones","country: Panama<br />value_musd:  -18.533134<br />flow: Importaciones","country: Venezuela<br />value_musd:  -17.158228<br />flow: Importaciones","country: El Salvador<br />value_musd:  -11.788792<br />flow: Importaciones","country: Uruguay<br />value_musd:  -10.346319<br />flow: Importaciones","country: Paraguay<br />value_musd:   -8.785352<br />flow: Importaciones"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Importaciones","legendgroup":"Importaciones","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[0,0],"y":[0.40000000000000002,15.6],"text":"","type":"scatter","mode":"lines","line":{"width":1.3228346456692912,"color":"rgba(0,0,0,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[-289.14576599999992,-160.97627600000001,-71.158733999999995,70.486287000000004,-84.43811500000001,-70.146095000000003,-45.020703000000005,-15.874291000000001,-21.751860000000001,-13.041457000000001,-17.358482000000002,-17.121849999999998,-10.158932,-9.7820520000000002,-8.3061970000000009],"y":[15,14,13,12,11,10,9,8,7,6,5,4,3,2,1],"text":["country: Mexico<br />balance_musd: -289.145766","country: Brazil<br />balance_musd: -160.976276","country: Colombia<br />balance_musd:  -71.158734","country: Dominican Rep.<br />balance_musd:   70.486287","country: Chile<br />balance_musd:  -84.438115","country: Argentina<br />balance_musd:  -70.146095","country: Peru<br />balance_musd:  -45.020703","country: Costa Rica<br />balance_musd:  -15.874291","country: Ecuador<br />balance_musd:  -21.751860","country: Guatemala<br />balance_musd:  -13.041457","country: Panama<br />balance_musd:  -17.358482","country: Venezuela<br />balance_musd:  -17.121850","country: El Salvador<br />balance_musd:  -10.158932","country: Uruguay<br />balance_musd:   -9.782052","country: Paraguay<br />balance_musd:   -8.306197"],"type":"scatter","mode":"markers","marker":{"autocolorscale":false,"color":"rgba(0,0,0,1)","opacity":1,"size":7.559055118110237,"symbol":"circle","line":{"width":1.8897637795275593,"color":"rgba(0,0,0,1)"}},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":43.098381070983812,"r":7.9701120797011216,"b":40.647571606475722,"l":101.22042341220428},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243},"title":{"text":"Principales países LAC por comercio de Cuidado de heridas y dispositivos de protección, 2024","font":{"color":"rgba(0,0,0,1)","family":"","size":19.128268991282692},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[-601.85583810000003,601.85583810000003],"tickmode":"array","ticktext":["-US$ 600 M","-US$ 300 M","US$ 0 M","US$ 300 M","US$ 600 M"],"tickvals":[-600,-300,0,300,600],"categoryorder":"array","categoryarray":["-US$ 600 M","-US$ 300 M","US$ 0 M","US$ 300 M","US$ 600 M"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"y","title":{"text":"Millones de USD","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,15.6],"tickmode":"array","ticktext":["Paraguay","Uruguay","El Salvador","Venezuela","Panama","Guatemala","Ecuador","Costa Rica","Peru","Argentina","Chile","Dominican Rep.","Colombia","Brazil","Mexico"],"tickvals":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],"categoryorder":"array","categoryarray":["Paraguay","Uruguay","El Salvador","Venezuela","Panama","Guatemala","Ecuador","Costa Rica","Peru","Argentina","Chile","Dominican Rep.","Colombia","Brazil","Mexico"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}},"hoverformat":".2f"},"shapes":[],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218},"orientation":"h","x":0,"y":-0.14999999999999999,"xanchor":"center","yanchor":"top","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"7b5431362e72":{"x":{},"y":{},"fill":{},"type":"bar"},"7b544c3121ce":{"yintercept":{}},"7b546d9ec2":{"x":{},"y":{}}},"cur_data":"7b5431362e72","visdat":{"7b5431362e72":["function (y) ","x"],"7b544c3121ce":["function (y) ","x"],"7b546d9ec2":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="resultados-por-país" class="level2">
+<h2 class="anchored" data-anchor-id="resultados-por-país">5. Resultados por país</h2>
+<p>La tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-83ed367184914479507b" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-83ed367184914479507b">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"pais":["Mexico","Brazil","Colombia","Dominican Rep.","Chile","Argentina","Peru","Costa Rica","Ecuador","Guatemala","Panama","Venezuela","El Salvador","Uruguay","Paraguay","Honduras","Bolivia (Plurinational State of)","Nicaragua","Trinidad and Tobago","Barbados","Jamaica","Cuba","Bahamas","Belize","Guyana","Suriname","Haiti","Aruba","CuraÃ§ao","Saint Lucia","Grenada","Antigua and Barbuda","Dominica","Saint Vincent and the Grenadines","Saint Maarten","Saint Kitts and Nevis","Br. Virgin Isds","Turks and Caicos Isds"],"exportaciones_musd":[257.995905,73.608004,32.673206,102.238603,0.781534,1.045769,0.877747,3.42898,0.315998,3.738742,1.174652,0.036378,1.62986,0.564267,0.479155,0.169818,0,0.055944,0.033048,1.326907,0.003724,0,0.005632,0.118298,0.005161,0.000263,1e-06,0.006139,0.039285,0.013851,1e-06,0.057772,0.235677,0.001235,0.072412,0,0,0],"importaciones_musd":[547.141671,234.58428,103.83194,31.752316,85.219649,71.191864,45.89845,19.303271,22.067858,16.780199,18.533134,17.158228,11.788792,10.346319,8.785352,8.919741,6.812261,6.250359,3.261869,1.334254,2.491227,2.256697,2.158753,1.584097,1.232398,1.171435,1.068923,0.737256,0.555516,0.561985,0.510783,0.391975,0.168669,0.32156,0.132667,0.188878,0.067388,0.042494],"balance_musd":[-289.145766,-160.976276,-71.158734,70.486287,-84.438115,-70.146095,-45.020703,-15.874291,-21.75186,-13.041457,-17.358482,-17.12185,-10.158932,-9.782052,-8.306197,-8.749923,-6.812261,-6.194415,-3.228821,-0.00734699999999998,-2.487503,-2.256697,-2.153121,-1.465799,-1.227237,-1.171172,-1.068922,-0.731117,-0.516231,-0.548134,-0.510782,-0.334203,0.067008,-0.320325,-0.060255,-0.188878,-0.067388,-0.042494],"comercio_total_musd":[805.137576,308.192284,136.505146,133.990919,86.001183,72.237633,46.776197,22.732251,22.383856,20.518941,19.707786,17.194606,13.418652,10.910586,9.264507,9.089559,6.812261,6.306303,3.294917,2.661161,2.494951,2.256697,2.164385,1.702395,1.237559,1.171698,1.068924,0.743395,0.594801,0.575836,0.510784,0.449747,0.404346,0.322795,0.205079,0.188878,0.067388,0.042494],"razon_import_export":[2.12073781171062,3.1869398333366,3.17789261329298,0.310570714664401,109.041511949576,68.0760894614394,52.2912069195338,5.62944986555769,69.8354356673144,4.48819388981641,15.7775528411819,471.664962339876,7.23300897009559,18.3358569613321,18.3350940718557,52.5252976716249,"NA",111.725278850279,98.7009501331397,1.00553693665042,668.965359828142,"NA",383.301313920455,13.3907335711508,238.790544468126,4454.12547528517,1068923,120.093826356084,14.1406643757159,40.5736047938777,510783,6.78486117842553,0.715678661897427,260.372469635628,1.83211346185715,"NA","NA","NA"]},"columns":[{"id":"pais","name":"País","type":"character","minWidth":180},{"id":"exportaciones_musd","name":"Exportaciones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"importaciones_musd","name":"Importaciones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"balance_musd","name":"Balance","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"comercio_total_musd","name":"Comercio total","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"razon_import_export","name":"Importaciones / exportaciones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"}],"filterable":true,"searchable":true,"defaultSorted":[{"id":"comercio_total_musd","desc":true}],"defaultPageSize":12,"theme":{"borderColor":"#e5e7eb","stripedColor":"#f8fafc","highlightColor":"#f1f5f9","cellPadding":"8px 10px"},"dataKey":"66b58aa8ca6bec633b3b0321d2352519"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="origen-y-destino-regional-del-comercio" class="level2">
+<h2 class="anchored" data-anchor-id="origen-y-destino-regional-del-comercio">6. Origen y destino regional del comercio</h2>
+<p>La composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-7a21409c26c7165804e4" style="width:100%;height:557px;"></div>
+<script type="application/json" data-for="htmlwidget-7a21409c26c7165804e4">{"x":{"visdat":{"7b541c721201":["function () ","plotlyVisDat"],"7b54661e6914":["function () ","data"],"7b54493c78d9":["function () ","data"],"7b5418331441":["function () ","data"],"7b5423b474b4":["function () ","data"],"7b542519570":["function () ","data"],"7b543cc946d8":["function () ","data"],"7b542ccc713c":["function () ","data"],"7b5478f47ae4":["function () ","data"],"7b54213f35d":["function () ","data"]},"cur_data":"7b54213f35d","attrs":{"7b54661e6914":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"Latin America & Caribbean","marker":{"color":"#1B9E77"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b54493c78d9":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"North America","marker":{"color":"#7570B3"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b5418331441":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"Europe","marker":{"color":"#D95F02"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b5423b474b4":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"Central Asia","marker":{"color":"#E6AB02"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b542519570":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"East Asia & Pacific","marker":{"color":"#E7298A"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b543cc946d8":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"South Asia","marker":{"color":"#66A61E"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b542ccc713c":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"Middle East, North Africa, Afghanistan & Pakistan","marker":{"color":"#A6761D"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b5478f47ae4":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"Sub-Saharan Africa","marker":{"color":"#1F78B4"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true},"7b54213f35d":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"x":{},"y":{},"type":"bar","orientation":"h","name":"No clasificada","marker":{"color":"#999999"},"customdata":{},"textposition":"none","hovertemplate":"%{customdata}<extra><\/extra>","inherit":true}},"layout":{"margin":{"b":120,"l":115,"t":85,"r":35},"barmode":"stack","title":{"text":"Composición regional del comercio: Latin America & Caribbean","x":0.5,"xanchor":"center"},"xaxis":{"domain":[0,1],"automargin":true,"title":"Participación del flujo total","range":[0,1],"tickformat":".0%"},"yaxis":{"domain":[0,1],"automargin":true,"title":"","categoryorder":"array","categoryarray":["Exportaciones","Importaciones"],"type":"category"},"legend":{"orientation":"h","x":0.5,"xanchor":"center","y":-0.25},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"x":[0.12424619764897092,0.046617169166641846],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"Latin America & Caribbean","marker":{"color":"#1B9E77","line":{"color":"rgba(31,119,180,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> Latin America & Caribbean<br><b>Participación:<\/b> 12,4%<br><b>Valor:<\/b> US$ 60,0 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> Latin America & Caribbean<br><b>Participación:<\/b> 4,7%<br><b>Valor:<\/b> US$ 60,0 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.6241140896884223,0.29993195935545408],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"North America","marker":{"color":"#7570B3","line":{"color":"rgba(255,127,14,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> North America<br><b>Participación:<\/b> 62,4%<br><b>Valor:<\/b> US$ 301,3 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> North America<br><b>Participación:<\/b> 30,0%<br><b>Valor:<\/b> US$ 385,9 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.11599778493317049,0.13030448281314433],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"Europe","marker":{"color":"#D95F02","line":{"color":"rgba(44,160,44,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> Europe<br><b>Participación:<\/b> 11,6%<br><b>Valor:<\/b> US$ 56,0 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> Europe<br><b>Participación:<\/b> 13,0%<br><b>Valor:<\/b> US$ 167,7 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.0018565339491502285,0.00071358525039459913],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"Central Asia","marker":{"color":"#E6AB02","line":{"color":"rgba(214,39,40,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> Central Asia<br><b>Participación:<\/b> 0,2%<br><b>Valor:<\/b> US$ 0,9 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> Central Asia<br><b>Participación:<\/b> 0,1%<br><b>Valor:<\/b> US$ 0,9 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(214,39,40,1)"},"error_x":{"color":"rgba(214,39,40,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.11443663313951837,0.50022390874445777],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"East Asia & Pacific","marker":{"color":"#E7298A","line":{"color":"rgba(148,103,189,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> East Asia & Pacific<br><b>Participación:<\/b> 11,4%<br><b>Valor:<\/b> US$ 55,2 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> East Asia & Pacific<br><b>Participación:<\/b> 50,0%<br><b>Valor:<\/b> US$ 643,6 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(148,103,189,1)"},"error_x":{"color":"rgba(148,103,189,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.0032439502993499725,0.013824839637511981],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"South Asia","marker":{"color":"#66A61E","line":{"color":"rgba(140,86,75,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> South Asia<br><b>Participación:<\/b> 0,3%<br><b>Valor:<\/b> US$ 1,6 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> South Asia<br><b>Participación:<\/b> 1,4%<br><b>Valor:<\/b> US$ 17,8 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(140,86,75,1)"},"error_x":{"color":"rgba(140,86,75,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.0074457697992365022,0.0077284440853210498],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"Middle East, North Africa, Afghanistan & Pakistan","marker":{"color":"#A6761D","line":{"color":"rgba(227,119,194,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Participación:<\/b> 0,7%<br><b>Valor:<\/b> US$ 3,6 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> Middle East, North Africa, Afghanistan & Pakistan<br><b>Participación:<\/b> 0,8%<br><b>Valor:<\/b> US$ 9,9 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(227,119,194,1)"},"error_x":{"color":"rgba(227,119,194,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[0.0086055473104805404,0.00065012441259066386],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"Sub-Saharan Africa","marker":{"color":"#1F78B4","line":{"color":"rgba(127,127,127,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> Sub-Saharan Africa<br><b>Participación:<\/b> 0,9%<br><b>Valor:<\/b> US$ 4,2 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> Sub-Saharan Africa<br><b>Participación:<\/b> 0,1%<br><b>Valor:<\/b> US$ 0,8 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(127,127,127,1)"},"error_x":{"color":"rgba(127,127,127,1)"},"xaxis":"x","yaxis":"y","frame":null},{"x":[5.3493231700653805e-05,5.4865344836798911e-06],"y":["Exportaciones","Importaciones"],"type":"bar","orientation":"h","name":"No clasificada","marker":{"color":"#999999","line":{"color":"rgba(188,189,34,1)"}},"customdata":["<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Exportaciones<br><b>Destino regional:<\/b> No clasificada<br><b>Participación:<\/b> 0,0%<br><b>Valor:<\/b> US$ 0,0 millones","<b>Año:<\/b> 2024<br><b>Área:<\/b> Latin America & Caribbean<br><b>Categoría:<\/b> Cuidado de heridas y dispositivos de protección<br><b>Flujo:<\/b> Importaciones<br><b>Origen regional:<\/b> No clasificada<br><b>Participación:<\/b> 0,0%<br><b>Valor:<\/b> US$ 0,0 millones"],"textposition":["none","none"],"hovertemplate":["%{customdata}<extra><\/extra>","%{customdata}<extra><\/extra>"],"error_y":{"color":"rgba(188,189,34,1)"},"error_x":{"color":"rgba(188,189,34,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="comercio-intrarregional" class="level2">
+<h2 class="anchored" data-anchor-id="comercio-intrarregional">7. Comercio intrarregional</h2>
+<p>La tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.</p>
+<p>Las columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:</p>
+<ul>
+<li><strong>País</strong>: país exportador de LAC.</li>
+<li><strong>% exportado hacia LAC</strong>: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.</li>
+<li><strong>Exportaciones a LAC, USD millones</strong>: valor de esas exportaciones intrarregionales.</li>
+<li><strong>Principal destino dentro de LAC</strong>: país de LAC que recibe el mayor flujo exportado por ese país.</li>
+<li><strong>% hacia principal destino</strong>: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-0c91776eb956333042d4" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-0c91776eb956333042d4">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"pais":["Paraguay","Nicaragua","Venezuela","Saint Lucia","Saint Vincent and the Grenadines","Panama","Trinidad and Tobago","Uruguay","Barbados","Argentina","Peru","Honduras","El Salvador","Chile","Guyana","Ecuador","Colombia","Jamaica","Guatemala","Costa Rica","Dominican Rep.","Brazil","Mexico","CuraÃ§ao","Bahamas","Dominica","Saint Maarten","Antigua and Barbuda","Belize","Aruba","Suriname","Grenada","Haiti","Cuba","Saint Kitts and Nevis","Bolivia (Plurinational State of)","Turks and Caicos Isds","Br. Virgin Isds"],"proporcion_exportaciones_lac":[1,1,1,1,1,0.999795684168588,0.998487049140644,0.994718812193518,0.991425171470193,0.963180205188718,0.940446392867193,0.917299697323016,0.900344814892077,0.776300199351532,0.756248788994381,0.56032316660232,0.543719737818199,0.494897959183674,0.383501990776577,0.361046725265239,0.110557124885597,0.0863497670715266,0.0541128550082995,0.0318696703576429,0.0165127840909091,0.0116048659818311,0.00472297409269182,0.0025964134875026,0,0,0,0,0,"NA","NA","NA","NA","NA"],"exportaciones_lac_musd":[0.479155,0.055944,0.036378,0.013851,0.001235,1.174412,0.032998,0.561287,1.315529,1.007264,0.825474,0.155774,1.467436,0.606705,0.003903,0.177061,17.765067,0.001843,1.433815,1.238022,11.303206,6.356034,13.960895,0.001252,9.3e-05,0.002735,0.000342,0.00015,0,0,0,0,0,0,0,0,0,0],"principal_destino_lac":["Brazil","Honduras","Colombia","Grenada","Barbados","Costa Rica","Guyana","Guatemala","Saint Lucia","Uruguay","Chile","Brazil","Costa Rica","Brazil","Trinidad and Tobago","Panama","Mexico","Barbados","Mexico","Guatemala","Mexico","Mexico","Colombia","Grenada","Antigua and Barbuda","Chile","Antigua and Barbuda","Br. Virgin Isds","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales","Sin exportaciones intrarregionales"],"proporcion_principal_destino_lac":[0.884828500172178,0.923977548977549,1,0.850768897552523,0.596761133603239,0.548023584857473,0.444081336238199,0.548066783987013,0.3750715008663,0.5305139089034,0.389709107521871,0.83627177331025,0.295032702195281,0.272386102204127,0.625266421236195,0.305508262710524,0.224384898133351,0.469924812030075,0.172856538375742,0.216743463070651,0.0529264274082462,0.0167256946676614,0.0127775748998807,0.0199567264859361,0.0165127840909091,0.0116048659818311,0.00472297409269182,0.0025964134875026,0,0,0,0,0,"NA","NA","NA","NA","NA"],"exportaciones_principal_destino_lac_musd":[0.42397,0.051691,0.036378,0.011784,0.000737,0.643737,0.014676,0.309256,0.497685,0.554795,0.342066,0.142014,0.480862,0.212879,0.003227,0.09654,7.331374,0.00175,0.646266,0.743209,5.411124,1.231145,3.296562,0.000784,9.3e-05,0.002735,0.000342,0.00015,0,0,0,0,0,0,0,0,0,0],"exportaciones_totales_musd":[0.479155,0.055944,0.036378,0.013851,0.001235,1.174652,0.033048,0.564267,1.326907,1.045769,0.877747,0.169818,1.62986,0.781534,0.005161,0.315998,32.673206,0.003724,3.738742,3.42898,102.238603,73.608004,257.995905,0.039285,0.005632,0.235677,0.072412,0.057772,0.118298,0.006139,0.000263,1e-06,1e-06,0,0,0,0,0]},"columns":[{"id":"pais","name":"País","type":"character","minWidth":180},{"id":"proporcion_exportaciones_lac","name":"% exportado hacia LAC","type":"numeric","format":{"cell":{"digits":1,"percent":true},"aggregated":{"digits":1,"percent":true}},"align":"right"},{"id":"exportaciones_lac_musd","name":"Exportaciones a LAC, USD millones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"principal_destino_lac","name":"Principal destino dentro de LAC","type":"character","minWidth":220},{"id":"proporcion_principal_destino_lac","name":"% hacia principal destino","type":"numeric","format":{"cell":{"digits":1,"percent":true},"aggregated":{"digits":1,"percent":true}},"align":"right"},{"id":"exportaciones_principal_destino_lac_musd","name":"Exportaciones al principal destino, USD millones","type":"numeric","show":false,"format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"exportaciones_totales_musd","name":"Exportaciones totales, USD millones","type":"numeric","show":false,"format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"}],"filterable":true,"searchable":true,"defaultSorted":[{"id":"proporcion_exportaciones_lac","desc":true}],"defaultPageSize":12,"theme":{"borderColor":"#e5e7eb","stripedColor":"#f8fafc","highlightColor":"#f1f5f9","cellPadding":"8px 10px"},"dataKey":"2580b471bffceb8c1de9d80457f10785"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<section id="principales-flujos-intrarregionales" class="level3">
+<h3 class="anchored" data-anchor-id="principales-flujos-intrarregionales">Principales flujos intrarregionales</h3>
+<p>El diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para <strong>Cuidado de heridas y dispositivos de protección</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="htmlwidget-9e1f4fc35e7f345f63bf" style="width:100%;height:502px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-9e1f4fc35e7f345f63bf">{"x":{"visdat":{"7b5467c840bf":["function () ","plotlyVisDat"]},"cur_data":"7b5467c840bf","attrs":{"7b5467c840bf":{"arrangement":"fixed","domain":{"y":[0,0.88]},"node":{"label":["Exp: Colombia","Exp: Mexico","Exp: Dominican Rep.","Exp: Brazil","Exp: Costa Rica","Exp: Guatemala","Exp: Panama","Exp: Argentina","Exp: Barbados","Exp: El Salvador","Imp: Mexico","Imp: Colombia","Imp: Guatemala","Imp: Ecuador","Imp: Costa Rica","Imp: Brazil","Imp: Peru","Imp: El Salvador","Imp: Chile","Imp: Uruguay","Imp: Argentina","Imp: Bolivia (Plurinational State of)","Imp: Paraguay","Imp: Saint Lucia"],"x":[0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999],"y":[0.040000000000000001,0.25271038977218041,0.41454988227076245,0.55960123878409007,0.62914233690813992,0.65825344801925101,0.68736455913036221,0.71647567024147329,0.74558678135258438,0.77469789246369547,0.040000000000000001,0.23503298816118234,0.33061218697823996,0.39659161750789224,0.4620458117209752,0.50997268975603727,0.54865910420009101,0.58414023035328577,0.61393641563518953,0.63970562257369112,0.6653979302659988,0.69109023795830649,0.71678254565061417,0.74247485334292196],"pad":8,"thickness":22,"line":{"color":"rgba(80,80,80,0.35)","width":0.5},"hovertemplate":"%{label}<extra><\/extra>"},"link":{"source":[0,2,0,1,1,2,1,1,1,3,0,0,3,0,2,3,3,2,0,4,1,0,5,6,2,3,7,1,8,9],"target":[10,10,13,11,12,11,15,18,14,10,16,20,21,17,15,22,11,13,12,12,17,14,10,14,16,19,19,16,23,14],"value":[7.3313739999999994,5.411124,3.7427609999999998,3.2965620000000002,3.0421559999999999,2.756345,1.4651559999999999,1.4107059999999998,1.3339770000000002,1.2311449999999999,1.101772,1.1010580000000001,1.0237609999999999,1.011064,0.95359799999999995,0.93490499999999999,0.80571199999999998,0.76492800000000005,0.76331300000000002,0.7432089999999999,0.71390399999999998,0.68129600000000001,0.64626600000000012,0.643737,0.5665889999999999,0.56430400000000003,0.55479499999999993,0.50025500000000001,0.49768499999999999,0.48086200000000001],"customdata":["Exp: Colombia<br>Imp: Mexico<br>Valor: 7,3 millones USD","Exp: Dominican Rep.<br>Imp: Mexico<br>Valor: 5,4 millones USD","Exp: Colombia<br>Imp: Ecuador<br>Valor: 3,7 millones USD","Exp: Mexico<br>Imp: Colombia<br>Valor: 3,3 millones USD","Exp: Mexico<br>Imp: Guatemala<br>Valor: 3,0 millones USD","Exp: Dominican Rep.<br>Imp: Colombia<br>Valor: 2,8 millones USD","Exp: Mexico<br>Imp: Brazil<br>Valor: 1,5 millones USD","Exp: Mexico<br>Imp: Chile<br>Valor: 1,4 millones USD","Exp: Mexico<br>Imp: Costa Rica<br>Valor: 1,3 millones USD","Exp: Brazil<br>Imp: Mexico<br>Valor: 1,2 millones USD","Exp: Colombia<br>Imp: Peru<br>Valor: 1,1 millones USD","Exp: Colombia<br>Imp: Argentina<br>Valor: 1,1 millones USD","Exp: Brazil<br>Imp: Bolivia (Plurinational State of)<br>Valor: 1,0 millones USD","Exp: Colombia<br>Imp: El Salvador<br>Valor: 1,0 millones USD","Exp: Dominican Rep.<br>Imp: Brazil<br>Valor: 1,0 millones USD","Exp: Brazil<br>Imp: Paraguay<br>Valor: 0,9 millones USD","Exp: Brazil<br>Imp: Colombia<br>Valor: 0,8 millones USD","Exp: Dominican Rep.<br>Imp: Ecuador<br>Valor: 0,8 millones USD","Exp: Colombia<br>Imp: Guatemala<br>Valor: 0,8 millones USD","Exp: Costa Rica<br>Imp: Guatemala<br>Valor: 0,7 millones USD","Exp: Mexico<br>Imp: El Salvador<br>Valor: 0,7 millones USD","Exp: Colombia<br>Imp: Costa Rica<br>Valor: 0,7 millones USD","Exp: Guatemala<br>Imp: Mexico<br>Valor: 0,6 millones USD","Exp: Panama<br>Imp: Costa Rica<br>Valor: 0,6 millones USD","Exp: Dominican Rep.<br>Imp: Peru<br>Valor: 0,6 millones USD","Exp: Brazil<br>Imp: Uruguay<br>Valor: 0,6 millones USD","Exp: Argentina<br>Imp: Uruguay<br>Valor: 0,6 millones USD","Exp: Mexico<br>Imp: Peru<br>Valor: 0,5 millones USD","Exp: Barbados<br>Imp: Saint Lucia<br>Valor: 0,5 millones USD","Exp: El Salvador<br>Imp: Costa Rica<br>Valor: 0,5 millones USD"],"hovertemplate":"%{customdata}<extra><\/extra>"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"sankey"}},"layout":{"height":520,"margin":{"b":20,"l":20,"t":80,"r":20},"title":{"text":"Principales flujos intrarregionales LAC<br><sup>Cuidado de heridas y dispositivos de protección, 2024. Valores en millones USD<\/sup>","x":0.5,"xanchor":"center"},"hovermode":"closest","showlegend":false},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"arrangement":"fixed","domain":{"y":[0,0.88]},"node":{"label":["Exp: Colombia","Exp: Mexico","Exp: Dominican Rep.","Exp: Brazil","Exp: Costa Rica","Exp: Guatemala","Exp: Panama","Exp: Argentina","Exp: Barbados","Exp: El Salvador","Imp: Mexico","Imp: Colombia","Imp: Guatemala","Imp: Ecuador","Imp: Costa Rica","Imp: Brazil","Imp: Peru","Imp: El Salvador","Imp: Chile","Imp: Uruguay","Imp: Argentina","Imp: Bolivia (Plurinational State of)","Imp: Paraguay","Imp: Saint Lucia"],"x":[0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999,0.98999999999999999],"y":[0.040000000000000001,0.25271038977218041,0.41454988227076245,0.55960123878409007,0.62914233690813992,0.65825344801925101,0.68736455913036221,0.71647567024147329,0.74558678135258438,0.77469789246369547,0.040000000000000001,0.23503298816118234,0.33061218697823996,0.39659161750789224,0.4620458117209752,0.50997268975603727,0.54865910420009101,0.58414023035328577,0.61393641563518953,0.63970562257369112,0.6653979302659988,0.69109023795830649,0.71678254565061417,0.74247485334292196],"pad":8,"thickness":22,"line":{"color":"rgba(80,80,80,0.35)","width":0.5},"hovertemplate":"%{label}<extra><\/extra>"},"link":{"source":[0,2,0,1,1,2,1,1,1,3,0,0,3,0,2,3,3,2,0,4,1,0,5,6,2,3,7,1,8,9],"target":[10,10,13,11,12,11,15,18,14,10,16,20,21,17,15,22,11,13,12,12,17,14,10,14,16,19,19,16,23,14],"value":[7.3313739999999994,5.411124,3.7427609999999998,3.2965620000000002,3.0421559999999999,2.756345,1.4651559999999999,1.4107059999999998,1.3339770000000002,1.2311449999999999,1.101772,1.1010580000000001,1.0237609999999999,1.011064,0.95359799999999995,0.93490499999999999,0.80571199999999998,0.76492800000000005,0.76331300000000002,0.7432089999999999,0.71390399999999998,0.68129600000000001,0.64626600000000012,0.643737,0.5665889999999999,0.56430400000000003,0.55479499999999993,0.50025500000000001,0.49768499999999999,0.48086200000000001],"customdata":["Exp: Colombia<br>Imp: Mexico<br>Valor: 7,3 millones USD","Exp: Dominican Rep.<br>Imp: Mexico<br>Valor: 5,4 millones USD","Exp: Colombia<br>Imp: Ecuador<br>Valor: 3,7 millones USD","Exp: Mexico<br>Imp: Colombia<br>Valor: 3,3 millones USD","Exp: Mexico<br>Imp: Guatemala<br>Valor: 3,0 millones USD","Exp: Dominican Rep.<br>Imp: Colombia<br>Valor: 2,8 millones USD","Exp: Mexico<br>Imp: Brazil<br>Valor: 1,5 millones USD","Exp: Mexico<br>Imp: Chile<br>Valor: 1,4 millones USD","Exp: Mexico<br>Imp: Costa Rica<br>Valor: 1,3 millones USD","Exp: Brazil<br>Imp: Mexico<br>Valor: 1,2 millones USD","Exp: Colombia<br>Imp: Peru<br>Valor: 1,1 millones USD","Exp: Colombia<br>Imp: Argentina<br>Valor: 1,1 millones USD","Exp: Brazil<br>Imp: Bolivia (Plurinational State of)<br>Valor: 1,0 millones USD","Exp: Colombia<br>Imp: El Salvador<br>Valor: 1,0 millones USD","Exp: Dominican Rep.<br>Imp: Brazil<br>Valor: 1,0 millones USD","Exp: Brazil<br>Imp: Paraguay<br>Valor: 0,9 millones USD","Exp: Brazil<br>Imp: Colombia<br>Valor: 0,8 millones USD","Exp: Dominican Rep.<br>Imp: Ecuador<br>Valor: 0,8 millones USD","Exp: Colombia<br>Imp: Guatemala<br>Valor: 0,8 millones USD","Exp: Costa Rica<br>Imp: Guatemala<br>Valor: 0,7 millones USD","Exp: Mexico<br>Imp: El Salvador<br>Valor: 0,7 millones USD","Exp: Colombia<br>Imp: Costa Rica<br>Valor: 0,7 millones USD","Exp: Guatemala<br>Imp: Mexico<br>Valor: 0,6 millones USD","Exp: Panama<br>Imp: Costa Rica<br>Valor: 0,6 millones USD","Exp: Dominican Rep.<br>Imp: Peru<br>Valor: 0,6 millones USD","Exp: Brazil<br>Imp: Uruguay<br>Valor: 0,6 millones USD","Exp: Argentina<br>Imp: Uruguay<br>Valor: 0,6 millones USD","Exp: Mexico<br>Imp: Peru<br>Valor: 0,5 millones USD","Exp: Barbados<br>Imp: Saint Lucia<br>Valor: 0,5 millones USD","Exp: El Salvador<br>Imp: Costa Rica<br>Valor: 0,5 millones USD"],"hovertemplate":"%{customdata}<extra><\/extra>"},"type":"sankey","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+</section>
+<section id="productos-exportados-por-país-de-origen" class="level2">
+<h2 class="anchored" data-anchor-id="productos-exportados-por-país-de-origen">8. Productos exportados por país de origen</h2>
+<p>La tabla muestra productos HS07, dentro de la categoría <strong>Cuidado de heridas y dispositivos de protección</strong>, exportados por países de LAC en 2024. Puede buscarse, filtrarse y agruparse por código de producto.</p>
+<p>Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría <strong>Cuidado de heridas y dispositivos de protección</strong>. Dentro de cada producto, las columnas muestran:</p>
+<ul>
+<li><strong>País exportador</strong>: país de LAC que registra exportaciones del producto.</li>
+<li><strong>Exportaciones, USD millones</strong>: valor exportado por el país en ese producto, en 2024.</li>
+<li><strong>% de la exportación regional</strong>: proporción del país en las exportaciones regionales de LAC de ese producto.</li>
+<li><strong>RCA</strong>: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.</li>
+</ul>
+<p>Para concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene <strong>RCA &gt; 1</strong> o exportaciones del producto superiores a <strong>US$ 1 millón</strong>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-9d7ed026120543de7837" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-9d7ed026120543de7837">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"product":["300510","300510","300510","300510","300510","300510","300510","300510","300590","300590","300590","300590","300590","300590","300590","300590","401511","401511"],"description_full":["Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","Rubber: vulcanised (other than hard rubber), surgical gloves","Rubber: vulcanised (other than hard rubber), surgical gloves"],"exp_country_name":["Mexico","Dominican Rep.","Brazil","Colombia","Guatemala","Costa Rica","Dominica","Barbados","Mexico","Dominican Rep.","Brazil","Colombia","Costa Rica","Barbados","Belize","Saint Maarten","Brazil","Barbados"],"exports_1000usd":[117542.974,82519.597,66425.958,30242.774,2729.087,2139.173,232.843,161.133,139757.473,19707.989,6162.666,2297.961,1224.953,899.094,118.298,72.379,1019.38,266.68],"exports_musd":[117.542974,82.519597,66.425958,30.242774,2.729087,2.139173,0.232843,0.161133,139.757473,19.707989,6.162666,2.297961,1.224953,0.899094,0.118298,0.072379,1.01938,0.26668],"rca_balassa":[0.753405228448262,23.5110276869824,0.772484231036079,2.34786952217768,0.732512298519303,0.319714901717719,28.1382487370206,1.497990091141,0.95469939437746,5.98434300983914,0.0763800748525036,0.190131747841975,0.195117421825561,8.90818442861437,1.25807480172444,14.22616465452,0.0120889678256114,2.52822784995894],"producto_hs07":["300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300510 — Dressings, adhesive: and other articles having an adhesive layer, packed for retail sale for medical, surgical, dental or veterinary purposes","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","300590 — Wadding, gauze, bandages and similar articles: (excluding adhesive dressings), impregnated or coated with pharmaceutical substances, packaged for retail sale","401511 — Rubber: vulcanised (other than hard rubber), surgical gloves","401511 — Rubber: vulcanised (other than hard rubber), surgical gloves"],"share_product":[0.385902176785483,0.270917869661531,0.218081276276548,0.0992892379822838,0.0089597921347214,0.00702306134623352,0.000764440591313115,0.000529011418853288,0.801457138044479,0.113017988387298,0.0353405978876279,0.0131779518251438,0.00702464994926603,0.00515596975678691,0.00067839504021646,0.000415066650457549,0.270962096459508,0.0708863935763127]},"columns":[{"id":"product","name":"Código HS07","type":"character","show":false},{"id":"description_full","name":"Descripción","type":"character","show":false},{"id":"exp_country_name","name":"País exportador","type":"character","minWidth":180},{"id":"exports_1000usd","name":"Exportaciones, miles USD","type":"numeric","show":false,"format":{"cell":{"prefix":"$","digits":0,"separators":true},"aggregated":{"prefix":"$","digits":0,"separators":true}},"align":"right"},{"id":"exports_musd","name":"Exportaciones, USD millones","type":"numeric","format":{"cell":{"prefix":"$","digits":1,"separators":true},"aggregated":{"prefix":"$","digits":1,"separators":true}},"align":"right"},{"id":"rca_balassa","name":"RCA","type":"numeric","format":{"cell":{"digits":2,"separators":true},"aggregated":{"digits":2,"separators":true}},"align":"right"},{"id":"producto_hs07","name":"Producto HS07","type":"character","minWidth":360},{"id":"share_product","name":"% de la exportación regional","type":"numeric","format":{"cell":{"digits":1,"percent":true},"aggregated":{"digits":1,"percent":true}},"align":"right"}],"groupBy":["producto_hs07"],"filterable":true,"searchable":true,"defaultSorted":[{"id":"exports_musd","desc":true}],"defaultPageSize":20,"highlight":true,"bordered":true,"striped":true,"theme":{"borderColor":"#e5e7eb","stripedColor":"#f8fafc","highlightColor":"#f1f5f9","cellPadding":"8px 10px"},"dataKey":"13b30d56dd149d7dfd9ae23a60b70d98"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="notas-metodológicas" class="level2">
+<h2 class="anchored" data-anchor-id="notas-metodológicas">Notas metodológicas</h2>
+<ul>
+<li><p>Todos los análisis presentados se basan en los datos de <a href="https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html">CEPII-BACI</a>, con nomenclatura HS 2007.</p></li>
+<li><p>La base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.</p></li>
+<li><p>A pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.</p></li>
+<li><p>Otra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal.</p></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+            // target, if specified
+            link.setAttribute("target", "_blank");
+            if (link.getAttribute("rel") === null) {
+              link.setAttribute("rel", "noopener");
+            }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL.</p>
+</div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Dashboard PAHO/CEPAL</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

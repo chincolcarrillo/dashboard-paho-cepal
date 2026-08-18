@@ -338,16 +338,8 @@ save_dashboard_rds(
 # Objetivo:
 #   Alimentar la hoja de panorama regional con series de exportaciones para:
 #   - todos los productos PAHO;
-#   - otras tecnologías sanitarias, distinguiendo dispositivos médicos;
+#   - medicamentos y otras tecnologías sanitarias, distinguiendo dispositivos médicos;
 #   - insumos, identificados como ingredientes farmacéuticos activos.
-
-health_technology_categories <- c(
-  "Células humanas, tejidos y productos médicos de terapia avanzada",
-  "Diagnósticos in vitro",
-  "Hemoderivados, antisueros y productos inmunobiológicos",
-  "Medicamentos",
-  "Vacunas (humanas)"
-)
 
 overview_exports_by_scope_hc <- bind_rows(
   exports_region_hc_cat2 |>
@@ -373,9 +365,9 @@ overview_exports_by_scope_hc <- bind_rows(
   ) |>
   mutate(
     product_group = case_when(
-      hc_cat2 %in% health_technology_categories ~ "Otras tecnologías sanitarias",
-      hc_cat2 == "Dispositivos médicos" ~ "Dispositivos médicos",
-      hc_cat2 == "Ingredientes farmacéuticos activos" ~ "Ingredientes farmacéuticos activos",
+      hc_cat2 %in% medicines_other_health_categories ~ "Medicamentos y otras tecnologías sanitarias",
+      hc_cat2 %in% medical_device_categories ~ "Dispositivos médicos",
+      hc_cat2 == ifa_category ~ "Ingredientes farmacéuticos activos",
       TRUE ~ "Otros productos"
     )
   )
@@ -392,7 +384,7 @@ overview_exports_trends <- bind_rows(
       product_group = "Todos los productos"
     ),
   overview_exports_by_scope_hc |>
-    filter(hc_cat2 %in% c(health_technology_categories, "Dispositivos médicos")) |>
+    filter(hc_cat2 %in% c(medicines_other_health_categories, medical_device_categories)) |>
     group_by(year, region_scope, product_group) |>
     summarise(
       exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
@@ -400,7 +392,7 @@ overview_exports_trends <- bind_rows(
     ) |>
     mutate(overview_tab = "Tecnologías sanitarias"),
   overview_exports_by_scope_hc |>
-    filter(hc_cat2 == "Ingredientes farmacéuticos activos") |>
+    filter(hc_cat2 == ifa_category) |>
     group_by(year, region_scope, product_group) |>
     summarise(
       exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
@@ -902,7 +894,8 @@ save_dashboard_rds(
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
-#   "Dispositivos médicos" en las exportaciones de LAC durante 2024.
+#   el conjunto de categorías de dispositivos médicos en las exportaciones
+#   de LAC durante 2024.
 #
 # Unidad:
 #   - product: código HS07 a 6 dígitos
@@ -925,7 +918,7 @@ medical_devices_lac_exports_2024_product <- comercio_hc_world |>
   filter(
     year == 2024,
     exp_region == "LAC",
-    hc_cat2 == "Dispositivos médicos"
+    hc_cat2 %in% medical_device_categories
   ) |>
   group_by(
     year,
@@ -1103,7 +1096,7 @@ ifas_lac_exports_2024_product <- comercio_hc_world |>
   filter(
     year == 2024,
     exp_region == "LAC",
-    hc_cat2 == "Ingredientes farmacéuticos activos"
+    hc_cat2 == ifa_category
   ) |>
   group_by(
     year,

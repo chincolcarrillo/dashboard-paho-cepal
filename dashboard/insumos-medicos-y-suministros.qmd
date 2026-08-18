@@ -1,11 +1,11 @@
 ---
-title: "Hemoderivados, antisueros y productos inmunobiológicos"
+title: "Insumos médicos y suministros para la atención de pacientes"
 subtitle: "Comercio internacional en América Latina y el Caribe"
 css: category-page.css
 page-layout: full
 params:
   data_dir: "data/dashboard"
-  category: "Hemoderivados, antisueros y productos inmunobiológicos"
+  category: "Insumos médicos y suministros para la atención de pacientes"
   max_countries: 15
   sankey_top_flows: 30
 ---

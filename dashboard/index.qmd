@@ -28,13 +28,24 @@ trade_balance <- load_dashboard_data(
 )
 
 category_links <- c(
-  "Células humanas, tejidos y productos médicos de terapia avanzada" = "terapias-avanzadas.html",
-  "Diagnósticos in vitro" = "diagnosticos-in-vitro.html",
-  "Dispositivos médicos" = "dispositivos-medicos.html",
-  "Hemoderivados, antisueros y productos inmunobiológicos" = "hemoderivados-inmunobiologicos.html",
   "Ingredientes farmacéuticos activos" = "ifas.html",
+  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico" = "celulas-tejidos.html",
   "Medicamentos" = "medicamentos.html",
-  "Vacunas (humanas)" = "vacunas-humanas.html"
+  "Sangre y productos derivados, inmunoglobulinas y antisueros" = "hemoderivados.html",
+  "Vacunas (humanas)" = "vacunas-humanas.html",
+  "Cuidado de heridas y dispositivos de protección" = "cuidado-de-heridas-y-dispositivos-proteccion.html",
+  "Dispositivos cardiovasculares" = "dispositivos-cardiovasculares.html",
+  "Dispositivos de diagnóstico in vitro y de laboratorio" = "diagnostico-in-vitro.html",
+  "Dispositivos de diagnóstico por imagen" = "diagnostico-por-imagen.html",
+  "Dispositivos de esterilización y desinfección" = "dispositivos-esterilizacion.html",
+  "Dispositivos odontológicos" = "dispositivos-odontologicos.html",
+  "Dispositivos para rehabilitación y asistencia" = "dispositivos-rehabilitacion.html",
+  "Dispositivos quirúrgicos e invasivos" = "dispositivos-quirurgicos.html",
+  "Equipos de diagnóstico y monitoreo" = "equipos-diagnostico.html",
+  "Equipos de laboratorio" = "equipos-laboratorio.html",
+  "Equipos terapéuticos" = "equipos-terapeuticos.html",
+  "Insumos médicos y suministros para la atención de pacientes" = "insumos-medicos-y-suministros.html",
+  "Mobiliario médico y elementos de soporte" = "mobiliario-medico.html"
 )
 
 landing_group_colors <- c(
@@ -43,19 +54,11 @@ landing_group_colors <- c(
   inputs = "#fdb462"
 )
 
-landing_device_categories <- c(
-  hc_cat2_levels[[3]]
-)
-
-landing_input_categories <- c(
-  hc_cat2_levels[[5]]
-)
-
 landing_category_groups <- tibble::tibble(
   hc_cat2 = hc_cat2_levels,
   landing_kpi_group = dplyr::case_when(
-    hc_cat2 %in% landing_device_categories ~ "devices",
-    hc_cat2 %in% landing_input_categories ~ "inputs",
+    hc_cat2 %in% medical_device_categories ~ "devices",
+    hc_cat2 == ifa_category ~ "inputs",
     TRUE ~ "other_health"
   ),
   landing_kpi_color = unname(landing_group_colors[landing_kpi_group])
@@ -69,9 +72,9 @@ landing_kpis <- prepare_landing_category_kpis(
 )
 ```
 
-El dashboard analiza el comercio internacional de tecnologías sanitarias e insumos en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007.
+El dashboard analiza el comercio internacional de medicamentos, otras tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007.
 
-Los productos se clasificaron en siete categorías de uso común en la industria, cada una cuenta con una pestaña independiente en el dashboard:
+Los productos se clasificaron en categorías de uso común en la industria, cada una cuenta con una pestaña independiente en el dashboard:
 
 ::: {.landing-category-diagram}
 

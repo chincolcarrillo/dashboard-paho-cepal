@@ -1,13 +1,38 @@
 # Configuración compartida del pipeline y del dashboard.
 
 hc_cat2_levels <- c(
-  "Células humanas, tejidos y productos médicos de terapia avanzada",
-  "Diagnósticos in vitro",
-  "Dispositivos médicos",
-  "Hemoderivados, antisueros y productos inmunobiológicos",
   "Ingredientes farmacéuticos activos",
+  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
   "Medicamentos",
+  "Sangre y productos derivados, inmunoglobulinas y antisueros",
+  "Vacunas (humanas)",
+  "Cuidado de heridas y dispositivos de protección",
+  "Dispositivos cardiovasculares",
+  "Dispositivos de diagnóstico in vitro y de laboratorio",
+  "Dispositivos de diagnóstico por imagen",
+  "Dispositivos de esterilización y desinfección",
+  "Dispositivos odontológicos",
+  "Dispositivos para rehabilitación y asistencia",
+  "Dispositivos quirúrgicos e invasivos",
+  "Equipos de diagnóstico y monitoreo",
+  "Equipos de laboratorio",
+  "Equipos terapéuticos",
+  "Insumos médicos y suministros para la atención de pacientes",
+  "Mobiliario médico y elementos de soporte"
+)
+
+ifa_category <- "Ingredientes farmacéuticos activos"
+
+medicines_other_health_categories <- c(
+  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+  "Medicamentos",
+  "Sangre y productos derivados, inmunoglobulinas y antisueros",
   "Vacunas (humanas)"
+)
+
+medical_device_categories <- setdiff(
+  hc_cat2_levels,
+  c(ifa_category, medicines_other_health_categories)
 )
 
 region_levels <- c(

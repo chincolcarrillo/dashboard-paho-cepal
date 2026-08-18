@@ -1,11 +1,11 @@
 ---
-title: "Diagnósticos in vitro"
+title: "Mobiliario médico y elementos de soporte"
 subtitle: "Comercio internacional en América Latina y el Caribe"
 css: category-page.css
 page-layout: full
 params:
   data_dir: "data/dashboard"
-  category: "Diagnósticos in vitro"
+  category: "Mobiliario médico y elementos de soporte"
   max_countries: 15
   sankey_top_flows: 30
 ---

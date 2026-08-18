@@ -58,24 +58,35 @@ flow_labels <- c(
 )
 
 hc_cat2_palette <- c(
-  "Células humanas, tejidos y productos médicos de terapia avanzada" = "#8DD3C7",
-  "Diagnósticos in vitro" = "#BEBADA",
-  "Dispositivos médicos" = "#FB8072",
-  "Hemoderivados, antisueros y productos inmunobiológicos" = "#80B1D3",
   "Ingredientes farmacéuticos activos" = "#FDB462",
+  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico" = "#8DD3C7",
   "Medicamentos" = "#B3DE69",
-  "Vacunas (humanas)" = "#FCCDE5"
+  "Sangre y productos derivados, inmunoglobulinas y antisueros" = "#80B1D3",
+  "Vacunas (humanas)" = "#FCCDE5",
+  "Cuidado de heridas y dispositivos de protección" = "#FB8072",
+  "Dispositivos cardiovasculares" = "#E15759",
+  "Dispositivos de diagnóstico in vitro y de laboratorio" = "#FF9DA7",
+  "Dispositivos de diagnóstico por imagen" = "#F28E2B",
+  "Dispositivos de esterilización y desinfección" = "#FFBE7D",
+  "Dispositivos odontológicos" = "#B07AA1",
+  "Dispositivos para rehabilitación y asistencia" = "#D4A6C8",
+  "Dispositivos quirúrgicos e invasivos" = "#9C755F",
+  "Equipos de diagnóstico y monitoreo" = "#BAB0AC",
+  "Equipos de laboratorio" = "#59A14F",
+  "Equipos terapéuticos" = "#8CD17D",
+  "Insumos médicos y suministros para la atención de pacientes" = "#EDC948",
+  "Mobiliario médico y elementos de soporte" = "#76B7B2"
 )
 
 overview_line_palette <- c(
   "Mundo - Todos los productos" = "#4C78A8",
   "LAC - Todos los productos" = "#4C78A8",
-  "Mundo - Otras tecnologías sanitarias" = "#4C78A8",
-  "LAC - Otras tecnologías sanitarias" = "#4C78A8",
-  "Mundo - Dispositivos médicos" = "#F58518",
-  "LAC - Dispositivos médicos" = "#F58518",
-  "Mundo - Ingredientes farmacéuticos activos" = "#9467BD",
-  "LAC - Ingredientes farmacéuticos activos" = "#9467BD"
+  "Mundo - Medicamentos y otras tecnologías sanitarias" = "#8DD3C7",
+  "LAC - Medicamentos y otras tecnologías sanitarias" = "#8DD3C7",
+  "Mundo - Dispositivos médicos" = "#FB8072",
+  "LAC - Dispositivos médicos" = "#FB8072",
+  "Mundo - Ingredientes farmacéuticos activos" = "#FDB462",
+  "LAC - Ingredientes farmacéuticos activos" = "#FDB462"
 )
 
 # 2. FXS AUXILIARES DE CARGA ----
@@ -1219,8 +1230,8 @@ prepare_landing_category_kpis <- function(
     category_groups <- tibble::tibble(
       hc_cat2 = hc_cat2_levels,
       landing_kpi_group = dplyr::case_when(
-        .data$hc_cat2 == hc_cat2_levels[[3]] ~ "devices",
-        .data$hc_cat2 == hc_cat2_levels[[5]] ~ "inputs",
+        .data$hc_cat2 %in% medical_device_categories ~ "devices",
+        .data$hc_cat2 == ifa_category ~ "inputs",
         TRUE ~ "other_health"
       ),
       landing_kpi_color = dplyr::case_when(
@@ -1355,17 +1366,18 @@ render_landing_kpi_cards <- function(kpi_data) {
   htmltools::tagList(
     htmltools::tags$section(
       class = "landing-kpi-section",
-      htmltools::tags$h2("Tecnologías sanitarias"),
+      htmltools::tags$h2("Medicamentos y otras tecnologías sanitarias"),
       htmltools::div(
-        class = "landing-kpi-two-column",
-        htmltools::div(
-          class = "landing-kpi-column landing-kpi-column-wide",
-          health_left_cards
-        ),
-        htmltools::div(
-          class = "landing-kpi-column landing-kpi-column-narrow",
-          medical_devices_cards
-        )
+        class = "landing-kpi-column landing-kpi-column-wide",
+        health_left_cards
+      )
+    ),
+    htmltools::tags$section(
+      class = "landing-kpi-section",
+      htmltools::tags$h2("Dispositivos médicos"),
+      htmltools::div(
+        class = "landing-kpi-column landing-kpi-column-wide",
+        medical_devices_cards
       )
     ),
     htmltools::tags$section(
@@ -1412,7 +1424,10 @@ normalize_overview_product_groups <- function(data) {
     dplyr::mutate(
       product_group = dplyr::case_when(
         .data$overview_tab == "Tecnologías sanitarias" &
-          .data$product_group == "Tecnologías sanitarias" ~ "Otras tecnologías sanitarias",
+          .data$product_group %in% c(
+            "Otras tecnologías sanitarias",
+            "Medicamentos y otras tecnologías sanitarias"
+          ) ~ "Medicamentos y otras tecnologías sanitarias",
         TRUE ~ as.character(.data$product_group)
       ),
       line_label = paste(.data$region_scope, .data$product_group, sep = " - ")

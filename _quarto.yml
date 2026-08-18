@@ -5,7 +5,7 @@ project:
 
 website:
   title: "Dashboard PAHO/CEPAL"
-  description: "Comercio internacional de tecnologías sanitarias en América Latina y el Caribe."
+  description: "Comercio internacional de medicamentos, tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe."
   navbar:
     left:
       - text: "Inicio"
@@ -14,20 +14,45 @@ website:
         href: dashboard/panorama-regional.qmd
       - text: "Categorías"
         menu:
-          - text: "Células, tejidos y terapias avanzadas"
-            href: dashboard/terapias-avanzadas.qmd
-          - text: "Diagnósticos in vitro"
-            href: dashboard/diagnosticos-in-vitro.qmd
-          - text: "Dispositivos médicos"
-            href: dashboard/dispositivos-medicos.qmd
-          - text: "Hemoderivados e inmunobiológicos"
-            href: dashboard/hemoderivados-inmunobiologicos.qmd
+          - text: "── IFAs ──"
           - text: "Ingredientes farmacéuticos activos"
             href: dashboard/ifas.qmd
+          - text: "── Medicamentos y otras tecnologías sanitarias ──"
+          - text: "Células, tejidos y sustancias terapéuticas"
+            href: dashboard/celulas-tejidos.qmd
           - text: "Medicamentos"
             href: dashboard/medicamentos.qmd
+          - text: "Sangre, inmunoglobulinas y antisueros"
+            href: dashboard/hemoderivados.qmd
           - text: "Vacunas (humanas)"
             href: dashboard/vacunas-humanas.qmd
+          - text: "── Dispositivos médicos ──"
+          - text: "Cuidado de heridas y dispositivos de protección"
+            href: dashboard/cuidado-de-heridas-y-dispositivos-proteccion.qmd
+          - text: "Dispositivos cardiovasculares"
+            href: dashboard/dispositivos-cardiovasculares.qmd
+          - text: "Dispositivos de diagnóstico in vitro y laboratorio"
+            href: dashboard/diagnostico-in-vitro.qmd
+          - text: "Dispositivos de diagnóstico por imagen"
+            href: dashboard/diagnostico-por-imagen.qmd
+          - text: "Dispositivos de esterilización y desinfección"
+            href: dashboard/dispositivos-esterilizacion.qmd
+          - text: "Dispositivos odontológicos"
+            href: dashboard/dispositivos-odontologicos.qmd
+          - text: "Dispositivos para rehabilitación y asistencia"
+            href: dashboard/dispositivos-rehabilitacion.qmd
+          - text: "Dispositivos quirúrgicos e invasivos"
+            href: dashboard/dispositivos-quirurgicos.qmd
+          - text: "Equipos de diagnóstico y monitoreo"
+            href: dashboard/equipos-diagnostico.qmd
+          - text: "Equipos de laboratorio"
+            href: dashboard/equipos-laboratorio.qmd
+          - text: "Equipos terapéuticos"
+            href: dashboard/equipos-terapeuticos.qmd
+          - text: "Insumos médicos y suministros para pacientes"
+            href: dashboard/insumos-medicos-y-suministros.qmd
+          - text: "Mobiliario médico y elementos de soporte"
+            href: dashboard/mobiliario-medico.qmd
   page-footer:
     left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
     right: "Dashboard PAHO/CEPAL"
