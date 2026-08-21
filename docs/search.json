@@ -56,53 +56,60 @@
     "text": "2. Crecimiento interanual de las exportaciones\nLos siguientes gráficos muestran la variación porcentual de las exportaciones respecto del año anterior.\n\nTodos los productosTecnologías sanitariasInsumos"
   },
   {
+    "objectID": "dashboard/panorama-regional.html#balance-comercial-agregado",
+    "href": "dashboard/panorama-regional.html#balance-comercial-agregado",
+    "title": "Panorama regional",
+    "section": "3. Balance comercial agregado",
+    "text": "3. Balance comercial agregado\nEl gráfico muestra la evolución de las exportaciones, importaciones y balance comercial de América Latina y el Caribe para el total de productos incluidos como medicamentos, otras tecnologías sanitarias e insumos."
+  },
+  {
     "objectID": "dashboard/panorama-regional.html#países-lac-con-mayor-comercio",
     "href": "dashboard/panorama-regional.html#países-lac-con-mayor-comercio",
     "title": "Panorama regional",
-    "section": "3. Países LAC con mayor comercio",
-    "text": "3. Países LAC con mayor comercio\nEl ranking ordena los países por comercio total de tecnologías sanitarias e insumos en 2024. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial."
+    "section": "4. Países LAC con mayor comercio",
+    "text": "4. Países LAC con mayor comercio\nEl ranking ordena los países por comercio total de tecnologías sanitarias e insumos en 2024. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial."
   },
   {
     "objectID": "dashboard/panorama-regional.html#importaciones-por-país-y-categoría",
     "href": "dashboard/panorama-regional.html#importaciones-por-país-y-categoría",
     "title": "Panorama regional",
-    "section": "4. Importaciones por país y categoría",
-    "text": "4. Importaciones por país y categoría\nEl gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado."
+    "section": "5. Importaciones por país y categoría",
+    "text": "5. Importaciones por país y categoría\nEl gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado."
   },
   {
     "objectID": "dashboard/panorama-regional.html#distribución-de-importaciones-por-categoría",
     "href": "dashboard/panorama-regional.html#distribución-de-importaciones-por-categoría",
     "title": "Panorama regional",
-    "section": "5. Distribución de importaciones por categoría",
-    "text": "5. Distribución de importaciones por categoría\nEl siguiente gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país."
+    "section": "6. Distribución de importaciones por categoría",
+    "text": "6. Distribución de importaciones por categoría\nEl siguiente gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país."
   },
   {
     "objectID": "dashboard/panorama-regional.html#exportaciones-por-país-y-categoría",
     "href": "dashboard/panorama-regional.html#exportaciones-por-país-y-categoría",
     "title": "Panorama regional",
-    "section": "6. Exportaciones por país y categoría",
-    "text": "6. Exportaciones por país y categoría\nEl gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado."
+    "section": "7. Exportaciones por país y categoría",
+    "text": "7. Exportaciones por país y categoría\nEl gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en 2024, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado."
   },
   {
     "objectID": "dashboard/panorama-regional.html#distribución-de-exportaciones-por-categoría",
     "href": "dashboard/panorama-regional.html#distribución-de-exportaciones-por-categoría",
     "title": "Panorama regional",
-    "section": "7. Distribución de exportaciones por categoría",
-    "text": "7. Distribución de exportaciones por categoría\nEl siguiente gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país."
+    "section": "8. Distribución de exportaciones por categoría",
+    "text": "8. Distribución de exportaciones por categoría\nEl siguiente gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país."
   },
   {
     "objectID": "dashboard/medicamentos.html",
     "href": "dashboard/medicamentos.html",
     "title": "Medicamentos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.263,1 millones e importó US$ 22.527,2 millones en Medicamentos, con un balance comercial de -US$ 16.264,1 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 2.078,7 millones) y el mayor importador fue Brazil (US$ 5.504,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.361,1 millones e importó US$ 22.829,0 millones en Medicamentos, con un balance comercial de -US$ 16.467,9 millones. Entre los países de la región, el mayor exportador fue México (US$ 2.108,2 millones) y el mayor importador fue Brasil (US$ 5.594,3 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América Latina y el Caribe y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/medicamentos.html#panorama-regional",
     "href": "dashboard/medicamentos.html#panorama-regional",
     "title": "Medicamentos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.263,1 millones e importó US$ 22.527,2 millones en Medicamentos, con un balance comercial de -US$ 16.264,1 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 2.078,7 millones) y el mayor importador fue Brazil (US$ 5.504,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 6.361,1 millones e importó US$ 22.829,0 millones en Medicamentos, con un balance comercial de -US$ 16.467,9 millones. Entre los países de la región, el mayor exportador fue México (US$ 2.108,2 millones) y el mayor importador fue Brasil (US$ 5.594,3 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América Latina y el Caribe y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/medicamentos.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -172,14 +179,14 @@
     "href": "dashboard/hemoderivados.html",
     "title": "Sangre y productos derivados, inmunoglobulinas y antisueros",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 49,8 millones e importó US$ 713,1 millones en Sangre y productos derivados, inmunoglobulinas y antisueros, con un balance comercial de -US$ 663,3 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 32,7 millones) y el mayor importador fue Brazil (US$ 414,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 49,8 millones e importó US$ 712,9 millones en Sangre y productos derivados, inmunoglobulinas y antisueros, con un balance comercial de -US$ 663,1 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 32,7 millones) y el mayor importador fue Brasil (US$ 414,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América Latina y el Caribe y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/hemoderivados.html#panorama-regional",
     "href": "dashboard/hemoderivados.html#panorama-regional",
     "title": "Sangre y productos derivados, inmunoglobulinas y antisueros",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 49,8 millones e importó US$ 713,1 millones en Sangre y productos derivados, inmunoglobulinas y antisueros, con un balance comercial de -US$ 663,3 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 32,7 millones) y el mayor importador fue Brazil (US$ 414,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Latin America & Caribbean y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 49,8 millones e importó US$ 712,9 millones en Sangre y productos derivados, inmunoglobulinas y antisueros, con un balance comercial de -US$ 663,1 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 32,7 millones) y el mayor importador fue Brasil (US$ 414,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América Latina y el Caribe y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/hemoderivados.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -249,14 +256,14 @@
     "href": "dashboard/equipos-laboratorio.html",
     "title": "Equipos de laboratorio",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2,7 millones e importó US$ 102,6 millones en Equipos de laboratorio, con un balance comercial de -US$ 99,9 millones. Entre los países de la región, el mayor exportador fue Brazil (US$ 0,7 millones) y el mayor importador fue Mexico (US$ 33,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2,6 millones e importó US$ 102,5 millones en Equipos de laboratorio, con un balance comercial de -US$ 99,9 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 0,7 millones) y el mayor importador fue México (US$ 33,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/equipos-laboratorio.html#panorama-regional",
     "href": "dashboard/equipos-laboratorio.html#panorama-regional",
     "title": "Equipos de laboratorio",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2,7 millones e importó US$ 102,6 millones en Equipos de laboratorio, con un balance comercial de -US$ 99,9 millones. Entre los países de la región, el mayor exportador fue Brazil (US$ 0,7 millones) y el mayor importador fue Mexico (US$ 33,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2,6 millones e importó US$ 102,5 millones en Equipos de laboratorio, con un balance comercial de -US$ 99,9 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 0,7 millones) y el mayor importador fue México (US$ 33,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/equipos-laboratorio.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -326,14 +333,14 @@
     "href": "dashboard/dispositivos-rehabilitacion.html",
     "title": "Dispositivos para rehabilitación y asistencia",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 10.303,7 millones e importó US$ 6.355,6 millones en Dispositivos para rehabilitación y asistencia, con un balance comercial de US$ 3.948,0 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 6.975,6 millones) y el mayor importador fue Mexico (US$ 2.555,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 10.300,1 millones e importó US$ 6.338,6 millones en Dispositivos para rehabilitación y asistencia, con un balance comercial de US$ 3.961,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 6.975,6 millones) y el mayor importador fue México (US$ 2.555,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/dispositivos-rehabilitacion.html#panorama-regional",
     "href": "dashboard/dispositivos-rehabilitacion.html#panorama-regional",
     "title": "Dispositivos para rehabilitación y asistencia",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 10.303,7 millones e importó US$ 6.355,6 millones en Dispositivos para rehabilitación y asistencia, con un balance comercial de US$ 3.948,0 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 6.975,6 millones) y el mayor importador fue Mexico (US$ 2.555,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 10.300,1 millones e importó US$ 6.338,6 millones en Dispositivos para rehabilitación y asistencia, con un balance comercial de US$ 3.961,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 6.975,6 millones) y el mayor importador fue México (US$ 2.555,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/dispositivos-rehabilitacion.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -403,14 +410,14 @@
     "href": "dashboard/dispositivos-odontologicos.html",
     "title": "Dispositivos odontológicos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16.835,8 millones e importó US$ 6.218,4 millones en Dispositivos odontológicos, con un balance comercial de US$ 10.617,4 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 11.270,6 millones) y el mayor importador fue Mexico (US$ 3.288,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16.833,9 millones e importó US$ 6.199,3 millones en Dispositivos odontológicos, con un balance comercial de US$ 10.634,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 11.270,6 millones) y el mayor importador fue México (US$ 3.288,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
   },
   {
     "objectID": "dashboard/dispositivos-odontologicos.html#panorama-regional",
     "href": "dashboard/dispositivos-odontologicos.html#panorama-regional",
     "title": "Dispositivos odontológicos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16.835,8 millones e importó US$ 6.218,4 millones en Dispositivos odontológicos, con un balance comercial de US$ 10.617,4 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 11.270,6 millones) y el mayor importador fue Mexico (US$ 3.288,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16.833,9 millones e importó US$ 6.199,3 millones en Dispositivos odontológicos, con un balance comercial de US$ 10.634,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 11.270,6 millones) y el mayor importador fue México (US$ 3.288,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
   },
   {
     "objectID": "dashboard/dispositivos-odontologicos.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -480,14 +487,14 @@
     "href": "dashboard/dispositivos-cardiovasculares.html",
     "title": "Dispositivos cardiovasculares",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 173,5 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 157,1 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brazil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 172,7 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 156,3 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brasil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/dispositivos-cardiovasculares.html#panorama-regional",
     "href": "dashboard/dispositivos-cardiovasculares.html#panorama-regional",
     "title": "Dispositivos cardiovasculares",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 173,5 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 157,1 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brazil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 172,7 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 156,3 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brasil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/dispositivos-cardiovasculares.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -557,14 +564,14 @@
     "href": "dashboard/diagnostico-in-vitro.html",
     "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 335,6 millones e importó US$ 3.247,5 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.911,9 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 160,0 millones) y el mayor importador fue Mexico (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 334,2 millones e importó US$ 3.239,4 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.905,2 millones. Entre los países de la región, el mayor exportador fue México (US$ 160,0 millones) y el mayor importador fue México (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/diagnostico-in-vitro.html#panorama-regional",
     "href": "dashboard/diagnostico-in-vitro.html#panorama-regional",
     "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 335,6 millones e importó US$ 3.247,5 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.911,9 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 160,0 millones) y el mayor importador fue Mexico (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 334,2 millones e importó US$ 3.239,4 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.905,2 millones. Entre los países de la región, el mayor exportador fue México (US$ 160,0 millones) y el mayor importador fue México (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/diagnostico-in-vitro.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -634,14 +641,14 @@
     "href": "dashboard/celulas-tejidos.html",
     "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,6 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,5 millones. Entre los países de la región, el mayor exportador fue Brazil (US$ 64,6 millones) y el mayor importador fue Brazil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue East Asia & Pacific y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,4 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,4 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 64,6 millones) y el mayor importador fue Brasil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Asia oriental y el Pacífico y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/celulas-tejidos.html#panorama-regional",
     "href": "dashboard/celulas-tejidos.html#panorama-regional",
     "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,6 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,5 millones. Entre los países de la región, el mayor exportador fue Brazil (US$ 64,6 millones) y el mayor importador fue Brazil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue East Asia & Pacific y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,4 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,4 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 64,6 millones) y el mayor importador fue Brasil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Asia oriental y el Pacífico y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/celulas-tejidos.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -711,14 +718,14 @@
     "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html",
     "title": "Cuidado de heridas y dispositivos de protección",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,7 millones e importó US$ 1.286,6 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 803,9 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 258,0 millones) y el mayor importador fue Mexico (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,6 millones e importó US$ 1.285,1 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 802,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 258,0 millones) y el mayor importador fue México (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#panorama-regional",
     "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#panorama-regional",
     "title": "Cuidado de heridas y dispositivos de protección",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,7 millones e importó US$ 1.286,6 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 803,9 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 258,0 millones) y el mayor importador fue Mexico (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,6 millones e importó US$ 1.285,1 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 802,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 258,0 millones) y el mayor importador fue México (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -788,14 +795,14 @@
     "href": "dashboard/diagnostico-por-imagen.html",
     "title": "Dispositivos de diagnóstico por imagen",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 613,7 millones e importó US$ 2.132,7 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.519,0 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 498,9 millones) y el mayor importador fue Mexico (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 612,8 millones e importó US$ 2.130,4 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.517,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 498,9 millones) y el mayor importador fue México (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/diagnostico-por-imagen.html#panorama-regional",
     "href": "dashboard/diagnostico-por-imagen.html#panorama-regional",
     "title": "Dispositivos de diagnóstico por imagen",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 613,7 millones e importó US$ 2.132,7 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.519,0 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 498,9 millones) y el mayor importador fue Mexico (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 612,8 millones e importó US$ 2.130,4 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.517,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 498,9 millones) y el mayor importador fue México (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/diagnostico-por-imagen.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -865,14 +872,14 @@
     "href": "dashboard/dispositivos-esterilizacion.html",
     "title": "Dispositivos de esterilización y desinfección",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 127,9 millones e importó US$ 85,4 millones en Dispositivos de esterilización y desinfección, con un balance comercial de US$ 42,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 123,3 millones) y el mayor importador fue Mexico (US$ 17,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 127,9 millones e importó US$ 85,2 millones en Dispositivos de esterilización y desinfección, con un balance comercial de US$ 42,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 123,3 millones) y el mayor importador fue México (US$ 17,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/dispositivos-esterilizacion.html#panorama-regional",
     "href": "dashboard/dispositivos-esterilizacion.html#panorama-regional",
     "title": "Dispositivos de esterilización y desinfección",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 127,9 millones e importó US$ 85,4 millones en Dispositivos de esterilización y desinfección, con un balance comercial de US$ 42,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 123,3 millones) y el mayor importador fue Mexico (US$ 17,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 127,9 millones e importó US$ 85,2 millones en Dispositivos de esterilización y desinfección, con un balance comercial de US$ 42,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 123,3 millones) y el mayor importador fue México (US$ 17,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/dispositivos-esterilizacion.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -942,14 +949,14 @@
     "href": "dashboard/dispositivos-quirurgicos.html",
     "title": "Dispositivos quirúrgicos e invasivos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 11.069,6 millones e importó US$ 3.546,5 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 7.523,1 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 6.937,5 millones) y el mayor importador fue Mexico (US$ 1.422,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 11.069,2 millones e importó US$ 3.541,5 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 7.527,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 6.937,5 millones) y el mayor importador fue México (US$ 1.422,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
   },
   {
     "objectID": "dashboard/dispositivos-quirurgicos.html#panorama-regional",
     "href": "dashboard/dispositivos-quirurgicos.html#panorama-regional",
     "title": "Dispositivos quirúrgicos e invasivos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 11.069,6 millones e importó US$ 3.546,5 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 7.523,1 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 6.937,5 millones) y el mayor importador fue Mexico (US$ 1.422,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue North America."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 11.069,2 millones e importó US$ 3.541,5 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 7.527,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 6.937,5 millones) y el mayor importador fue México (US$ 1.422,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
   },
   {
     "objectID": "dashboard/dispositivos-quirurgicos.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -1019,14 +1026,14 @@
     "href": "dashboard/equipos-diagnostico.html",
     "title": "Equipos de diagnóstico y monitoreo",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2.507,7 millones e importó US$ 849,5 millones en Equipos de diagnóstico y monitoreo, con un balance comercial de US$ 1.658,2 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 1.432,6 millones) y el mayor importador fue Mexico (US$ 426,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2.507,4 millones e importó US$ 847,7 millones en Equipos de diagnóstico y monitoreo, con un balance comercial de US$ 1.659,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 1.432,6 millones) y el mayor importador fue México (US$ 426,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/equipos-diagnostico.html#panorama-regional",
     "href": "dashboard/equipos-diagnostico.html#panorama-regional",
     "title": "Equipos de diagnóstico y monitoreo",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2.507,7 millones e importó US$ 849,5 millones en Equipos de diagnóstico y monitoreo, con un balance comercial de US$ 1.658,2 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 1.432,6 millones) y el mayor importador fue Mexico (US$ 426,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 2.507,4 millones e importó US$ 847,7 millones en Equipos de diagnóstico y monitoreo, con un balance comercial de US$ 1.659,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 1.432,6 millones) y el mayor importador fue México (US$ 426,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/equipos-diagnostico.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -1096,14 +1103,14 @@
     "href": "dashboard/equipos-terapeuticos.html",
     "title": "Equipos terapéuticos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 19,1 millones e importó US$ 78,4 millones en Equipos terapéuticos, con un balance comercial de -US$ 59,3 millones. Entre los países de la región, el mayor exportador fue Brazil (US$ 6,7 millones) y el mayor importador fue Brazil (US$ 51,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 19,1 millones e importó US$ 78,3 millones en Equipos terapéuticos, con un balance comercial de -US$ 59,2 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 6,7 millones) y el mayor importador fue Brasil (US$ 51,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/equipos-terapeuticos.html#panorama-regional",
     "href": "dashboard/equipos-terapeuticos.html#panorama-regional",
     "title": "Equipos terapéuticos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 19,1 millones e importó US$ 78,4 millones en Equipos terapéuticos, con un balance comercial de -US$ 59,3 millones. Entre los países de la región, el mayor exportador fue Brazil (US$ 6,7 millones) y el mayor importador fue Brazil (US$ 51,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 19,1 millones e importó US$ 78,3 millones en Equipos terapéuticos, con un balance comercial de -US$ 59,2 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 6,7 millones) y el mayor importador fue Brasil (US$ 51,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/equipos-terapeuticos.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -1173,14 +1180,14 @@
     "href": "dashboard/ifas.html",
     "title": "Ingredientes farmacéuticos activos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,8 millones e importó US$ 6.457,5 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.703,7 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brazil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,6 millones e importó US$ 6.456,4 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.702,7 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brasil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/ifas.html#panorama-regional",
     "href": "dashboard/ifas.html#panorama-regional",
     "title": "Ingredientes farmacéuticos activos",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,8 millones e importó US$ 6.457,5 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.703,7 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brazil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 1.753,6 millones e importó US$ 6.456,4 millones en Ingredientes farmacéuticos activos, con un balance comercial de -US$ 4.702,7 millones. Entre los países de la región, el mayor exportador fue Argentina (US$ 961,0 millones) y el mayor importador fue Brasil (US$ 3.284,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/ifas.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -1250,14 +1257,14 @@
     "href": "dashboard/insumos-medicos-y-suministros.html",
     "title": "Insumos médicos y suministros para la atención de pacientes",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 390,3 millones e importó US$ 198,8 millones en Insumos médicos y suministros para la atención de pacientes, con un balance comercial de US$ 191,5 millones. Entre los países de la región, el mayor exportador fue Dominican Rep. (US$ 209,2 millones) y el mayor importador fue Brazil (US$ 54,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 390,3 millones e importó US$ 198,4 millones en Insumos médicos y suministros para la atención de pacientes, con un balance comercial de US$ 191,9 millones. Entre los países de la región, el mayor exportador fue República Dominicana (US$ 209,2 millones) y el mayor importador fue Brasil (US$ 54,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/insumos-medicos-y-suministros.html#panorama-regional",
     "href": "dashboard/insumos-medicos-y-suministros.html#panorama-regional",
     "title": "Insumos médicos y suministros para la atención de pacientes",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 390,3 millones e importó US$ 198,8 millones en Insumos médicos y suministros para la atención de pacientes, con un balance comercial de US$ 191,5 millones. Entre los países de la región, el mayor exportador fue Dominican Rep. (US$ 209,2 millones) y el mayor importador fue Brazil (US$ 54,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 390,3 millones e importó US$ 198,4 millones en Insumos médicos y suministros para la atención de pacientes, con un balance comercial de US$ 191,9 millones. Entre los países de la región, el mayor exportador fue República Dominicana (US$ 209,2 millones) y el mayor importador fue Brasil (US$ 54,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/insumos-medicos-y-suministros.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -1327,14 +1334,14 @@
     "href": "dashboard/mobiliario-medico.html",
     "title": "Mobiliario médico y elementos de soporte",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 252,4 millones e importó US$ 235,9 millones en Mobiliario médico y elementos de soporte, con un balance comercial de US$ 16,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 240,5 millones) y el mayor importador fue Mexico (US$ 73,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 252,4 millones e importó US$ 234,7 millones en Mobiliario médico y elementos de soporte, con un balance comercial de US$ 17,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 240,5 millones) y el mayor importador fue México (US$ 73,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/mobiliario-medico.html#panorama-regional",
     "href": "dashboard/mobiliario-medico.html#panorama-regional",
     "title": "Mobiliario médico y elementos de soporte",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 252,4 millones e importó US$ 235,9 millones en Mobiliario médico y elementos de soporte, con un balance comercial de US$ 16,5 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 240,5 millones) y el mayor importador fue Mexico (US$ 73,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue North America y el principal origen de las importaciones fue East Asia & Pacific."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 252,4 millones e importó US$ 234,7 millones en Mobiliario médico y elementos de soporte, con un balance comercial de US$ 17,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 240,5 millones) y el mayor importador fue México (US$ 73,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/mobiliario-medico.html#participación-de-lac-en-las-exportaciones-mundiales",
@@ -1404,14 +1411,14 @@
     "href": "dashboard/vacunas-humanas.html",
     "title": "Vacunas (humanas)",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 101,3 millones e importó US$ 2.365,6 millones en Vacunas (humanas), con un balance comercial de -US$ 2.264,3 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 46,4 millones) y el mayor importador fue Brazil (US$ 960,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 101,3 millones e importó US$ 2.364,7 millones en Vacunas (humanas), con un balance comercial de -US$ 2.263,4 millones. Entre los países de la región, el mayor exportador fue México (US$ 46,4 millones) y el mayor importador fue Brasil (US$ 960,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/vacunas-humanas.html#panorama-regional",
     "href": "dashboard/vacunas-humanas.html#panorama-regional",
     "title": "Vacunas (humanas)",
     "section": "",
-    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 101,3 millones e importó US$ 2.365,6 millones en Vacunas (humanas), con un balance comercial de -US$ 2.264,3 millones. Entre los países de la región, el mayor exportador fue Mexico (US$ 46,4 millones) y el mayor importador fue Brazil (US$ 960,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europe y el principal origen de las importaciones fue Europe."
+    "text": "Exportaciones LAC\n\n2024\n\n\nImportaciones LAC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de LAC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 101,3 millones e importó US$ 2.364,7 millones en Vacunas (humanas), con un balance comercial de -US$ 2.263,4 millones. Entre los países de la región, el mayor exportador fue México (US$ 46,4 millones) y el mayor importador fue Brasil (US$ 960,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Europa y el principal origen de las importaciones fue Europa."
   },
   {
     "objectID": "dashboard/vacunas-humanas.html#participación-de-lac-en-las-exportaciones-mundiales",

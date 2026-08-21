@@ -43,24 +43,38 @@ regiones <- read_excel("data/country-class.xlsx") |>
 paises <- paises |>
   left_join(regiones, by = c("country_iso3" = "code")) |>
   mutate(country_code = as.integer(country_code),
-         region_longname = region,
+         region_longname = case_when(region == "Middle East, North Africa, Afghanistan & Pakistan" ~ "Oriente Medio, Norte de África, Afganistán y Pakistán",
+                                     region == "Latin America & Caribbean" ~ "América Latina y el Caribe",
+                                     region == "East Asia & Pacific" ~ "Asia oriental y el Pacífico",
+                                     region == "Central Asia" ~ "Asia central",
+                                     region == "Europe" ~ "Europa",
+                                     region == "North America" ~ "América del Norte",
+                                     region == "South Asia" ~ "Asia meridional",
+                                     region == "Sub-Saharan Africa" ~ "África al sur del Sahara",
+                                     TRUE ~ unclassified_region) ,
          region = case_when(region == "Middle East, North Africa, Afghanistan & Pakistan" ~ "MENA",
                             region == "Latin America & Caribbean" ~ "LAC",
-                            region == "East Asia & Pacific" ~ "East Asia & Pacific",
-                            region == "Central Asia" ~ "Central Asia",
-                            region == "Europe" ~ "Europe",
-                            region == "North America" ~ "North America",
-                            region == "South Asia" ~ "South Asia",
-                            region == "Sub-Saharan Africa" ~ "Sub-Saharan Africa",
+                            region == "East Asia & Pacific" ~ "Asia oriental y el Pacífico",
+                            region == "Central Asia" ~ "Asia central",
+                            region == "Europe" ~ "Europa",
+                            region == "North America" ~ "América del Norte",
+                            region == "South Asia" ~ "Asia meridional",
+                            region == "Sub-Saharan Africa" ~ "África al sur del Sahara",
                             TRUE ~ unclassified_region)) |>
   mutate(
-    region = if_else(country_code == 490L, "East Asia & Pacific", region),
+    region = if_else(
+      country_code == 490L, # Proxy de Taiwan
+      "Asia oriental y el Pacífico", 
+      region),
+    region = if_else(
+      country_code %in% c(533L, 531L, 796L, 92L, 534L), # Aruba, Curazao, Turks and Caicos, Br Virgin, Saint Maarten
+      unclassified_region,
+      region),
     region_longname = if_else(
       country_code == 490L, # Proxy de Taiwan
-      "East Asia & Pacific",
-      region_longname
-    ),
-    region_longname = if_else(
+      "Asia oriental y el Pacífico",
+      region_longname),
+    region_longname = if_else(  # Todas las que no estan clasificadas en region, quedan como no clasificadas en longname
       region == unclassified_region,
       unclassified_region,
       region_longname
@@ -71,6 +85,25 @@ paises <- paises |>
 
 # paises_no_clasificados <- paises |> filter(region == unclassified_region)
 # Paises sin region WB quedan etiquetados explicitamente para evitar NA en el dashboard.
+
+paises <- paises |> # arreglar nombres en ingles
+  mutate(country_name = case_when(country_name == "Antigua and Barbuda" ~ "Antigua y Barbuda",
+                                  country_name == "Bolivia (Plurinational State of)" ~ "Bolivia",
+                                  country_name == "Brazil" ~ "Brasil",
+                                  country_name == "Belize" ~ "Belice",
+                                  country_name == "Dominican Rep." ~ "República Dominicana",
+                                  country_name == "Grenada" ~ "Granada",
+                                  country_name == "Guyana" ~ "Guayana",
+                                  country_name == "Haiti" ~ "Haití",
+                                  country_name == "Mexico" ~ "México",
+                                  country_name == "Panama" ~ "Panamá",
+                                  country_name == "Peru" ~ "Perú",
+                                  country_name == "Saint Kitts and Nevis" ~ "San Cristóbal y Nieves",
+                                  country_name == "Saint Lucia" ~ "Santa Lucía",
+                                  country_name == "Saint Vincent and the Grenadines" ~ "San Vicente y las Granadinas",
+                                  country_name == "Suriname" ~ "Surinam",
+                                  country_name == "Trinidad and Tobago" ~ "Trinidad y Tobago",
+                                  TRUE ~ country_name))
 
 # Dejar columnas listas para unir con base BACI
 paises_imp <- paises |> rename_with(~ paste0("imp_", .), -country_code)
@@ -464,7 +497,7 @@ exports_lac_region <- comercio_hc_min |>
   filter(exp_region == "LAC") |>
   mutate(
     ref_area_code = "LAC",
-    ref_area_name = "Latin America & Caribbean",
+    ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "exports_1000usd"
   ) |>
@@ -479,7 +512,7 @@ imports_lac_region <- comercio_hc_min |>
   filter(imp_region == "LAC") |>
   mutate(
     ref_area_code = "LAC",
-    ref_area_name = "Latin America & Caribbean",
+    ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "imports_1000usd"
   ) |>
@@ -645,7 +678,7 @@ partner_exports_region_2024 <- comercio_hc_min |>
   ) |>
   mutate(
     ref_area_code = "LAC",
-    ref_area_name = "Latin America & Caribbean",
+    ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "Exports",
     partner_region = imp_region,
@@ -674,7 +707,7 @@ partner_imports_region_2024 <- comercio_hc_min |>
   ) |>
   mutate(
     ref_area_code = "LAC",
-    ref_area_name = "Latin America & Caribbean",
+    ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "Imports",
     partner_region = exp_region,

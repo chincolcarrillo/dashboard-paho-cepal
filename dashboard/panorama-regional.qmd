@@ -18,6 +18,10 @@ overview_data <- load_overview_dashboard_data(data_dir = params$data_dir)
 
 overview_exports_trends <- overview_data$overview_exports_trends
 overview_lac_country_category_trade <- overview_data$overview_lac_country_category_trade
+trade_balance_lac <- load_dashboard_data(
+  "trade_balance_lac.rds",
+  data_dir = params$data_dir
+)
 
 overview_year <- max(overview_lac_country_category_trade$year, na.rm = TRUE)
 overview_first_year <- min(overview_exports_trends$year, na.rm = TRUE)
@@ -123,7 +127,23 @@ plot_overview_exports_growth_trends(
 
 :::
 
-## 3. Países LAC con mayor comercio
+## 3. Balance comercial agregado
+
+El gráfico muestra la evolución de las exportaciones, importaciones y balance comercial de América Latina y el Caribe para el total de productos incluidos como medicamentos, otras tecnologías sanitarias e insumos.
+
+```{r}
+#| label: overview-trade-balance-total
+#| fig-height: 6
+
+plot_trade_balance(
+  trade_balance_lac,
+  selected_area = "LAC",
+  selected_hc_cat2 = NULL,
+  interactive = TRUE
+)
+```
+
+## 4. Países LAC con mayor comercio
 
 El ranking ordena los países por comercio total de tecnologías sanitarias e insumos en `r overview_year`. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial.
 
@@ -138,7 +158,7 @@ plot_overview_lac_country_trade_ranking(
 )
 ```
 
-## 4. Importaciones por país y categoría
+## 5. Importaciones por país y categoría
 
 El gráfico muestra el valor de las importaciones de cada país de América Latina y el Caribe en `r overview_year`, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total importado.
 
@@ -154,7 +174,7 @@ plot_overview_lac_country_category_trade(
 )
 ```
 
-## 5. Distribución de importaciones por categoría
+## 6. Distribución de importaciones por categoría
 
 El siguiente gráfico muestra la composición porcentual de las importaciones de tecnologías sanitarias e insumos de cada país.
 
@@ -170,7 +190,7 @@ plot_overview_lac_country_category_share(
 )
 ```
 
-## 6. Exportaciones por país y categoría
+## 7. Exportaciones por país y categoría
 
 El gráfico muestra el valor de las exportaciones de cada país de América Latina y el Caribe en `r overview_year`, desagregado por categoría de producto. Los países se ordenan de mayor a menor valor total exportado.
 
@@ -186,7 +206,7 @@ plot_overview_lac_country_category_trade(
 )
 ```
 
-## 7. Distribución de exportaciones por categoría
+## 8. Distribución de exportaciones por categoría
 
 El siguiente gráfico muestra la composición porcentual de las exportaciones de tecnologías sanitarias e insumos de cada país.
 

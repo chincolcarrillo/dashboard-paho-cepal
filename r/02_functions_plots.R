@@ -63,6 +63,7 @@ hc_cat2_palette <- c(
   "Medicamentos" = "#B3DE69",
   "Sangre y productos derivados, inmunoglobulinas y antisueros" = "#80B1D3",
   "Vacunas (humanas)" = "#FCCDE5",
+  "Dispositivos médicos" = "#FB8072",
   "Cuidado de heridas y dispositivos de protección" = "#FB8072",
   "Dispositivos cardiovasculares" = "#E15759",
   "Dispositivos de diagnóstico in vitro y de laboratorio" = "#FF9DA7",
@@ -388,11 +389,19 @@ plot_exports_region_area <- function(
     ggplot2::theme(
       legend.position = "bottom",
       legend.title = ggplot2::element_text(face = "bold"),
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5),
       panel.grid.minor = ggplot2::element_blank()
     )
 
   if (isTRUE(interactive)) {
     return(plotly::ggplotly(p, tooltip = "text") |>
+             center_plotly_title(
+               title = "Participación regional en exportaciones mundiales",
+               subtitle = glue::glue(
+                 "Categoría: {selected_label}. Región de interés: {recode_region_names(highlight_region)}"
+               )
+             ) |>
              plotly::layout(legend = list(orientation = "h", x = 0, y = -0.2)))
   }
 
@@ -474,7 +483,6 @@ plot_trade_balance <- function(
       value_abs_1000usd = abs(value_plot_1000usd),
       tooltip = make_tooltip(
         glue::glue("<b>Año:</b> {year}"),
-        glue::glue("<b>Área:</b> {ref_area_name}"),
         glue::glue("<b>Categoría:</b> {hc_cat2}"),
         glue::glue("<b>Flujo:</b> {flow_type}"),
         glue::glue("<b>Valor:</b> {format_usd_millions(value_abs_1000usd)}")
@@ -485,7 +493,6 @@ plot_trade_balance <- function(
     dplyr::mutate(
       tooltip = make_tooltip(
         glue::glue("<b>Año:</b> {year}"),
-        glue::glue("<b>Área:</b> {ref_area_name}"),
         glue::glue("<b>Categoría:</b> {hc_cat2}"),
         glue::glue("<b>Balance comercial:</b> {format_usd_millions(balance_1000usd)}")
       )
@@ -539,6 +546,7 @@ plot_trade_balance <- function(
     ) +
     ggplot2::labs(
       title = glue::glue("Exportaciones, importaciones y balance comercial: {unique(base_data$ref_area_name)}"),
+      subtitle = glue::glue("{selected_label}"),
       x = NULL,
       y = "Millones de USD",
       caption = "Nota: las importaciones se grafican con signo negativo sólo para visualización. El balance corresponde a exportaciones menos importaciones."
@@ -552,6 +560,10 @@ plot_trade_balance <- function(
 
   if (isTRUE(interactive)) {
     return(plotly::ggplotly(p, tooltip = "text") |>
+             center_plotly_title(
+               title = glue::glue("Exportaciones, importaciones y balance comercial: {unique(base_data$ref_area_name)}"),
+               subtitle = glue::glue("{selected_label}")
+             ) |>
              plotly::layout(legend = list(orientation = "h", x = 0, y = -0.2)))
   }
 
@@ -633,7 +645,6 @@ plot_partner_region_100pct <- function(
       ),
       tooltip = make_tooltip(
         glue::glue("<b>Año:</b> {year}"),
-        glue::glue("<b>Área:</b> {ref_area_name}"),
         glue::glue("<b>Categoría:</b> {hc_cat2}"),
         glue::glue("<b>Flujo:</b> {flow_type}"),
         glue::glue("<b>{counterparty_label}:</b> {partner_region_longname}"),
@@ -1001,7 +1012,7 @@ plot_sankey_intra_lac <- function(
       title = list(
         text = glue::glue(
           "Principales flujos intrarregionales LAC",
-          "<br><sup>{selected_label}, {selected_year}. Valores en millones USD</sup>"
+          "<br><sup>{selected_label}, {selected_year}</sup>"
         ),
         x = 0.5,
         xanchor = "center"
@@ -1126,8 +1137,45 @@ theme_trade <- function(base_size = 12) {
     ggplot2::theme(
       legend.position = "bottom",
       plot.title.position = "plot",
+      plot.title = ggplot2::element_text(hjust = 0.5),
+      plot.subtitle = ggplot2::element_text(hjust = 0.5),
       panel.grid.minor = ggplot2::element_blank(),
       strip.text = ggplot2::element_text(face = "bold")
+    )
+}
+
+plotly_title_text <- function(title = NULL, subtitle = NULL) {
+  if (is.null(title) || is.na(title) || identical(title, "")) {
+    return(NULL)
+  }
+
+  if (is.null(subtitle) || is.na(subtitle) || identical(subtitle, "")) {
+    return(as.character(title))
+  }
+
+  glue::glue("{title}<br><sup>{subtitle}</sup>")
+}
+
+center_plotly_title <- function(
+  plot_widget,
+  title = NULL,
+  subtitle = NULL,
+  top_margin = 85
+) {
+  title_text <- plotly_title_text(title = title, subtitle = subtitle)
+
+  if (is.null(title_text)) {
+    return(plot_widget)
+  }
+
+  plot_widget |>
+    plotly::layout(
+      title = list(
+        text = title_text,
+        x = 0.5,
+        xanchor = "center"
+      ),
+      margin = list(t = top_margin)
     )
 }
 
@@ -1374,7 +1422,7 @@ render_landing_kpi_cards <- function(kpi_data) {
     ),
     htmltools::tags$section(
       class = "landing-kpi-section",
-      htmltools::tags$h2("Dispositivos médicos"),
+      htmltools::tags$h2(""),
       htmltools::div(
         class = "landing-kpi-column landing-kpi-column-wide",
         medical_devices_cards
@@ -1382,7 +1430,7 @@ render_landing_kpi_cards <- function(kpi_data) {
     ),
     htmltools::tags$section(
       class = "landing-kpi-section",
-      htmltools::tags$h2("Insumos"),
+      htmltools::tags$h2("Ingredientes Farmacéuticos Activos (IFAs)"),
       htmltools::div(
         class = "landing-kpi-one-column",
         inputs_cards
@@ -1403,6 +1451,31 @@ complete_hc_cat2_palette <- function(category_names) {
   names(fallback_values) <- missing_categories
 
   c(hc_cat2_palette, fallback_values)
+}
+
+overview_category_levels <- function(category_names = NULL) {
+  base_levels <- c(
+    medicines_other_health_categories,
+    "Dispositivos médicos",
+    ifa_category
+  )
+
+  if (is.null(category_names)) {
+    return(base_levels)
+  }
+
+  c(base_levels, setdiff(unique(as.character(category_names)), base_levels))
+}
+
+collapse_overview_medical_device_categories <- function(data) {
+  data |>
+    dplyr::mutate(
+      hc_cat2 = dplyr::if_else(
+        .data$hc_cat2 %in% medical_device_categories,
+        "Dispositivos médicos",
+        as.character(.data$hc_cat2)
+      )
+    )
 }
 
 complete_overview_line_palette <- function(line_names) {
@@ -1797,8 +1870,17 @@ plot_overview_lac_country_category_trade <- function(
 
   plot_data <- data |>
     dplyr::filter(.data$flow_type == .env$flow_type) |>
+    collapse_overview_medical_device_categories() |>
+    dplyr::group_by(year, ref_area_code, ref_area_name, hc_cat2, flow_type) |>
+    dplyr::summarise(
+      value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
     dplyr::mutate(
-      hc_cat2 = factor(as.character(hc_cat2), levels = hc_cat2_levels),
+      hc_cat2 = factor(
+        as.character(hc_cat2),
+        levels = overview_category_levels(hc_cat2)
+      ),
       value_musd = to_musd(value_1000usd)
     )
 
@@ -1841,7 +1923,8 @@ plot_overview_lac_country_category_trade <- function(
 
   if (isTRUE(interactive)) {
     plot_widget <- plotly::plot_ly()
-    category_names <- hc_cat2_levels[hc_cat2_levels %in% as.character(plot_data$hc_cat2)]
+    category_names <- overview_category_levels(plot_data$hc_cat2)
+    category_names <- category_names[category_names %in% as.character(plot_data$hc_cat2)]
 
     for (category_name in category_names) {
       category_data <- plot_data |>
@@ -1908,8 +1991,17 @@ plot_overview_lac_country_category_share <- function(
 
   plot_data <- data |>
     dplyr::filter(.data$flow_type == .env$flow_type) |>
+    collapse_overview_medical_device_categories() |>
+    dplyr::group_by(year, ref_area_code, ref_area_name, hc_cat2, flow_type) |>
+    dplyr::summarise(
+      value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
     dplyr::mutate(
-      hc_cat2 = factor(as.character(hc_cat2), levels = hc_cat2_levels),
+      hc_cat2 = factor(
+        as.character(hc_cat2),
+        levels = overview_category_levels(hc_cat2)
+      ),
       value_musd = to_musd(value_1000usd)
     )
 
@@ -1963,7 +2055,8 @@ plot_overview_lac_country_category_share <- function(
 
   if (isTRUE(interactive)) {
     plot_widget <- plotly::plot_ly()
-    category_names <- hc_cat2_levels[hc_cat2_levels %in% as.character(plot_data$hc_cat2)]
+    category_names <- overview_category_levels(plot_data$hc_cat2)
+    category_names <- category_names[category_names %in% as.character(plot_data$hc_cat2)]
 
     for (category_name in category_names) {
       category_data <- plot_data |>
@@ -2083,6 +2176,7 @@ plot_overview_lac_country_trade_ranking <- function(
     selected_hc_cat2 = "tecnologías sanitarias e insumos",
     year = year,
     max_countries = max_countries,
+    show_title = FALSE,
     interactive = interactive
   )
 }
@@ -2090,7 +2184,7 @@ plot_overview_lac_country_trade_ranking <- function(
 plot_lac_world_share_line <- function(
   data,
   selected_hc_cat2,
-  max_share = 0.12,
+  max_share = NULL,
   interactive = TRUE
 ) {
   required_cols <- c("year", "exp_region", "hc_cat2", "share_exports_value")
@@ -2110,6 +2204,19 @@ plot_lac_world_share_line <- function(
       )
     )
 
+  if (nrow(plot_data) == 0) {
+    rlang::abort(glue::glue(
+      "No hay datos de participación LAC para '{selected_hc_cat2}'."
+    ))
+  }
+
+  if (is.null(max_share)) {
+    max_share <- max(plot_data$share_exports_value, na.rm = TRUE) * 1.12
+  }
+  if (!is.finite(max_share) || max_share <= 0) {
+    max_share <- 0.01
+  }
+
   p <- ggplot2::ggplot(
     plot_data,
     ggplot2::aes(
@@ -2123,13 +2230,14 @@ plot_lac_world_share_line <- function(
     ggplot2::geom_point(size = 1.5, color = "#1B9E77") +
     ggplot2::scale_y_continuous(
       labels = scales::label_percent(accuracy = 0.1, decimal.mark = ","),
-      breaks = seq(0, max_share, by = 0.02),
+      breaks = scales::pretty_breaks(n = 6),
       expand = ggplot2::expansion(mult = c(0, 0.03))
     ) +
     ggplot2::coord_cartesian(ylim = c(0, max_share)) +
     ggplot2::scale_x_continuous(breaks = scales::pretty_breaks()) +
     ggplot2::labs(
-      title = glue::glue("Participación de LAC en las exportaciones mundiales de {selected_hc_cat2}"),
+      title = glue::glue("Participación de LAC en las exportaciones mundiales"),
+      subtitle = glue::glue("{selected_hc_cat2}"),
       x = NULL,
       y = "Participación en exportaciones mundiales"
     ) +
@@ -2150,7 +2258,10 @@ plot_lac_world_share_line <- function(
       plotly::layout(
         title = list(
           text = glue::glue(
-            "Participación de LAC en las exportaciones mundiales de {selected_hc_cat2}")
+            "Participación de LAC en las exportaciones mundiales<br><sup>{selected_hc_cat2}</sup>"
+          ),
+          x = 0.5,
+          xanchor = "center"
         ),
         xaxis = list(
           title = "",
@@ -2257,7 +2368,8 @@ plot_world_exports_region_structure <- function(
     ) +
     ggplot2::coord_cartesian(ylim = c(0, y_max * 1.03)) +
     ggplot2::labs(
-      title = glue::glue("Exportaciones de {selected_hc_cat2}, por región exportadora"),
+      title = glue::glue("Exportaciones mundiales, por región exportadora"),
+      subtitle = glue::glue("{selected_hc_cat2}"),
       x = NULL,
       y = "Exportaciones"
     ) +
@@ -2290,7 +2402,10 @@ plot_world_exports_region_structure <- function(
              plotly::layout(
                title = list(
                  text = glue::glue(
-                   "Exportaciones de {selected_hc_cat2}, por región exportadora")
+                   "Exportaciones mundiales, por región exportadora<br><sup>{selected_hc_cat2}</sup>"
+                 ),
+                 x = 0.5,
+                 xanchor = "center"
                ),
                xaxis = list(title = ""),
                yaxis = list(
@@ -2310,6 +2425,7 @@ plot_lac_country_trade_ranking <- function(
   selected_hc_cat2,
   year,
   max_countries = 15,
+  show_title = TRUE,
   interactive = TRUE
 ) {
   required_cols <- c(
@@ -2374,15 +2490,25 @@ plot_lac_country_trade_ranking <- function(
       name = NULL
     ) +
     ggplot2::labs(
-      title = glue::glue("Principales países LAC por comercio de {selected_hc_cat2}, {year}"),
-      subtitle = "Barras = exportaciones e importaciones; punto = balance comercial",
+      title = if (isTRUE(show_title)) glue::glue("Principales países LAC por comercio") else NULL,
+      subtitle = if (isTRUE(show_title)) "{selected_hc_cat2}, {year}" else NULL,
       x = NULL,
       y = "Millones de USD"
     ) +
     theme_trade()
 
   if (isTRUE(interactive)) {
-    return(plotly::ggplotly(p, tooltip = c("x", "y", "fill")) |>
+    plot_widget <- plotly::ggplotly(p, tooltip = c("x", "y", "fill"))
+
+    if (isTRUE(show_title)) {
+      plot_widget <- plot_widget |>
+        center_plotly_title(
+          title = glue::glue("Principales países LAC por comercio"),
+          subtitle = glue::glue("{selected_hc_cat2}, {year}")
+        )
+    }
+
+    return(plot_widget |>
              plotly::layout(legend = list(orientation = "h", x = 0, y = -0.15)))
   }
 
