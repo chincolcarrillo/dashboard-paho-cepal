@@ -1414,7 +1414,7 @@ render_landing_kpi_cards <- function(kpi_data) {
   htmltools::tagList(
     htmltools::tags$section(
       class = "landing-kpi-section",
-      htmltools::tags$h2("Medicamentos y otras tecnologías sanitarias"),
+      htmltools::tags$h2("Medicamentos, vacunas y otros"),
       htmltools::div(
         class = "landing-kpi-column landing-kpi-column-wide",
         health_left_cards
@@ -1422,7 +1422,7 @@ render_landing_kpi_cards <- function(kpi_data) {
     ),
     htmltools::tags$section(
       class = "landing-kpi-section",
-      htmltools::tags$h2(""),
+      htmltools::tags$h2("Dispositivos médicos"),
       htmltools::div(
         class = "landing-kpi-column landing-kpi-column-wide",
         medical_devices_cards
@@ -1430,7 +1430,7 @@ render_landing_kpi_cards <- function(kpi_data) {
     ),
     htmltools::tags$section(
       class = "landing-kpi-section",
-      htmltools::tags$h2("Ingredientes Farmacéuticos Activos (IFAs)"),
+      htmltools::tags$h2("Insumos"),
       htmltools::div(
         class = "landing-kpi-one-column",
         inputs_cards

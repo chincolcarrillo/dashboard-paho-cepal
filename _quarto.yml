@@ -14,18 +14,18 @@ website:
         href: dashboard/panorama-regional.qmd
       - text: "Categorías"
         menu:
-          - text: "── IFAs ──"
+          - text: "── Insumos ──"
           - text: "Ingredientes farmacéuticos activos"
             href: dashboard/ifas.qmd
-          - text: "── Medicamentos y otras tecnologías sanitarias ──"
-          - text: "Células, tejidos y sustancias terapéuticas"
-            href: dashboard/celulas-tejidos.qmd
+          - text: "── Medicamentos, vacunas y otros ──"
           - text: "Medicamentos"
             href: dashboard/medicamentos.qmd
-          - text: "Sangre, inmunoglobulinas y antisueros"
-            href: dashboard/hemoderivados.qmd
           - text: "Vacunas (humanas)"
             href: dashboard/vacunas-humanas.qmd
+          - text: "Células, tejidos y sustancias terapéuticas"
+            href: dashboard/celulas-tejidos.qmd
+          - text: "Sangre, inmunoglobulinas y antisueros"
+            href: dashboard/hemoderivados.qmd
           - text: "── Dispositivos médicos ──"
           - text: "Cuidado de heridas y dispositivos de protección"
             href: dashboard/cuidado-de-heridas-y-dispositivos-proteccion.qmd
