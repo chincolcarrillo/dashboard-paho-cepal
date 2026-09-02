@@ -1,0 +1,465 @@
+---
+title: "Evaluación de productos candidatos"
+subtitle: "Reunión 04 de septiembre"
+css: category-page.css
+page-layout: full
+search: false
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+```{r}
+#| label: setup-candidate-products
+#| include: false
+
+if (!requireNamespace("pacman", quietly = TRUE)) {
+  stop("Instale el paquete 'pacman' antes de renderizar esta página.", call. = FALSE)
+}
+library(pacman)
+p_load(
+  tidyverse,
+  readxl,
+  janitor,
+  arrow,
+  reactable,
+  plotly,
+  glue,
+  scales
+)
+
+source("r/00_config.R", encoding = "UTF-8")
+source("r/02_functions_plots.R", encoding = "UTF-8")
+
+# Productos en evaluación. La columna evaluation_hc_cat2 explicita la categoría
+# contra la que se quiere medir el peso potencial del producto. Si el equipo
+# decide evaluar un producto contra otra categoría, basta con modificar esta
+# tabla dentro del QMD.
+candidate_products <- tibble::tribble(
+  ~product, ~description, ~evaluation_hc_cat2, ~evaluation_note,
+  "382100",
+  "Prepared culture media for the development or maintenance of micro-organisms (including viruses and the like) or of plant, human or animal cells.",
+  "Dispositivos de diagnóstico in vitro y de laboratorio",
+  "Asignación preliminar: insumo/medio de cultivo usado en entornos de laboratorio; revisar si corresponde mantenerlo fuera del universo de dispositivos.",
+  "901110",
+  "Microscopes, compound optical: stereoscopic microscopes.",
+  "Equipos de laboratorio",
+  "Asignación preliminar: equipo de laboratorio de uso potencialmente sanitario, aunque el código no distingue uso final médico.",
+  "901120",
+  "Microscopes, compound optical: for photomicrography, cinephotomicrography or microprojection.",
+  "Equipos de laboratorio",
+  "Asignación preliminar: equipo de laboratorio de uso potencialmente sanitario, aunque el código no distingue uso final médico.",
+  "902219",
+  "Apparatus based on the use of x-rays, including radiography or radiotherapy apparatus: for other than medical, surgical, dental or veterinary uses.",
+  "Dispositivos de diagnóstico por imagen",
+  "Código explícitamente definido para usos distintos de los médicos, quirúrgicos, dentales o veterinarios; se incluye sólo para evaluar su peso potencial."
+)
+
+exports_region <- load_dashboard_data(
+  "exports_region_hc_cat2.rds",
+  data_dir = "data/dashboard"
+)
+
+trade_balance <- load_dashboard_data(
+  "trade_balance_lac.rds",
+  data_dir = "data/dashboard"
+)
+
+product_catalog_raw <- readxl::read_excel(
+  "data/rev_paho_2026.xlsx",
+  sheet = "exportable"
+) |>
+  janitor::clean_names()
+
+product_code_col <- intersect(c("code", "product"), names(product_catalog_raw))
+if (length(product_code_col) == 0) {
+  stop("No se encontró una columna de código de producto en data/rev_paho_2026.xlsx.", call. = FALSE)
+}
+product_code_col <- product_code_col[[1]]
+
+product_catalog <- product_catalog_raw |>
+  dplyr::mutate(
+    product = as.character(.data[[product_code_col]]),
+    hc = as.integer(hc),
+    current_hc_cat2 = dplyr::if_else(
+      .data$hc == 1L,
+      as.character(hc_cat2),
+      NA_character_
+    )
+  ) |>
+  dplyr::arrange(product, dplyr::desc(.data$hc == 1L)) |>
+  dplyr::distinct(product, .keep_all = TRUE) |>
+  dplyr::select(product, hc, current_hc_cat2)
+
+candidate_products <- candidate_products |>
+  dplyr::left_join(product_catalog, by = "product") |>
+  dplyr::mutate(
+    current_status = dplyr::case_when(
+      !is.na(.data$current_hc_cat2) & .data$current_hc_cat2 == .data$evaluation_hc_cat2 ~
+        "Ya incluida en la categoría de evaluación",
+      !is.na(.data$current_hc_cat2) ~
+        "Incluida actualmente en otra categoría",
+      !is.na(.data$hc) ~
+        "Presente en la hoja exportable, pero no activa como producto de salud",
+      TRUE ~ "No incluida actualmente en la clasificación"
+    ),
+    candidate_is_new_for_category = is.na(.data$current_hc_cat2) |
+      .data$current_hc_cat2 != .data$evaluation_hc_cat2,
+    current_hc_cat2 = tidyr::replace_na(
+      .data$current_hc_cat2,
+      "Sin categoría hc_cat2 activa"
+    )
+  )
+
+candidate_product_codes <- candidate_products$product
+
+# Clasificación de países equivalente a la usada en el script de procesamiento.
+# Se replica aquí para que esta página sea autocontenida y no obligue a crear
+# una nueva base liviana sólo para esta decisión metodológica puntual.
+countries <- readr::read_csv(
+  "data/raw/country_codes_V202601.csv",
+  show_col_types = FALSE
+) |>
+  dplyr::left_join(
+    readxl::read_excel("data/country-class.xlsx") |>
+      janitor::clean_names(),
+    by = c("country_iso3" = "code")
+  ) |>
+  dplyr::mutate(
+    country_code = as.integer(country_code),
+    region = dplyr::case_when(
+      region == "Middle East, North Africa, Afghanistan & Pakistan" ~ "MENA",
+      region == "Latin America & Caribbean" ~ "LAC",
+      region == "East Asia & Pacific" ~ "Asia oriental y el Pacífico",
+      region == "Central Asia" ~ "Asia central",
+      region == "Europe" ~ "Europa",
+      region == "North America" ~ "América del Norte",
+      region == "South Asia" ~ "Asia meridional",
+      region == "Sub-Saharan Africa" ~ "África al sur del Sahara",
+      TRUE ~ unclassified_region
+    ),
+    region = dplyr::if_else(
+      country_code == 490L,
+      "Asia oriental y el Pacífico",
+      region
+    ),
+    region = dplyr::if_else(
+      country_code %in% c(533L, 531L, 796L, 92L, 534L),
+      unclassified_region,
+      region
+    )
+  ) |>
+  dplyr::select(country_code, country_name, region)
+
+countries_exp <- countries |>
+  dplyr::rename_with(~ paste0("exp_", .), -country_code)
+countries_imp <- countries |>
+  dplyr::rename_with(~ paste0("imp_", .), -country_code)
+
+candidate_trade <- arrow::open_dataset("data/raw/parquet") |>
+  dplyr::mutate(product = as.character(product)) |>
+  dplyr::filter(product %in% .env$candidate_product_codes) |>
+  dplyr::collect() |>
+  dplyr::left_join(countries_exp, by = c("exporter" = "country_code")) |>
+  dplyr::left_join(countries_imp, by = c("importer" = "country_code")) |>
+  dplyr::mutate(
+    exp_region = tidyr::replace_na(as.character(exp_region), unclassified_region),
+    imp_region = tidyr::replace_na(as.character(imp_region), unclassified_region)
+  )
+
+if (nrow(candidate_trade) == 0) {
+  stop("No se encontraron flujos BACI para los productos candidatos.", call. = FALSE)
+}
+
+common_years <- Reduce(
+  intersect,
+  list(
+    unique(candidate_trade$year),
+    unique(exports_region$year),
+    unique(trade_balance$year)
+  )
+)
+latest_year <- max(common_years, na.rm = TRUE)
+
+category_world_totals <- exports_region |>
+  dplyr::group_by(year, evaluation_hc_cat2 = hc_cat2) |>
+  dplyr::summarise(
+    category_world_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+category_lac_totals <- trade_balance |>
+  dplyr::filter(
+    .data$ref_area_code == "LAC",
+    .data$ref_area_type == "region"
+  ) |>
+  dplyr::group_by(year, evaluation_hc_cat2 = hc_cat2) |>
+  dplyr::summarise(
+    category_lac_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+    category_lac_imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+category_totals <- category_world_totals |>
+  dplyr::left_join(
+    category_lac_totals,
+    by = c("year", "evaluation_hc_cat2")
+  )
+
+candidate_by_product <- candidate_trade |>
+  dplyr::group_by(year, product) |>
+  dplyr::summarise(
+    candidate_world_exports_1000usd = sum(value_1000usd, na.rm = TRUE),
+    candidate_lac_exports_1000usd = sum(
+      dplyr::if_else(exp_region == "LAC", value_1000usd, 0),
+      na.rm = TRUE
+    ),
+    candidate_lac_imports_1000usd = sum(
+      dplyr::if_else(imp_region == "LAC", value_1000usd, 0),
+      na.rm = TRUE
+    ),
+    .groups = "drop"
+  ) |>
+  dplyr::left_join(candidate_products, by = "product") |>
+  dplyr::left_join(
+    category_totals,
+    by = c("year", "evaluation_hc_cat2")
+  ) |>
+  dplyr::mutate(
+    world_denominator_if_included_1000usd = category_world_exports_1000usd +
+      dplyr::if_else(
+        candidate_is_new_for_category,
+        candidate_world_exports_1000usd,
+        0
+      ),
+    lac_exports_denominator_if_included_1000usd = category_lac_exports_1000usd +
+      dplyr::if_else(
+        candidate_is_new_for_category,
+        candidate_lac_exports_1000usd,
+        0
+      ),
+    lac_imports_denominator_if_included_1000usd = category_lac_imports_1000usd +
+      dplyr::if_else(
+        candidate_is_new_for_category,
+        candidate_lac_imports_1000usd,
+        0
+      ),
+    share_world_exports_if_included = dplyr::if_else(
+      world_denominator_if_included_1000usd > 0,
+      candidate_world_exports_1000usd / world_denominator_if_included_1000usd,
+      NA_real_
+    ),
+    share_lac_exports_if_included = dplyr::if_else(
+      lac_exports_denominator_if_included_1000usd > 0,
+      candidate_lac_exports_1000usd / lac_exports_denominator_if_included_1000usd,
+      NA_real_
+    ),
+    share_lac_imports_if_included = dplyr::if_else(
+      lac_imports_denominator_if_included_1000usd > 0,
+      candidate_lac_imports_1000usd / lac_imports_denominator_if_included_1000usd,
+      NA_real_
+    )
+  )
+
+candidate_by_category <- candidate_by_product |>
+  dplyr::group_by(year, evaluation_hc_cat2) |>
+  dplyr::summarise(
+    candidate_products = paste(product, collapse = ", "),
+    n_products = dplyr::n_distinct(product),
+    candidate_world_exports_1000usd = sum(candidate_world_exports_1000usd, na.rm = TRUE),
+    candidate_lac_exports_1000usd = sum(candidate_lac_exports_1000usd, na.rm = TRUE),
+    candidate_lac_imports_1000usd = sum(candidate_lac_imports_1000usd, na.rm = TRUE),
+    candidate_world_exports_to_add_1000usd = sum(
+      dplyr::if_else(candidate_is_new_for_category, candidate_world_exports_1000usd, 0),
+      na.rm = TRUE
+    ),
+    candidate_lac_exports_to_add_1000usd = sum(
+      dplyr::if_else(candidate_is_new_for_category, candidate_lac_exports_1000usd, 0),
+      na.rm = TRUE
+    ),
+    candidate_lac_imports_to_add_1000usd = sum(
+      dplyr::if_else(candidate_is_new_for_category, candidate_lac_imports_1000usd, 0),
+      na.rm = TRUE
+    ),
+    category_world_exports_1000usd = dplyr::first(category_world_exports_1000usd),
+    category_lac_exports_1000usd = dplyr::first(category_lac_exports_1000usd),
+    category_lac_imports_1000usd = dplyr::first(category_lac_imports_1000usd),
+    .groups = "drop"
+  ) |>
+  dplyr::mutate(
+    world_denominator_if_included_1000usd = category_world_exports_1000usd +
+      candidate_world_exports_to_add_1000usd,
+    lac_exports_denominator_if_included_1000usd = category_lac_exports_1000usd +
+      candidate_lac_exports_to_add_1000usd,
+    lac_imports_denominator_if_included_1000usd = category_lac_imports_1000usd +
+      candidate_lac_imports_to_add_1000usd,
+    share_world_exports_if_included = dplyr::if_else(
+      world_denominator_if_included_1000usd > 0,
+      candidate_world_exports_1000usd / world_denominator_if_included_1000usd,
+      NA_real_
+    ),
+    share_lac_exports_if_included = dplyr::if_else(
+      lac_exports_denominator_if_included_1000usd > 0,
+      candidate_lac_exports_1000usd / lac_exports_denominator_if_included_1000usd,
+      NA_real_
+    ),
+    share_lac_imports_if_included = dplyr::if_else(
+      lac_imports_denominator_if_included_1000usd > 0,
+      candidate_lac_imports_1000usd / lac_imports_denominator_if_included_1000usd,
+      NA_real_
+    )
+  )
+
+candidate_latest <- candidate_by_product |>
+  dplyr::filter(year == latest_year)
+
+category_latest <- candidate_by_category |>
+  dplyr::filter(year == latest_year)
+
+format_usd_musd_plain <- function(x) {
+  scales::label_number(
+    accuracy = 0.1,
+    big.mark = ".",
+    decimal.mark = ","
+  )(x / 1000)
+}
+
+render_candidate_product_table <- function(data) {
+  table_data <- data |>
+    dplyr::transmute(
+      producto = product,
+      descripcion = description,
+      categoria_evaluacion = evaluation_hc_cat2,
+      exportaciones_mundo_musd = candidate_world_exports_1000usd / 1000,
+      peso_exportaciones_mundo = share_world_exports_if_included,
+      exportaciones_lac_musd = candidate_lac_exports_1000usd / 1000,
+      peso_exportaciones_lac = share_lac_exports_if_included,
+      importaciones_lac_musd = candidate_lac_imports_1000usd / 1000,
+      peso_importaciones_lac = share_lac_imports_if_included
+    )
+
+  reactable::reactable(
+    table_data,
+    searchable = TRUE,
+    filterable = TRUE,
+    defaultPageSize = 4,
+    columns = list(
+      producto = reactable::colDef(name = "HS07"),
+      descripcion = reactable::colDef(name = "Descripción", minWidth = 300),
+      categoria_evaluacion = reactable::colDef(name = "Categoría de evaluación", minWidth = 260),
+      exportaciones_mundo_musd = reactable::colDef(
+        name = "Exp. mundiales, USD millones",
+        align = "right",
+        format = reactable::colFormat(digits = 1, separators = TRUE)
+      ),
+      peso_exportaciones_mundo = reactable::colDef(
+        name = "% de exp. mundiales de la categoría",
+        align = "right",
+        format = reactable::colFormat(percent = TRUE, digits = 2)
+      ),
+      exportaciones_lac_musd = reactable::colDef(
+        name = "Exp. LAC, USD millones",
+        align = "right",
+        format = reactable::colFormat(digits = 1, separators = TRUE)
+      ),
+      peso_exportaciones_lac = reactable::colDef(
+        name = "% de exp. LAC de la categoría",
+        align = "right",
+        format = reactable::colFormat(percent = TRUE, digits = 2)
+      ),
+      importaciones_lac_musd = reactable::colDef(
+        name = "Imp. LAC, USD millones",
+        align = "right",
+        format = reactable::colFormat(digits = 1, separators = TRUE)
+      ),
+      peso_importaciones_lac = reactable::colDef(
+        name = "% de imp. LAC de la categoría",
+        align = "right",
+        format = reactable::colFormat(percent = TRUE, digits = 2)
+      )
+    )
+  )
+}
+
+share_plot_data <- category_latest |>
+  dplyr::select(
+    evaluation_hc_cat2,
+    share_world_exports_if_included,
+    share_lac_exports_if_included,
+    share_lac_imports_if_included
+  ) |>
+  tidyr::pivot_longer(
+    cols = dplyr::starts_with("share_"),
+    names_to = "metric",
+    values_to = "share"
+  ) |>
+  dplyr::mutate(
+    metric = dplyr::recode(
+      metric,
+      share_world_exports_if_included = "Exp. mundiales",
+      share_lac_exports_if_included = "Exp. LAC",
+      share_lac_imports_if_included = "Imp. LAC"
+    ),
+    tooltip = make_tooltip(
+      glue::glue("<b>Categoría:</b> {evaluation_hc_cat2}"),
+      glue::glue("<b>Indicador:</b> {metric}"),
+      glue::glue("<b>Peso estimado:</b> {format_percent_label(share, accuracy = 0.01)}")
+    )
+  )
+```
+
+Esta página auxiliar estima cuánto pesarían cuatro productos candidatos en las estadísticas del dashboard si se incorporaran a las categorías indicadas abajo.
+
+## Productos evaluados
+
+```{r}
+#| label: candidate-product-table
+
+render_candidate_product_table(candidate_latest)
+```
+
+
+## Comparación visual
+
+```{r}
+#| label: candidate-share-plot
+#| fig-height: 5.6
+
+p <- share_plot_data |>
+  ggplot2::ggplot(
+    ggplot2::aes(
+      x = share,
+      y = forcats::fct_reorder(evaluation_hc_cat2, share, .fun = max),
+      fill = metric,
+      text = tooltip
+    )
+  ) +
+  ggplot2::geom_col(position = ggplot2::position_dodge(width = 0.75), width = 0.65) +
+  ggplot2::scale_x_continuous(
+    labels = scales::label_percent(accuracy = 0.1, decimal.mark = ","),
+    expand = ggplot2::expansion(mult = c(0, 0.08))
+  ) +
+  ggplot2::scale_fill_manual(
+    values = c(
+      "Exp. mundiales" = "#4C78A8",
+      "Exp. LAC" = "#1B9E77",
+      "Imp. LAC" = "#D95F02"
+    ),
+    name = NULL
+  ) +
+  ggplot2::labs(
+    title = glue::glue("Peso estimado de productos candidatos, {latest_year}"),
+    subtitle = "Participación en el total de la categoría de evaluación",
+    x = NULL,
+    y = NULL
+  ) +
+  theme_trade()
+
+plotly::ggplotly(p, tooltip = "text") |>
+  center_plotly_title(
+    title = glue::glue("Peso estimado de productos candidatos, {latest_year}"),
+    subtitle = "Participación en el total de la categoría de evaluación"
+  ) |>
+  plotly::layout(legend = list(orientation = "h", x = 0, y = -0.2))
+```

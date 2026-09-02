@@ -72,13 +72,396 @@ landing_kpis <- prepare_landing_category_kpis(
 )
 ```
 
-El dashboard analiza el comercio internacional de medicamentos, otras tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura HS 2007.
+::: {.column-page}
+El dashboard analiza el comercio internacional de medicamentos, otras tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura del Sistema Armonizado 2007.
 
-Los productos se clasificaron en categorías de uso común en la industria, cada una cuenta con una pestaña independiente en el dashboard:
+Los productos, a nivel de subpartida del Sistema Armonizado de seis dígitos, se clasificaron en categorías de uso común en salud. Cada una cuenta con una pestaña independiente en el dashboard:
+:::
 
-::: {.landing-category-diagram}
 
-![](../data/diagrama-categorias.png){fig-alt="Diagrama de categorías de productos" fig-align="center" width=70%}
+::: {.column-page}
+
+```{=html}
+<style>
+.ts-wrap {
+  --ts-ink: #111111;
+  --ts-sub-ink: #222222;
+  --ts-muted: #707070;
+
+  --ts-card-bg: #f8f9fa;
+  --ts-card-border: #e1e5e8;
+
+  --ts-teal-bar: #7fd1c4;
+  --ts-teal-bg: #dcefed;
+
+  --ts-coral-bar: #ff7c70;
+  --ts-coral-bg: #fbd5d2;
+
+  --ts-orange-bar: #ffb057;
+  --ts-orange-bg: #fde7ca;
+
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ts-sub-ink);
+
+  width: 100%;
+  max-width: 900px;   /* antes 1200px aprox */
+  margin: 30px auto 35px;
+}
+
+.ts-cards {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2.5fr) minmax(180px, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.ts-card {
+  box-sizing: border-box;
+  min-width: 0;
+
+  background: var(--ts-card-bg);
+  border: 2px solid var(--ts-card-border);
+  border-radius: 21px;
+
+  padding: 18px 20px 20px;
+}
+
+.ts-card-title {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ts-ink);
+  margin: 0 0 24px;
+}
+
+.ts-columns {
+  display: grid !important;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(280px, 1.45fr);
+  gap: 20px;
+  align-items: start;
+  width: 100%;
+}
+
+.ts-col {
+  min-width: 0;
+}
+
+.ts-col-header {
+  font-weight: 650;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: #555;
+  text-align: center;
+  margin: 0 0 13px;
+}
+
+.ts-list {
+  list-style: none;
+  margin: 0;
+  padding: 16px 15px 16px 20px;
+  border-left: 13px solid var(--ts-bar-color, #ccc);
+  background: var(--ts-bg-color, #f4f4f4);
+  border-radius: 9px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.ts-list--teal {
+  --ts-bar-color: var(--ts-teal-bar);
+  --ts-bg-color: var(--ts-teal-bg);
+}
+
+.ts-list--coral {
+  --ts-bar-color: var(--ts-coral-bar);
+  --ts-bg-color: var(--ts-coral-bg);
+}
+
+.ts-list--orange {
+  --ts-bar-color: var(--ts-orange-bar);
+  --ts-bg-color: var(--ts-orange-bg);
+}
+
+.ts-list li + li {
+  margin-top: 4px;
+}
+
+.ts-list a {
+  color: inherit !important;
+  text-decoration: none !important;
+  display: inline;
+  border-radius: 4px;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ts-list a:hover,
+.ts-list a:focus-visible {
+  background-color: rgba(0, 0, 0, 0.08);
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+.ts-card--narrow .ts-col {
+  margin-top: 0;
+}
+
+.ts-card--narrow .ts-list {
+  margin-top: 0;
+}
+
+.ts-card--narrow .ts-card-title {
+  margin-bottom: 24px;
+}
+
+.ts-footnote {
+  font-style: italic;
+  font-size: 0.64rem;
+  color: var(--ts-muted);
+  margin: 14px 4px 0;
+}
+
+@media (max-width: 900px) {
+  .ts-cards {
+    grid-template-columns: minmax(0, 2fr) minmax(160px, 0.8fr);
+    gap: 14px;
+  }
+
+  .ts-columns {
+    grid-template-columns: minmax(160px, 0.9fr) minmax(220px, 1.4fr);
+    gap: 14px;
+  }
+
+  .ts-card {
+    padding: 16px;
+  }
+
+  .ts-list {
+    font-size: 0.72rem;
+    padding: 14px 12px 14px 16px;
+    border-left-width: 10px;
+  }
+
+  .ts-card-title {
+    font-size: 1.1rem;
+  }
+
+  .ts-col-header {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .ts-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-card {
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .ts-card-title {
+    margin-bottom: 18px;
+  }
+}
+</style>
+
+<div class="ts-wrap">
+
+  <div class="ts-cards">
+
+    <!-- ====================================================
+         TECNOLOGÍAS SANITARIAS
+         ==================================================== -->
+
+    <section class="ts-card ts-card--wide">
+
+      <h2 class="ts-card-title">
+        Tecnologías sanitarias*
+      </h2>
+
+      <div class="ts-columns">
+
+        <!-- Medicamentos, vacunas y otros -->
+
+        <div class="ts-col">
+
+          <h3 class="ts-col-header">
+            Medicamentos, vacunas y otros
+          </h3>
+
+          <ul class="ts-list ts-list--teal">
+
+            <li>
+              <a href="medicamentos.html">
+                Medicamentos
+              </a>
+            </li>
+
+            <li>
+              <a href="vacunas-humanas.html">
+                Vacunas (humanas)
+              </a>
+            </li>
+
+            <li>
+              <a href="hemoderivados.html">
+                Sangre, inmunoglobulinas y antisueros
+              </a>
+            </li>
+
+            <li>
+              <a href="celulas-tejidos.html">
+                Células, tejidos y sustancias terapéuticas
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- Dispositivos médicos -->
+
+        <div class="ts-col">
+
+          <h3 class="ts-col-header">
+            Dispositivos médicos
+          </h3>
+
+          <ul class="ts-list ts-list--coral">
+
+            <li>
+              <a href="cuidado-de-heridas-y-dispositivos-proteccion.html">
+                Cuidado de heridas y dispositivos de protección
+              </a>
+            </li>
+
+            <li>
+              <a href="dispositivos-cardiovasculares.html">
+                Dispositivos cardiovasculares
+              </a>
+            </li>
+
+            <li>
+              <a href="diagnostico-in-vitro.html">
+                Dispositivos de diagnóstico in vitro y laboratorio
+              </a>
+            </li>
+
+            <li>
+              <a href="diagnostico-por-imagen.html">
+                Dispositivos de diagnóstico por imagen
+              </a>
+            </li>
+
+            <li>
+              <a href="dispositivos-esterilizacion.html">
+                Dispositivos de esterilización y desinfección
+              </a>
+            </li>
+
+            <li>
+              <a href="dispositivos-odontologicos.html">
+                Dispositivos odontológicos
+              </a>
+            </li>
+
+            <li>
+              <a href="dispositivos-rehabilitacion.html">
+                Dispositivos para rehabilitación y asistencia
+              </a>
+            </li>
+
+            <li>
+              <a href="dispositivos-quirurgicos.html">
+                Dispositivos quirúrgicos e invasivos
+              </a>
+            </li>
+
+            <li>
+              <a href="equipos-diagnostico.html">
+                Equipos de diagnóstico y monitoreo
+              </a>
+            </li>
+
+            <li>
+              <a href="equipos-laboratorio.html">
+                Equipos de laboratorio
+              </a>
+            </li>
+
+            <li>
+              <a href="equipos-terapeuticos.html">
+                Equipos terapéuticos
+              </a>
+            </li>
+
+            <li>
+              <a href="insumos-medicos-y-suministros.html">
+                Insumos médicos y suministros para pacientes
+              </a>
+            </li>
+
+            <li>
+              <a href="mobiliario-medico.html">
+                Mobiliario médico y elementos de soporte
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         INSUMOS
+         ==================================================== -->
+
+    <section class="ts-card ts-card--narrow">
+
+      <h2 class="ts-card-title">
+        Insumos
+      </h2>
+
+      <div class="ts-col">
+
+        <h3 class="ts-col-header">
+          IFAs
+        </h3>
+
+        <ul class="ts-list ts-list--orange">
+
+          <li>
+            <a href="ifas.html">
+              Ingredientes farmacéuticos activos
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <p class="ts-footnote">
+    *Incluye medicamentos, vacunas, dispositivos médicos y otros.
+  </p>
+
+</div>
+```
 
 :::
 
@@ -89,5 +472,6 @@ Los productos se clasificaron en categorías de uso común en la industria, cada
 
 render_landing_kpi_cards(landing_kpis)
 ```
+
 
 

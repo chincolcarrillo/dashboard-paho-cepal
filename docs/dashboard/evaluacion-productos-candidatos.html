@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>notas_metodologicas – Dashboard PAHO/CEPAL</title>
+<title>Evaluación de productos candidatos – Dashboard PAHO/CEPAL</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -71,8 +71,43 @@ ul.task-list li input[type="checkbox"] {
   }
 }</script>
 <style>html{ scroll-behavior: smooth; }</style>
+<script src="../site_libs/core-js-2.5.3/shim.min.js"></script>
+
+<script src="../site_libs/react-18.2.0/react.min.js"></script>
+
+<script src="../site_libs/react-18.2.0/react-dom.min.js"></script>
+
+<script src="../site_libs/reactwidget-2.0.0/react-tools.js"></script>
+
+<link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
+
+<script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<link href="../site_libs/reactable-0.4.5/reactable.css" rel="stylesheet">
+
+<script src="../site_libs/reactable-binding-0.4.5/reactable.js"></script>
+
+<script src="../site_libs/plotly-binding-4.12.0/plotly.js"></script>
+
+<script src="../site_libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="../site_libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="../site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="../site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+<link href="../site_libs/plotly-htmlwidgets-css-2.25.2/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="../site_libs/plotly-main-2.25.2/plotly-latest.min.js"></script>
+
+<link href="../site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet">
+
+<script src="../site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
+
+<link rel="stylesheet" href="category-page.css">
 </head>
 
 <body class="nav-fixed quarto-light">
@@ -196,7 +231,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -204,161 +239,54 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#notas-metodológicas---plots-y-tablas-del-dashboard" id="toc-notas-metodológicas---plots-y-tablas-del-dashboard" class="nav-link active" data-scroll-target="#notas-metodológicas---plots-y-tablas-del-dashboard">Notas metodológicas - Plots y tablas del dashboard</a>
-  <ul class="collapse">
-  <li><a href="#fuente-y-unidades-de-los-datos" id="toc-fuente-y-unidades-de-los-datos" class="nav-link" data-scroll-target="#fuente-y-unidades-de-los-datos">1. Fuente y unidades de los datos</a></li>
-  <li><a href="#bases-de-entrada-esperadas" id="toc-bases-de-entrada-esperadas" class="nav-link" data-scroll-target="#bases-de-entrada-esperadas">2. Bases de entrada esperadas</a></li>
-  <li><a href="#indicadores-calculados" id="toc-indicadores-calculados" class="nav-link" data-scroll-target="#indicadores-calculados">3. Indicadores calculados</a>
-  <ul class="collapse">
-  <li><a href="#participación-en-exportaciones-mundiales-market-share" id="toc-participación-en-exportaciones-mundiales-market-share" class="nav-link" data-scroll-target="#participación-en-exportaciones-mundiales-market-share">3.1 Participación en exportaciones mundiales (<em>market share</em>)</a></li>
-  <li><a href="#balance-comercial" id="toc-balance-comercial" class="nav-link" data-scroll-target="#balance-comercial">3.2 Balance comercial</a></li>
-  <li><a href="#razón-importacionesexportaciones" id="toc-razón-importacionesexportaciones" class="nav-link" data-scroll-target="#razón-importacionesexportaciones">3.3 Razón importaciones/exportaciones</a></li>
-  <li><a href="#composición-regional-del-comercio-contraparte" id="toc-composición-regional-del-comercio-contraparte" class="nav-link" data-scroll-target="#composición-regional-del-comercio-contraparte">3.4 Composición regional del comercio (contraparte)</a></li>
-  <li><a href="#comercio-intrarregional-lac-sankey" id="toc-comercio-intrarregional-lac-sankey" class="nav-link" data-scroll-target="#comercio-intrarregional-lac-sankey">3.5 Comercio intrarregional LAC (Sankey)</a></li>
-  <li><a href="#participación-de-las-exportaciones-hacia-lac-por-país" id="toc-participación-de-las-exportaciones-hacia-lac-por-país" class="nav-link" data-scroll-target="#participación-de-las-exportaciones-hacia-lac-por-país">3.6 Participación de las exportaciones hacia LAC por país</a></li>
-  <li><a href="#cagr-tasa-de-crecimiento-anual-compuesta" id="toc-cagr-tasa-de-crecimiento-anual-compuesta" class="nav-link" data-scroll-target="#cagr-tasa-de-crecimiento-anual-compuesta">3.7 CAGR (tasa de crecimiento anual compuesta)</a></li>
-  <li><a href="#crecimiento-interanual-a-n-años-series-de-tendencia" id="toc-crecimiento-interanual-a-n-años-series-de-tendencia" class="nav-link" data-scroll-target="#crecimiento-interanual-a-n-años-series-de-tendencia">3.8 Crecimiento interanual / a n años (series de tendencia)</a></li>
-  <li><a href="#distribución-del-comercio-de-un-país-entre-categorías" id="toc-distribución-del-comercio-de-un-país-entre-categorías" class="nav-link" data-scroll-target="#distribución-del-comercio-de-un-país-entre-categorías">3.9 Distribución del comercio de un país entre categorías</a></li>
-  <li><a href="#índice-de-ventaja-comparativa-revelada-rca-de-balassa" id="toc-índice-de-ventaja-comparativa-revelada-rca-de-balassa" class="nav-link" data-scroll-target="#índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</a></li>
-  <li><a href="#kpi-de-la-página-de-inicio-por-categoría" id="toc-kpi-de-la-página-de-inicio-por-categoría" class="nav-link" data-scroll-target="#kpi-de-la-página-de-inicio-por-categoría">3.11 KPI de la página de inicio, por categoría</a></li>
-  </ul></li>
-  <li><a href="#notas-generales" id="toc-notas-generales" class="nav-link" data-scroll-target="#notas-generales">4. Notas generales</a></li>
-  </ul></li>
+  <li><a href="#productos-evaluados" id="toc-productos-evaluados" class="nav-link active" data-scroll-target="#productos-evaluados">Productos evaluados</a></li>
+  <li><a href="#comparación-visual" id="toc-comparación-visual" class="nav-link" data-scroll-target="#comparación-visual">Comparación visual</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content column-page-left" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Evaluación de productos candidatos</h1>
+<p class="subtitle lead">Reunión 04 de septiembre</p>
+</div>
 
 
 
+<div class="quarto-title-meta column-page-left">
 
-<section id="notas-metodológicas---plots-y-tablas-del-dashboard" class="level1">
-<h1>Notas metodológicas - Plots y tablas del dashboard</h1>
-<section id="fuente-y-unidades-de-los-datos" class="level2">
-<h2 class="anchored" data-anchor-id="fuente-y-unidades-de-los-datos">1. Fuente y unidades de los datos</h2>
-<ul>
-<li>Fuente: BACI/CEPII, con clasificación de categorías de producto propia (<code>hc_cat2</code>, en “data/rev_paho_2026.xlsx”).</li>
-<li><strong>Unidad base de todas las variables de valor: miles de USD</strong> (<code>_1000usd</code>). Las funciones de formato convierten sobre esa base:
-<ul>
-<li><code>format_usd_thousands()</code>: mantiene la unidad (miles de USD).</li>
-<li><code>format_usd_millions()</code> / <code>to_musd()</code>: <code>x / 1.000</code> -&gt; millones de USD.</li>
-<li><code>format_usd_billions()</code>: <code>x / 1.000.000</code> -&gt; miles de millones de USD.</li>
-<li><code>format_percent_label()</code>: formatea proporciones (0–1) como porcentaje.</li>
-</ul></li>
-<li>Formato: separador de miles <code>.</code>, decimal <code>,</code> (español).</li>
-<li>Los niveles y colores de región (<code>region_levels</code>, <code>region_long_labels</code>, <code>region_colors</code>) y de categoría (<code>hc_cat2_levels</code>) se definen en <code>r/00_config.R</code>.</li>
-</ul>
-</section>
-<section id="bases-de-entrada-esperadas" class="level2">
-<h2 class="anchored" data-anchor-id="bases-de-entrada-esperadas">2. Bases de entrada esperadas</h2>
-<table class="caption-top table">
-<colgroup>
-<col style="width: 50%">
-<col style="width: 50%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Base (<code>.rds</code>)</th>
-<th>Uso principal</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td><code>exports_region_hc_cat2</code></td>
-<td>Exportaciones mundiales por año, región exportadora y categoría</td>
-</tr>
-<tr class="even">
-<td><code>trade_balance_lac</code></td>
-<td>Exportaciones, importaciones y balance por año, área (país o LAC) y categoría</td>
-</tr>
-<tr class="odd">
-<td><code>partner_region_lac_2024</code></td>
-<td>Comercio por región contraparte (destino en exportaciones, origen en importaciones)</td>
-</tr>
-<tr class="even">
-<td><code>sankey_intra_lac</code></td>
-<td>Flujos bilaterales de exportación entre países de LAC</td>
-</tr>
-<tr class="odd">
-<td><code>overview_exports_trends</code></td>
-<td>Series Mundo/LAC por grupo de producto, para la página de resumen</td>
-</tr>
-<tr class="even">
-<td><code>overview_lac_country_category_trade</code></td>
-<td>Comercio por país de LAC y categoría, para la página de resumen</td>
-</tr>
-<tr class="odd">
-<td><code>product_exports_lac_2024_by_country</code></td>
-<td>Exportaciones por producto (HS07) y país, con RCA ya calculado</td>
-</tr>
-</tbody>
-</table>
-<p><code>check_required_columns()</code> valida que cada base tenga las columnas necesarias antes de calcular nada, y <code>load_dashboard_data()</code> centraliza la lectura desde <code>data/dashboard/</code>.</p>
-</section>
-<section id="indicadores-calculados" class="level2">
-<h2 class="anchored" data-anchor-id="indicadores-calculados">3. Indicadores calculados</h2>
-<section id="participación-en-exportaciones-mundiales-market-share" class="level3">
-<h3 class="anchored" data-anchor-id="participación-en-exportaciones-mundiales-market-share">3.1 Participación en exportaciones mundiales (<em>market share</em>)</h3>
-<p><code>share_exports_value = exports_1000usd / world_exports_1000usd</code>, agregado por año y región exportadora (y opcionalmente categoría). Se usa en el stacked area chart regional (<code>plot_exports_region_area</code>) y en la línea de participación de LAC (<code>plot_lac_world_share_line</code>).</p>
-</section>
-<section id="balance-comercial" class="level3">
-<h3 class="anchored" data-anchor-id="balance-comercial">3.2 Balance comercial</h3>
-<p>Por año, área y categoría: <code>balance_1000usd = exports_1000usd - imports_1000usd</code>. Se grafica como exportaciones (positivas) e importaciones (negativas) más una línea de balance neto (<code>plot_trade_balance</code>).</p>
-</section>
-<section id="razón-importacionesexportaciones" class="level3">
-<h3 class="anchored" data-anchor-id="razón-importacionesexportaciones">3.3 Razón importaciones/exportaciones</h3>
-<p><code>razon_import_export = imports_musd / exports_musd</code> (si <code>exports_musd &gt; 0</code>, si no <code>NA</code>). Se calcula en la tabla de resultados por país (<code>render_country_results_table</code>).</p>
-</section>
-<section id="composición-regional-del-comercio-contraparte" class="level3">
-<h3 class="anchored" data-anchor-id="composición-regional-del-comercio-contraparte">3.4 Composición regional del comercio (contraparte)</h3>
-<p>Para cada año/área/flujo (exportación o importación): <code>share_flow_value = value_1000usd / sum(value_1000usd)</code> dentro de ese grupo, donde la región contraparte es el <strong>destino</strong> en exportaciones y el <strong>origen</strong> en importaciones. Alimenta las barras apiladas al 100 % (<code>plot_partner_region_100pct</code>).</p>
-</section>
-<section id="comercio-intrarregional-lac-sankey" class="level3">
-<h3 class="anchored" data-anchor-id="comercio-intrarregional-lac-sankey">3.5 Comercio intrarregional LAC (Sankey)</h3>
-<p><code>prepare_sankey_data()</code> agrega <code>value_1000usd</code> por par origen–destino dentro de LAC para un año y categoría dados. Por defecto excluye flujos donde origen = destino (<code>keep_self_flows = FALSE</code>) y permite aplicar un umbral mínimo (<code>min_value_1000usd</code>) y quedarse solo con los <code>top_n_flows</code> de mayor valor.</p>
-</section>
-<section id="participación-de-las-exportaciones-hacia-lac-por-país" class="level3">
-<h3 class="anchored" data-anchor-id="participación-de-las-exportaciones-hacia-lac-por-país">3.6 Participación de las exportaciones hacia LAC por país</h3>
-<p>Para cada país de LAC: - <code>intra_lac_export_share = exportaciones intrarregionales / exportaciones totales del país</code> - <strong>Principal destino LAC</strong>: el país socio con mayor valor de exportación intrarregional, con su participación (<code>main_lac_destination_share</code>) sobre el total exportado por el país.</p>
-<p>Ambos se calculan en <code>prepare_intra_lac_export_share()</code>, cruzando <code>trade_balance_lac</code> (total exportado) con <code>sankey_intra_lac</code> (flujos bilaterales).</p>
-</section>
-<section id="cagr-tasa-de-crecimiento-anual-compuesta" class="level3">
-<h3 class="anchored" data-anchor-id="cagr-tasa-de-crecimiento-anual-compuesta">3.7 CAGR (tasa de crecimiento anual compuesta)</h3>
-<p>Fórmula general (<code>calculate_cagr()</code>):</p>
-<pre><code>CAGR = (valor_final / valor_inicial)^(1 / n_años) - 1</code></pre>
-<p>Devuelve <code>NA</code> si el valor inicial es ≤ 0 o si <code>n_años ≤ 0</code>. Se usa en dos ventanas para los KPI de la página de inicio (<code>prepare_landing_category_kpis()</code>), sobre exportaciones mundiales por categoría: - <strong>CAGR histórico completo</strong>: desde el primer año disponible hasta el último. - <strong>CAGR de los últimos 5 años</strong> (<code>cagr_window</code>, configurable, default = 5).</p>
-</section>
-<section id="crecimiento-interanual-a-n-años-series-de-tendencia" class="level3">
-<h3 class="anchored" data-anchor-id="crecimiento-interanual-a-n-años-series-de-tendencia">3.8 Crecimiento interanual / a n años (series de tendencia)</h3>
-<p>En <code>plot_overview_exports_growth_trends()</code>, para cada serie (<code>line_label</code> = ámbito × grupo de producto):</p>
-<pre><code>growth_rate = exports_1000usd(t) / exports_1000usd(t - lag_years) - 1</code></pre>
-<p>Si <code>annualized = TRUE</code> y <code>lag_years &gt; 1</code>, el resultado se anualiza: <code>(1 + growth_rate)^(1/lag_years) - 1</code>. Con <code>lag_years = 1</code> (default) es simplemente el crecimiento interanual.</p>
-</section>
-<section id="distribución-del-comercio-de-un-país-entre-categorías" class="level3">
-<h3 class="anchored" data-anchor-id="distribución-del-comercio-de-un-país-entre-categorías">3.9 Distribución del comercio de un país entre categorías</h3>
-<p>Dentro de cada país y flujo (exportación/importación): <code>share_value = value_1000usd / total_value_1000usd_del_país</code>. Muestra cómo se compone el comercio de tecnologías sanitarias de cada país por categoría (<code>plot_overview_lac_country_category_share</code>).</p>
-</section>
-<section id="índice-de-ventaja-comparativa-revelada-rca-de-balassa" class="level3">
-<h3 class="anchored" data-anchor-id="índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</h3>
-<p><strong>Se calcula en el script 03_trade_indicators.R</strong> La columna <code>rca_balassa</code> llega ya calculada desde la base <code>product_exports_lac_2024_by_country</code> (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En <code>render_product_exports_by_country_table()</code> <strong>se promedia (<code>mean</code>) si hay múltiples registros por producto/país [quizás sacar???]</strong>, y la tabla se filtra a productos con <code>rca_balassa &gt; 1</code> <strong>o</strong> exportaciones <code>&gt; US$ 1 millón</code>, para priorizar productos relevantes.</p>
-</section>
-<section id="kpi-de-la-página-de-inicio-por-categoría" class="level3">
-<h3 class="anchored" data-anchor-id="kpi-de-la-página-de-inicio-por-categoría">3.11 KPI de la página de inicio, por categoría</h3>
-<p><code>prepare_landing_category_kpis()</code> combina, por categoría (<code>hc_cat2</code>) y último año disponible: - Comercio total global (exportaciones mundiales de la categoría). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.</p>
-<p>Las categorías se agrupan en tres grupos temáticos (<code>landing_kpi_group</code>): dispositivos médicos, insumos/ingredientes farmacéuticos activos, y “otras tecnologías sanitarias” (resto), cada uno con un color asociado para las tarjetas de KPI.</p>
-</section>
-</section>
-<section id="notas-generales" class="level2">
-<h2 class="anchored" data-anchor-id="notas-generales">4. Notas generales</h2>
-<ul>
-<li>Todas las funciones de gráfico aceptan <code>interactive = TRUE/FALSE</code>: <code>TRUE</code> devuelve un widget <code>plotly</code>/<code>networkD3</code>; <code>FALSE</code> devuelve el objeto <code>ggplot</code> estático equivalente (mismo cálculo subyacente).</li>
-<li><code>check_required_columns()</code> se llama al inicio de casi toda función que recibe una base externa: si falta una columna requerida, la función se detiene con un mensaje explícito en vez de fallar más adelante de forma críptica.</li>
-<li>Los <code>NA</code> en tasas de crecimiento y en participaciones (<code>share_*</code>) ocurren cuando el denominador es 0, negativo o no disponible; se excluyen o se muestran como “n/d” según el contexto (<code>format_landing_kpi_value</code>).</li>
-</ul>
+    
+  
+    
+  </div>
+  
 
 
+</header>
+
+
+<p>Esta página auxiliar estima cuánto pesarían cuatro productos candidatos en las estadísticas del dashboard si se incorporaran a las categorías indicadas abajo.</p>
+<section id="productos-evaluados" class="level2">
+<h2 class="anchored" data-anchor-id="productos-evaluados">Productos evaluados</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="reactable html-widget html-fill-item" id="htmlwidget-d9906a29a54b928154b8" style="width:auto;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-d9906a29a54b928154b8">{"x":{"tag":{"name":"Reactable","attribs":{"data":{"producto":["382100","901110","901120","902219"],"descripcion":["Prepared culture media for the development or maintenance of micro-organisms (including viruses and the like) or of plant, human or animal cells.","Microscopes, compound optical: stereoscopic microscopes.","Microscopes, compound optical: for photomicrography, cinephotomicrography or microprojection.","Apparatus based on the use of x-rays, including radiography or radiotherapy apparatus: for other than medical, surgical, dental or veterinary uses."],"categoria_evaluacion":["Dispositivos de diagnóstico in vitro y de laboratorio","Equipos de laboratorio","Equipos de laboratorio","Dispositivos de diagnóstico por imagen"],"exportaciones_mundo_musd":[3625.536993,726.645915,212.947437,4316.113369],"peso_exportaciones_mundo":[0.0656408541654638,0.31458758381437,0.0921915589180637,0.110726871810135],"exportaciones_lac_musd":[76.598526,0.732405,0.14778,35.55963],"peso_exportaciones_lac":[0.229192762530162,0.276984220629813,0.0558881057948455,0.0548469391473372],"importaciones_lac_musd":[198.421723,39.520181,7.712993,486.598777],"peso_importaciones_lac":[0.0612520358558155,0.385429920432688,0.0752227900547286,0.185939144667345]},"columns":[{"id":"producto","name":"HS07","type":"character"},{"id":"descripcion","name":"Descripción","type":"character","minWidth":300},{"id":"categoria_evaluacion","name":"Categoría de evaluación","type":"character","minWidth":260},{"id":"exportaciones_mundo_musd","name":"Exp. mundiales, USD millones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"peso_exportaciones_mundo","name":"% de exp. mundiales de la categoría","type":"numeric","format":{"cell":{"digits":2,"percent":true},"aggregated":{"digits":2,"percent":true}},"align":"right"},{"id":"exportaciones_lac_musd","name":"Exp. LAC, USD millones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"peso_exportaciones_lac","name":"% de exp. LAC de la categoría","type":"numeric","format":{"cell":{"digits":2,"percent":true},"aggregated":{"digits":2,"percent":true}},"align":"right"},{"id":"importaciones_lac_musd","name":"Imp. LAC, USD millones","type":"numeric","format":{"cell":{"digits":1,"separators":true},"aggregated":{"digits":1,"separators":true}},"align":"right"},{"id":"peso_importaciones_lac","name":"% de imp. LAC de la categoría","type":"numeric","format":{"cell":{"digits":2,"percent":true},"aggregated":{"digits":2,"percent":true}},"align":"right"}],"filterable":true,"searchable":true,"defaultPageSize":4,"dataKey":"c576f960033e6fda05b49bce246dcad3"},"children":[]},"class":"reactR_markup"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
 </section>
+<section id="comparación-visual" class="level2">
+<h2 class="anchored" data-anchor-id="comparación-visual">Comparación visual</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-1339001c837914e64bfb" style="width:100%;height:519px;"></div>
+<script type="application/json" data-for="htmlwidget-1339001c837914e64bfb">{"x":{"data":[{"orientation":"v","width":[0.22919276253016158,0.054846939147337181,0.3328723264246588],"base":[1.6416666666666666,0.64166666666666672,2.6416666666666666],"x":[0.11459638126508079,0.027423469573668591,0.1664361632123294],"y":[0.21666666666666679,0.21666666666666656,0.21666666666666679],"text":["<b>Categoría:<\/b> Dispositivos de diagnóstico in vitro y de laboratorio<br><b>Indicador:<\/b> Exp. LAC<br><b>Peso estimado:<\/b> 22,92%","<b>Categoría:<\/b> Dispositivos de diagnóstico por imagen<br><b>Indicador:<\/b> Exp. LAC<br><b>Peso estimado:<\/b> 5,48%","<b>Categoría:<\/b> Equipos de laboratorio<br><b>Indicador:<\/b> Exp. LAC<br><b>Peso estimado:<\/b> 33,29%"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(27,158,119,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Exp. LAC","legendgroup":"Exp. LAC","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.065640854165463794,0.11072687181013499,0.40677914273243398],"base":[1.8916666666666666,0.89166666666666672,2.8916666666666666],"x":[0.032820427082731897,0.055363435905067496,0.20338957136621699],"y":[0.21666666666666679,0.21666666666666667,0.21666666666666679],"text":["<b>Categoría:<\/b> Dispositivos de diagnóstico in vitro y de laboratorio<br><b>Indicador:<\/b> Exp. mundiales<br><b>Peso estimado:<\/b> 6,56%","<b>Categoría:<\/b> Dispositivos de diagnóstico por imagen<br><b>Indicador:<\/b> Exp. mundiales<br><b>Peso estimado:<\/b> 11,07%","<b>Categoría:<\/b> Equipos de laboratorio<br><b>Indicador:<\/b> Exp. mundiales<br><b>Peso estimado:<\/b> 40,68%"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(76,120,168,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Exp. mundiales","legendgroup":"Exp. mundiales","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"orientation":"v","width":[0.06125203585581547,0.18593914466734526,0.46065271048741624],"base":[2.1416666666666666,1.1416666666666666,3.1416666666666666],"x":[0.030626017927907735,0.092969572333672632,0.23032635524370812],"y":[0.21666666666666679,0.21666666666666679,0.21666666666666679],"text":["<b>Categoría:<\/b> Dispositivos de diagnóstico in vitro y de laboratorio<br><b>Indicador:<\/b> Imp. LAC<br><b>Peso estimado:<\/b> 6,13%","<b>Categoría:<\/b> Dispositivos de diagnóstico por imagen<br><b>Indicador:<\/b> Imp. LAC<br><b>Peso estimado:<\/b> 18,59%","<b>Categoría:<\/b> Equipos de laboratorio<br><b>Indicador:<\/b> Imp. LAC<br><b>Peso estimado:<\/b> 46,07%"],"type":"bar","textposition":"none","marker":{"autocolorscale":false,"color":"rgba(217,95,2,1)","line":{"width":1.8897637795275593,"color":"transparent"}},"name":"Imp. LAC","legendgroup":"Imp. LAC","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":85,"r":7.9701120797011216,"b":24.707347447073481,"l":349.88792029887935},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241},"title":{"text":"Peso estimado de productos candidatos, 2024<br><sup>Participación en el total de la categoría de evaluación<\/sup>","font":{"color":"rgba(0,0,0,1)","family":"","size":19.128268991282692},"x":0.5,"xref":"paper","xanchor":"center"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,0.49750492732640955],"tickmode":"array","ticktext":["0,0%","10,0%","20,0%","30,0%","40,0%"],"tickvals":[0,0.10000000000000001,0.20000000000000001,0.30000000000000004,0.40000000000000002],"categoryorder":"array","categoryarray":["0,0%","10,0%","20,0%","30,0%","40,0%"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505603,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"y","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241}},"hoverformat":".2f"},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0.40000000000000002,3.6000000000000001],"tickmode":"array","ticktext":["Dispositivos de diagnóstico por imagen","Dispositivos de diagnóstico in vitro y de laboratorio","Equipos de laboratorio"],"tickvals":[1,2,3],"categoryorder":"array","categoryarray":["Dispositivos de diagnóstico por imagen","Dispositivos de diagnóstico in vitro y de laboratorio","Equipos de laboratorio"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.9850560398505608,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(77,77,77,1)","family":"","size":12.7521793275218},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(235,235,235,1)","gridwidth":0.72455564360919278,"zeroline":false,"anchor":"x","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241}},"hoverformat":".2f"},"shapes":[],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(0,0,0,1)","family":"","size":12.7521793275218},"orientation":"h","x":0,"y":-0.20000000000000001,"xanchor":"center","yanchor":"top","title":{"text":"","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402241}}},"hovermode":"closest","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"52683bf0cde":{"x":{},"y":{},"fill":{},"text":{},"type":"bar"}},"cur_data":"52683bf0cde","visdat":{"52683bf0cde":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+
 </section>
 
 </main> <!-- /main -->

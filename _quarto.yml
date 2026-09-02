@@ -12,11 +12,8 @@ website:
         href: dashboard/index.qmd
       - text: "Panorama regional"
         href: dashboard/panorama-regional.qmd
-      - text: "Categorías"
+      - text: "Tecnologías sanitarias"
         menu:
-          - text: "── Insumos ──"
-          - text: "Ingredientes farmacéuticos activos"
-            href: dashboard/ifas.qmd
           - text: "── Medicamentos, vacunas y otros ──"
           - text: "Medicamentos"
             href: dashboard/medicamentos.qmd
@@ -53,6 +50,10 @@ website:
             href: dashboard/insumos-medicos-y-suministros.qmd
           - text: "Mobiliario médico y elementos de soporte"
             href: dashboard/mobiliario-medico.qmd
+      - text: "Insumos"
+        menu:
+          - text: "Ingredientes farmacéuticos activos"
+            href: dashboard/ifas.qmd
   page-footer:
     left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
     right: "Dashboard PAHO/CEPAL"
