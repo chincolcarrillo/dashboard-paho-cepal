@@ -8,7 +8,7 @@ website:
   description: "Comercio internacional de medicamentos, tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe."
   navbar:
     left:
-      - text: "Inicio"
+      - text: "Presentación"
         href: dashboard/index.qmd
       - text: "Panorama regional"
         href: dashboard/panorama-regional.qmd
@@ -24,12 +24,12 @@ website:
           - text: "Sangre, inmunoglobulinas y antisueros"
             href: dashboard/hemoderivados.qmd
           - text: "── Dispositivos médicos ──"
+          - text: "Dispositivos de diagnóstico in vitro y laboratorio"
+            href: dashboard/diagnostico-in-vitro.qmd
           - text: "Cuidado de heridas y dispositivos de protección"
             href: dashboard/cuidado-de-heridas-y-dispositivos-proteccion.qmd
           - text: "Dispositivos cardiovasculares"
             href: dashboard/dispositivos-cardiovasculares.qmd
-          - text: "Dispositivos de diagnóstico in vitro y laboratorio"
-            href: dashboard/diagnostico-in-vitro.qmd
           - text: "Dispositivos de diagnóstico por imagen"
             href: dashboard/diagnostico-por-imagen.qmd
           - text: "Dispositivos de esterilización y desinfección"

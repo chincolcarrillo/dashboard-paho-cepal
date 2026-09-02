@@ -1,5 +1,5 @@
 ---
-title: "Inicio"
+title: "Presentación"
 css: category-page.css
 format:
   dashboard:
@@ -33,9 +33,9 @@ category_links <- c(
   "Medicamentos" = "medicamentos.html",
   "Sangre y productos derivados, inmunoglobulinas y antisueros" = "hemoderivados.html",
   "Vacunas (humanas)" = "vacunas-humanas.html",
+  "Dispositivos de diagnóstico in vitro y de laboratorio" = "diagnostico-in-vitro.html",
   "Cuidado de heridas y dispositivos de protección" = "cuidado-de-heridas-y-dispositivos-proteccion.html",
   "Dispositivos cardiovasculares" = "dispositivos-cardiovasculares.html",
-  "Dispositivos de diagnóstico in vitro y de laboratorio" = "diagnostico-in-vitro.html",
   "Dispositivos de diagnóstico por imagen" = "diagnostico-por-imagen.html",
   "Dispositivos de esterilización y desinfección" = "dispositivos-esterilizacion.html",
   "Dispositivos odontológicos" = "dispositivos-odontologicos.html",
@@ -73,9 +73,14 @@ landing_kpis <- prepare_landing_category_kpis(
 ```
 
 ::: {.column-page}
-El dashboard analiza el comercio internacional de medicamentos, otras tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe a partir de los datos de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html), con nomenclatura del Sistema Armonizado 2007.
+El acceso equitativo y oportuno a medicamentos y otras tecnologías sanitarias depende, entre otros factores, de contar con capacidades de innovación y producción capaces de responder de manera sostenible a las necesidades de salud de la población. Al mismo tiempo, estas industrias representan una oportunidad relevante para el desarrollo productivo de América Latina y el Caribe por su intensidad tecnológica, su potencial para generar empleo calificado y encadenamientos productivos, y una demanda regional y global en expansión. La región dispone de capacidades relevantes, pero estas se encuentran distribuidas de manera heterogénea y coexisten con una importante dependencia de fuentes extrarregionales para diversos productos e insumos estratégicos. Fortalecer y articular estas capacidades constituye, por tanto, un componente de la resiliencia y la seguridad sanitaria regional, además de una oportunidad para impulsar el desarrollo productivo y tecnológico.
 
-Los productos, a nivel de subpartida del Sistema Armonizado de seis dígitos, se clasificaron en categorías de uso común en salud. Cada una cuenta con una pestaña independiente en el dashboard:
+En este contexto, la Comisión Económica para América Latina y el Caribe (CEPAL) y la Organización Panamericana de la Salud (OPS) desarrollaron este dashboard como una herramienta de información para apoyar el análisis de las capacidades productivas y los vínculos comerciales asociados a las tecnologías sanitarias en la región. Ante la ausencia de datos de producción suficientemente detallados y comparables entre países, los flujos de comercio exterior ofrecen una aproximación que permite identificar capacidades existentes, patrones de especialización, dependencias externas y espacios de complementariedad regional, aportando evidencia para el diseño de políticas y estrategias de cooperación orientadas al fortalecimiento de los ecosistemas regionales de innovación y producción.
+
+Este dashboard presenta una caracterización del comercio internacional de medicamentos, dispositivos médicos, otras tecnologías sanitarias e insumos en América Latina y el Caribe, utilizando información de [CEPII-BACI](https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html) basada en la nomenclatura del Sistema Armonizado 2007. 
+
+Los productos, identificados a nivel de subpartida de seis dígitos, fueron agrupados en categorías de uso común en salud. Cada una de estas categorías cuenta con una sección específica dentro del dashboard:
+
 :::
 
 
@@ -311,14 +316,14 @@ Los productos, a nivel de subpartida del Sistema Armonizado de seis dígitos, se
             </li>
 
             <li>
-              <a href="hemoderivados.html">
-                Sangre, inmunoglobulinas y antisueros
+              <a href="celulas-tejidos.html">
+                Células, tejidos y sustancias terapéuticas
               </a>
             </li>
 
             <li>
-              <a href="celulas-tejidos.html">
-                Células, tejidos y sustancias terapéuticas
+              <a href="hemoderivados.html">
+                Sangre, inmunoglobulinas y antisueros
               </a>
             </li>
 
@@ -336,7 +341,12 @@ Los productos, a nivel de subpartida del Sistema Armonizado de seis dígitos, se
           </h3>
 
           <ul class="ts-list ts-list--coral">
-
+            <li>
+              <a href="diagnostico-in-vitro.html">
+                Dispositivos de diagnóstico in vitro y laboratorio
+              </a>
+            </li>
+            
             <li>
               <a href="cuidado-de-heridas-y-dispositivos-proteccion.html">
                 Cuidado de heridas y dispositivos de protección
@@ -346,12 +356,6 @@ Los productos, a nivel de subpartida del Sistema Armonizado de seis dígitos, se
             <li>
               <a href="dispositivos-cardiovasculares.html">
                 Dispositivos cardiovasculares
-              </a>
-            </li>
-
-            <li>
-              <a href="diagnostico-in-vitro.html">
-                Dispositivos de diagnóstico in vitro y laboratorio
               </a>
             </li>
 
@@ -474,4 +478,10 @@ render_landing_kpi_cards(landing_kpis)
 ```
 
 
+::: {.column-page}
 
+Acá incluir un texto genérico de presentación del anexo metodológico.
+
+<a href="Anexo_Dashboard_PAHO_CEPAL.pdf" download class="btn btn-primary">Descargar Anexo</a>
+
+:::

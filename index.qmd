@@ -14,4 +14,4 @@ format:
 </script>
 ```
 
-Si la página no redirige automáticamente, abre la página de [Inicio](dashboard/index.html).
+Si la página no redirige automáticamente, abre la página de [Presentación](dashboard/index.html).

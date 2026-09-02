@@ -2,13 +2,13 @@
 
 hc_cat2_levels <- c(
   "Ingredientes farmacéuticos activos",
-  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
   "Medicamentos",
-  "Sangre y productos derivados, inmunoglobulinas y antisueros",
   "Vacunas (humanas)",
+  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+  "Sangre y productos derivados, inmunoglobulinas y antisueros",
+  "Dispositivos de diagnóstico in vitro y de laboratorio",
   "Cuidado de heridas y dispositivos de protección",
   "Dispositivos cardiovasculares",
-  "Dispositivos de diagnóstico in vitro y de laboratorio",
   "Dispositivos de diagnóstico por imagen",
   "Dispositivos de esterilización y desinfección",
   "Dispositivos odontológicos",
@@ -24,10 +24,10 @@ hc_cat2_levels <- c(
 ifa_category <- "Ingredientes farmacéuticos activos"
 
 medicines_other_health_categories <- c(
-  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
   "Medicamentos",
-  "Sangre y productos derivados, inmunoglobulinas y antisueros",
-  "Vacunas (humanas)"
+  "Vacunas (humanas)",
+  "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+  "Sangre y productos derivados, inmunoglobulinas y antisueros"
 )
 
 medical_device_categories <- setdiff(
