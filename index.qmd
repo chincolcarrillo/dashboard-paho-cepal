@@ -1,0 +1,17 @@
+---
+title: "Dashboard PAHO/CEPAL"
+format:
+  html:
+    toc: false
+    include-in-header:
+      text: |
+        <meta http-equiv="refresh" content="0; url=dashboard/index.html">
+---
+
+```{=html}
+<script>
+  window.location.replace("dashboard/index.html");
+</script>
+```
+
+Si la página no redirige automáticamente, abre la página de [Inicio](dashboard/index.html).
