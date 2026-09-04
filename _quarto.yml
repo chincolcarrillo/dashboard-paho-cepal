@@ -9,7 +9,7 @@ website:
   navbar:
     left:
       - text: "Presentación"
-        href: dashboard/index.qmd
+        href: index.qmd
       - text: "Panorama regional"
         href: dashboard/panorama-regional.qmd
       - text: "Tecnologías sanitarias"
@@ -57,7 +57,7 @@ website:
   page-footer:
     left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
     right: "Dashboard PAHO/CEPAL"
-  search: true
+  search: false
   reader-mode: false
 
 format:

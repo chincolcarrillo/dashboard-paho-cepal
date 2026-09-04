@@ -471,11 +471,11 @@ plot_trade_balance <- function(
       ref_area_code,
       ref_area_name,
       hc_cat2,
-      Exports = exports_1000usd,
-      Imports = -imports_1000usd
+      Exportaciones = exports_1000usd,
+      Importaciones = -imports_1000usd
     ) |>
     tidyr::pivot_longer(
-      cols = c("Exports", "Imports"),
+      cols = c("Exportaciones", "Importaciones"),
       names_to = "flow_type",
       values_to = "value_plot_1000usd"
     ) |>
@@ -534,7 +534,7 @@ plot_trade_balance <- function(
       color = "grey15"
     ) +
     ggplot2::scale_fill_manual(
-      values = c("Exports" = "#1b9e77", "Imports" = "#d95f02"),
+      values = c("Exportaciones" = "#1b9e77", "Importaciones" = "#d95f02"),
       name = "Flujo"
     ) +
     ggplot2::scale_x_continuous(breaks = scales::pretty_breaks()) +
@@ -1217,6 +1217,38 @@ calculate_cagr <- function(value_start, value_end, years) {
   (value_end / value_start)^(1 / years) - 1
 }
 
+dashboard_category_hierarchy <- function(category_names = hc_cat2_levels) {
+  tibble::tibble(hc_cat2 = category_names) |>
+    dplyr::mutate(
+      summary_level_1 = dplyr::if_else(
+        .data$hc_cat2 == ifa_category,
+        "Insumos",
+        "Tecnologías sanitarias"
+      ),
+      summary_level_2 = dplyr::case_when(
+        .data$hc_cat2 == ifa_category ~ "IFAs",
+        .data$hc_cat2 %in% medical_device_categories ~ "Dispositivos médicos",
+        TRUE ~ "Medicamentos, vacunas y otros"
+      ),
+      summary_color = dplyr::case_when(
+        .data$summary_level_2 == "Dispositivos médicos" ~ "#fb8072",
+        .data$summary_level_2 == "IFAs" ~ "#fdb462",
+        TRUE ~ "#8dd3c7"
+      ),
+      summary_level_1_order = dplyr::case_when(
+        .data$summary_level_1 == "Tecnologías sanitarias" ~ 1L,
+        .data$summary_level_1 == "Insumos" ~ 2L,
+        TRUE ~ 99L
+      ),
+      summary_level_2_order = dplyr::case_when(
+        .data$summary_level_2 == "Medicamentos, vacunas y otros" ~ 1L,
+        .data$summary_level_2 == "Dispositivos médicos" ~ 2L,
+        .data$summary_level_2 == "IFAs" ~ 3L,
+        TRUE ~ 99L
+      )
+    )
+}
+
 prepare_landing_category_kpis <- function(
   exports_region,
   trade_balance,
@@ -1320,6 +1352,121 @@ prepare_landing_category_kpis <- function(
     )
 }
 
+prepare_landing_group_kpis <- function(
+  exports_region,
+  trade_balance,
+  group_links = NULL,
+  cagr_window = 5
+) {
+  check_required_columns(
+    exports_region,
+    c("year", "exp_region", "hc_cat2", "exports_1000usd"),
+    "exports_region_hc_cat2"
+  )
+  check_required_columns(
+    trade_balance,
+    c(
+      "year", "ref_area_code", "ref_area_type", "hc_cat2",
+      "exports_1000usd", "imports_1000usd"
+    ),
+    "trade_balance_lac"
+  )
+
+  category_hierarchy <- dashboard_category_hierarchy()
+
+  world_exports <- exports_region |>
+    dplyr::left_join(category_hierarchy, by = "hc_cat2") |>
+    dplyr::group_by(
+      year,
+      landing_group_label = summary_level_2,
+      landing_kpi_color = summary_color,
+      landing_group_order = summary_level_2_order
+    ) |>
+    dplyr::summarise(
+      world_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  latest_year <- max(world_exports$year, na.rm = TRUE)
+  first_year <- min(world_exports$year, na.rm = TRUE)
+  cagr_start_year <- latest_year - cagr_window
+
+  world_latest <- world_exports |>
+    dplyr::filter(.data$year == .env$latest_year) |>
+    dplyr::select(
+      landing_group_label,
+      landing_kpi_color,
+      landing_group_order,
+      market_total_global_1000usd = world_exports_1000usd
+    )
+
+  world_first <- world_exports |>
+    dplyr::filter(.data$year == .env$first_year) |>
+    dplyr::select(
+      landing_group_label,
+      first_world_exports_1000usd = world_exports_1000usd
+    )
+
+  world_cagr_start <- world_exports |>
+    dplyr::filter(.data$year == .env$cagr_start_year) |>
+    dplyr::select(
+      landing_group_label,
+      cagr_5y_world_exports_1000usd = world_exports_1000usd
+    )
+
+  lac_latest <- trade_balance |>
+    dplyr::filter(
+      .data$ref_area_code == "LAC",
+      .data$ref_area_type == "region",
+      .data$year == .env$latest_year
+    ) |>
+    dplyr::left_join(category_hierarchy, by = "hc_cat2") |>
+    dplyr::group_by(landing_group_label = summary_level_2) |>
+    dplyr::summarise(
+      lac_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      lac_imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  if (is.null(group_links)) {
+    group_links <- c(
+      "Medicamentos, vacunas y otros" = "dashboard/panorama-regional.html#resumen",
+      "Dispositivos médicos" = "dashboard/panorama-regional.html#resumen",
+      "IFAs" = "dashboard/panorama-regional.html#resumen"
+    )
+  }
+
+  world_latest |>
+    dplyr::left_join(world_first, by = "landing_group_label") |>
+    dplyr::left_join(world_cagr_start, by = "landing_group_label") |>
+    dplyr::left_join(lac_latest, by = "landing_group_label") |>
+    dplyr::mutate(
+      hc_cat2 = .data$landing_group_label,
+      category_link = unname(group_links[landing_group_label]),
+      landing_kpi_group = dplyr::case_when(
+        .data$landing_group_label == "Dispositivos médicos" ~ "devices",
+        .data$landing_group_label == "IFAs" ~ "inputs",
+        TRUE ~ "other_health"
+      ),
+      category_link = tidyr::replace_na(
+        .data$category_link,
+        "dashboard/panorama-regional.html#resumen"
+      ),
+      first_year = .env$first_year,
+      latest_year = .env$latest_year,
+      cagr_start_year = .env$cagr_start_year,
+      cagr_all_years = purrr::pmap_dbl(
+        list(first_world_exports_1000usd, market_total_global_1000usd),
+        ~ calculate_cagr(..1, ..2, .env$latest_year - .env$first_year)
+      ),
+      cagr_5y = purrr::pmap_dbl(
+        list(cagr_5y_world_exports_1000usd, market_total_global_1000usd),
+        ~ calculate_cagr(..1, ..2, .env$cagr_window)
+      )
+    ) |>
+    dplyr::arrange(.data$landing_group_order)
+}
+
 landing_category_kpi_card <- function(row) {
   category_name <- row$hc_cat2[[1]]
   category_link <- row$category_link[[1]]
@@ -1383,57 +1530,292 @@ landing_category_kpi_card <- function(row) {
 }
 
 render_landing_kpi_cards <- function(kpi_data) {
-  health_left <- kpi_data |>
-    dplyr::filter(.data$landing_kpi_group == "other_health")
-
-  medical_devices <- kpi_data |>
-    dplyr::filter(.data$landing_kpi_group == "devices")
-
-  inputs <- kpi_data |>
-    dplyr::filter(.data$landing_kpi_group == "inputs")
-
-  health_left_cards <- htmltools::tagList(
+  kpi_cards <- htmltools::tagList(
     purrr::map(
-      seq_len(nrow(health_left)),
-      ~ landing_category_kpi_card(health_left[.x, ])
-    )
-  )
-  medical_devices_cards <- htmltools::tagList(
-    purrr::map(
-      seq_len(nrow(medical_devices)),
-      ~ landing_category_kpi_card(medical_devices[.x, ])
-    )
-  )
-  inputs_cards <- htmltools::tagList(
-    purrr::map(
-      seq_len(nrow(inputs)),
-      ~ landing_category_kpi_card(inputs[.x, ])
+      seq_len(nrow(kpi_data)),
+      ~ landing_category_kpi_card(kpi_data[.x, ])
     )
   )
 
+  htmltools::tags$section(
+    class = "landing-kpi-section",
+    htmltools::div(
+      class = "landing-kpi-column landing-kpi-summary-grid",
+      kpi_cards
+    )
+  )
+}
+
+format_overview_summary_value <- function(value, type = c("money", "percent")) {
+  type <- rlang::arg_match(type)
+
+  if (length(value) == 0 || is.na(value) || !is.finite(value)) {
+    return("n/d")
+  }
+
+  if (type == "money") {
+    return(format_usd_billions(value, accuracy = 0.1))
+  }
+
+  format_percent_label(value, accuracy = 0.1)
+}
+
+prepare_overview_summary_table <- function(trade_balance) {
+  check_required_columns(
+    trade_balance,
+    c(
+      "year", "ref_area_code", "ref_area_type", "hc_cat2",
+      "exports_1000usd", "imports_1000usd"
+    ),
+    "trade_balance_lac"
+  )
+
+  summary_year <- trade_balance |>
+    dplyr::filter(
+      .data$ref_area_code == "LAC",
+      .data$ref_area_type == "region"
+    ) |>
+    dplyr::pull(year) |>
+    max(na.rm = TRUE)
+
+  category_values <- trade_balance |>
+    dplyr::filter(
+      .data$ref_area_code == "LAC",
+      .data$ref_area_type == "region",
+      .data$year == .env$summary_year
+    ) |>
+    dplyr::group_by(hc_cat2) |>
+    dplyr::summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::left_join(dashboard_category_hierarchy(), by = "hc_cat2")
+
+  total_values <- category_values |>
+    dplyr::summarise(
+      parent_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      parent_imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    )
+
+  level_1 <- category_values |>
+    dplyr::group_by(
+      summary_level_1,
+      summary_level_1_order
+    ) |>
+    dplyr::summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      row_label = .data$summary_level_1,
+      parent_label = "Total del dashboard",
+      parent_exports_1000usd = total_values$parent_exports_1000usd[[1]],
+      parent_imports_1000usd = total_values$parent_imports_1000usd[[1]],
+      summary_level = 1L,
+      row_order = .data$summary_level_1_order,
+      export_share_parent = dplyr::if_else(
+        .data$parent_exports_1000usd > 0,
+        .data$exports_1000usd / .data$parent_exports_1000usd,
+        NA_real_
+      ),
+      import_share_parent = dplyr::if_else(
+        .data$parent_imports_1000usd > 0,
+        .data$imports_1000usd / .data$parent_imports_1000usd,
+        NA_real_
+      )
+    )
+
+  level_2_parent_values <- level_1 |>
+    dplyr::select(
+      summary_level_1,
+      parent_exports_1000usd = exports_1000usd,
+      parent_imports_1000usd = imports_1000usd
+    )
+
+  level_2 <- category_values |>
+    dplyr::group_by(
+      summary_level_1,
+      summary_level_2,
+      summary_level_1_order,
+      summary_level_2_order
+    ) |>
+    dplyr::summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::left_join(level_2_parent_values, by = "summary_level_1") |>
+    dplyr::mutate(
+      row_label = .data$summary_level_2,
+      parent_label = .data$summary_level_1,
+      summary_level = 2L,
+      row_order = .data$summary_level_1_order * 100L + .data$summary_level_2_order,
+      export_share_parent = dplyr::if_else(
+        .data$parent_exports_1000usd > 0,
+        .data$exports_1000usd / .data$parent_exports_1000usd,
+        NA_real_
+      ),
+      import_share_parent = dplyr::if_else(
+        .data$parent_imports_1000usd > 0,
+        .data$imports_1000usd / .data$parent_imports_1000usd,
+        NA_real_
+      )
+    )
+
+  level_3_parent_values <- level_2 |>
+    dplyr::select(
+      summary_level_2,
+      parent_exports_1000usd = exports_1000usd,
+      parent_imports_1000usd = imports_1000usd
+    )
+
+  level_3 <- category_values |>
+    dplyr::left_join(level_3_parent_values, by = "summary_level_2") |>
+    dplyr::arrange(
+      .data$summary_level_1_order,
+      .data$summary_level_2_order,
+      factor(.data$hc_cat2, levels = hc_cat2_levels)
+    ) |>
+    dplyr::mutate(
+      row_label = .data$hc_cat2,
+      parent_label = .data$summary_level_2,
+      summary_level = 3L,
+      row_order = .data$summary_level_1_order * 100L +
+        .data$summary_level_2_order * 10L +
+        dplyr::row_number(),
+      export_share_parent = dplyr::if_else(
+        .data$parent_exports_1000usd > 0,
+        .data$exports_1000usd / .data$parent_exports_1000usd,
+        NA_real_
+      ),
+      import_share_parent = dplyr::if_else(
+        .data$parent_imports_1000usd > 0,
+        .data$imports_1000usd / .data$parent_imports_1000usd,
+        NA_real_
+      )
+    )
+
+  dplyr::bind_rows(level_1, level_2, level_3) |>
+    dplyr::mutate(
+      summary_year = .env$summary_year,
+      imports_label = purrr::map_chr(
+        .data$imports_1000usd,
+        ~ format_overview_summary_value(.x, "money")
+      ),
+      import_share_label = purrr::map_chr(
+        .data$import_share_parent,
+        ~ format_overview_summary_value(.x, "percent")
+      ),
+      exports_label = purrr::map_chr(
+        .data$exports_1000usd,
+        ~ format_overview_summary_value(.x, "money")
+      ),
+      export_share_label = purrr::map_chr(
+        .data$export_share_parent,
+        ~ format_overview_summary_value(.x, "percent")
+      )
+    ) |>
+    dplyr::arrange(.data$row_order, .data$row_label)
+}
+
+overview_summary_row_cells <- function(row_data, label_class = NULL) {
   htmltools::tagList(
-    htmltools::tags$section(
-      class = "landing-kpi-section",
-      htmltools::tags$h2("Medicamentos, vacunas y otros"),
-      htmltools::div(
-        class = "landing-kpi-column landing-kpi-column-wide",
-        health_left_cards
-      )
+    htmltools::tags$div(
+      class = paste(c("overview-summary-label", label_class), collapse = " "),
+      row_data$row_label[[1]]
     ),
-    htmltools::tags$section(
-      class = "landing-kpi-section",
-      htmltools::tags$h2("Dispositivos médicos"),
-      htmltools::div(
-        class = "landing-kpi-column landing-kpi-column-wide",
-        medical_devices_cards
-      )
+    htmltools::tags$div(row_data$imports_label[[1]]),
+    htmltools::tags$div(row_data$import_share_label[[1]]),
+    htmltools::tags$div(row_data$exports_label[[1]]),
+    htmltools::tags$div(row_data$export_share_label[[1]])
+  )
+}
+
+render_overview_summary_table <- function(summary_data) {
+  check_required_columns(
+    summary_data,
+    c(
+      "summary_year", "summary_level", "summary_level_1", "summary_level_2",
+      "row_label", "imports_label", "import_share_label",
+      "exports_label", "export_share_label"
     ),
-    htmltools::tags$section(
-      class = "landing-kpi-section",
-      htmltools::tags$h2("Insumos"),
-      htmltools::div(
-        class = "landing-kpi-one-column",
-        inputs_cards
+    "overview_summary_table"
+  )
+
+  level_1_data <- summary_data |>
+    dplyr::filter(.data$summary_level == 1L) |>
+    dplyr::arrange(.data$row_order)
+
+  htmltools::tags$div(
+    class = "overview-summary-table",
+    htmltools::tags$div(
+      class = "overview-summary-header",
+      htmltools::tags$div("Categoría"),
+      htmltools::tags$div("Imp. LAC"),
+      htmltools::tags$div("% de imp. del nivel superior"),
+      htmltools::tags$div("Exp. LAC"),
+      htmltools::tags$div("% de exp. del nivel superior")
+    ),
+    htmltools::tagList(
+      purrr::map(
+        seq_len(nrow(level_1_data)),
+        function(level_1_index) {
+          level_1_row <- level_1_data[level_1_index, ]
+
+          level_2_data <- summary_data |>
+            dplyr::filter(
+              .data$summary_level == 2L,
+              .data$summary_level_1 == level_1_row$summary_level_1[[1]]
+            ) |>
+            dplyr::arrange(.data$row_order)
+
+          htmltools::tags$details(
+            class = "overview-summary-details overview-summary-level-1",
+            htmltools::tags$summary(
+              class = "overview-summary-row overview-summary-row-level-1",
+              overview_summary_row_cells(level_1_row)
+            ),
+            htmltools::tagList(
+              purrr::map(
+                seq_len(nrow(level_2_data)),
+                function(level_2_index) {
+                  level_2_row <- level_2_data[level_2_index, ]
+
+                  level_3_data <- summary_data |>
+                    dplyr::filter(
+                      .data$summary_level == 3L,
+                      .data$summary_level_2 == level_2_row$summary_level_2[[1]]
+                    ) |>
+                    dplyr::arrange(.data$row_order)
+
+                  htmltools::tags$details(
+                    class = "overview-summary-details overview-summary-level-2",
+                    htmltools::tags$summary(
+                      class = "overview-summary-row overview-summary-row-level-2",
+                      overview_summary_row_cells(level_2_row)
+                    ),
+                    htmltools::tagList(
+                      purrr::map(
+                        seq_len(nrow(level_3_data)),
+                        function(level_3_index) {
+                          level_3_row <- level_3_data[level_3_index, ]
+
+                          htmltools::tags$div(
+                            class = "overview-summary-row overview-summary-row-level-3",
+                            overview_summary_row_cells(level_3_row)
+                          )
+                        }
+                      )
+                    )
+                  )
+                }
+              )
+            )
+          )
+        }
       )
     )
   )

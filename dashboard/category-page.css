@@ -68,6 +68,10 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.landing-kpi-summary-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
 .landing-kpi-column-narrow {
   grid-template-columns: 1fr;
 }
@@ -144,6 +148,82 @@
   overflow-wrap: anywhere;
 }
 
+.overview-summary-table {
+  background: #fff;
+  border: 1px solid #dfe3e6;
+  border-radius: 0.8rem;
+  box-shadow: 0 2px 8px rgba(24, 39, 75, 0.04);
+  margin: 1rem 0 2rem;
+  overflow: hidden;
+}
+
+.overview-summary-header,
+.overview-summary-row {
+  align-items: center;
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: minmax(260px, 1.8fr) repeat(4, minmax(120px, 1fr));
+}
+
+.overview-summary-header {
+  background: #f4f6f8;
+  color: #5f6b72;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  padding: 0.75rem 1rem;
+  text-transform: uppercase;
+}
+
+.overview-summary-row {
+  border-top: 1px solid #eef1f3;
+  color: #1f2d3d;
+  list-style: none;
+  padding: 0.8rem 1rem;
+}
+
+.overview-summary-row::-webkit-details-marker {
+  display: none;
+}
+
+.overview-summary-details > summary {
+  cursor: pointer;
+}
+
+.overview-summary-details > summary .overview-summary-label::before {
+  color: #5f6b72;
+  content: "▸";
+  display: inline-block;
+  margin-right: 0.4rem;
+  transition: transform 0.15s ease;
+}
+
+.overview-summary-details[open] > summary .overview-summary-label::before {
+  transform: rotate(90deg);
+}
+
+.overview-summary-row-level-1 {
+  background: #fbfcfd;
+  font-weight: 700;
+}
+
+.overview-summary-row-level-2 {
+  background: #fff;
+  font-weight: 650;
+  padding-left: 1.75rem;
+}
+
+.overview-summary-row-level-3 {
+  background: #fcfdff;
+  color: #3d4a57;
+  font-size: 0.92rem;
+  padding-left: 3rem;
+}
+
+.overview-summary-level-1 + .overview-summary-level-1 {
+  border-top: 1px solid #dfe3e6;
+}
+
 @media (max-width: 1400px) {
   .landing-kpi-column-wide {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -157,8 +237,19 @@
 }
 
 @media (max-width: 720px) {
-  .landing-kpi-column-wide {
+  .landing-kpi-column-wide,
+  .landing-kpi-summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .overview-summary-table {
+    overflow-x: auto;
+  }
+
+  .overview-summary-header,
+  .overview-summary-row {
+    grid-template-columns: minmax(220px, 1.8fr) repeat(4, minmax(120px, 1fr));
+    min-width: 760px;
   }
 }
 

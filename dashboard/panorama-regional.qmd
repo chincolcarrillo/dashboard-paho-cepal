@@ -26,9 +26,22 @@ trade_balance_lac <- load_dashboard_data(
 overview_year <- max(overview_lac_country_category_trade$year, na.rm = TRUE)
 overview_first_year <- min(overview_exports_trends$year, na.rm = TRUE)
 overview_last_year <- max(overview_exports_trends$year, na.rm = TRUE)
+overview_summary <- prepare_overview_summary_table(trade_balance_lac)
+overview_summary_year <- max(overview_summary$summary_year, na.rm = TRUE)
 ```
 
-Esta hoja resume patrones generales de comercio para el conjunto de tecnologías sanitarias e insumos incluidos en la clasificación PAHO/CEPAL. A diferencia de las hojas por categoría, aquí se presentan resultados agregados para comparar la evolución global y regional, así como la composición reciente del comercio de los países de América Latina y el Caribe.
+
+## Resumen
+
+La tabla resume el comercio de América Latina y el Caribe en `r overview_summary_year` para los productos seleccionados. Las filas se pueden desplegar para navegar desde los grandes bloques —tecnologías sanitarias e insumos— hacia las categorías de uso común de los productos. En las columnas de participación, cada fila se compara con su nivel de agrupación inmediatamente superior.
+
+
+```{r}
+#| label: overview-summary-table
+#| results: asis
+
+render_overview_summary_table(overview_summary)
+```
 
 ## 1. Tendencias de exportaciones
 

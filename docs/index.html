@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Dashboard PAHO/CEPAL</title>
+<title>Presentación – Dashboard PAHO/CEPAL</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -29,33 +29,29 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark-0a6b7249c26820e032cb0bd839ff02b1.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-a0f9fd0d421825b736dc1bbcbcba2219.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="site_libs/quarto-dashboard/stickythead.js"></script>
+
+
+
+<script src="site_libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="site_libs/quarto-dashboard/components.js"></script>
+
 <script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
   "language": {
     "search-no-results-text": "No se han encontrado resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -70,13 +66,13 @@ ul.task-list li input[type="checkbox"] {
     "search-label": "Buscar"
   }
 }</script>
-<style>html{ scroll-behavior: smooth; }</style>
-<meta http-equiv="refresh" content="0; url=dashboard/index.html">
 
 
+<link rel="stylesheet" href="dashboard/category-page.css">
 </head>
 
-<body class="nav-fixed fullcontent quarto-light">
+<body class="quarto-dashboard nav-fixed fullcontent quarto-light">
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -87,14 +83,13 @@ ul.task-list li input[type="checkbox"] {
     <span class="navbar-title">Dashboard PAHO/CEPAL</span>
     </a>
   </div>
-            <div id="quarto-search" class="" title="Buscar"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll me-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./dashboard/index.html"> 
+    <a class="nav-link active" href="./index.html" aria-current="page"> 
 <span class="menu-text">Presentación</span></a>
   </li>  
   <li class="nav-item">
@@ -195,42 +190,537 @@ ul.task-list li input[type="checkbox"] {
 </div>
       </div> <!-- /container-fluid -->
     </nav>
-</header>
+<header id="quarto-dashboard-header">
+<nav class="navbar navbar-expand-md slim" data-bs-theme="dark">
+  <div class="navbar-container container-fluid">
+    <button class="navbar-toggler hidden" type="button" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-controls="dashboard-collapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>    
+
+
+    <div class="navbar-brand-container">
+
+
+      <div class="navbar-title">
+        <div class="navbar-title-text"><a href="#">Presentación</a></div>
+        
+        
+      </div>
+    </div>
+</div>
+</nav>
+</header></header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar quarto-dashboard-content bslib-gap-spacing html-fill-container dashboard-scrolling">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
 <!-- main -->
-<main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">Dashboard PAHO/CEPAL</h1>
+<div class="bslib-grid-item html-fill-item bslib-grid" data-layout="flow" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="card bslib-card html-fill-container" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="column-page html-fill-item html-fill-container">
+<p>El acceso equitativo y oportuno a medicamentos y otras tecnologías sanitarias depende, entre otros factores, de contar con capacidades de innovación y producción capaces de responder de manera sostenible a las necesidades de salud de la población. Al mismo tiempo, estas industrias representan una oportunidad relevante para el desarrollo productivo de América Latina y el Caribe por su intensidad tecnológica, su potencial para generar empleo calificado y encadenamientos productivos, y una demanda regional y global en expansión. La región dispone de capacidades relevantes, pero estas se encuentran distribuidas de manera heterogénea y coexisten con una importante dependencia de fuentes extrarregionales para diversos productos e insumos estratégicos. Fortalecer y articular estas capacidades constituye, por tanto, un componente de la resiliencia y la seguridad sanitaria regional, además de una oportunidad para impulsar el desarrollo productivo y tecnológico.</p>
+<p>En este contexto, la Comisión Económica para América Latina y el Caribe (CEPAL) y la Organización Panamericana de la Salud (OPS) desarrollaron este dashboard como una herramienta de información para apoyar el análisis de las capacidades productivas y los vínculos comerciales asociados a las tecnologías sanitarias en la región. Ante la ausencia de datos de producción suficientemente detallados y comparables entre países, los flujos de comercio exterior ofrecen una aproximación que permite identificar capacidades existentes, patrones de especialización, dependencias externas y espacios de complementariedad regional, aportando evidencia para el diseño de políticas y estrategias de cooperación orientadas al fortalecimiento de los ecosistemas regionales de innovación y producción.</p>
+<p>Este dashboard presenta una caracterización del comercio internacional de medicamentos, dispositivos médicos, otras tecnologías sanitarias e insumos en América Latina y el Caribe, utilizando información de <a href="https://www.cepii.fr/DATA_DOWNLOAD/baci/doc/baci_webpage.html">CEPII-BACI</a> basada en la nomenclatura del Sistema Armonizado 2007.</p>
+<p>Los productos, identificados a nivel de subpartida de seis dígitos, fueron agrupados en categorías de uso común en salud. Cada una de estas categorías cuenta con una sección específica dentro del dashboard:</p>
+</div>
+<div class="column-page html-fill-item html-fill-container">
+<style>
+.ts-wrap {
+  --ts-ink: #111111;
+  --ts-sub-ink: #222222;
+  --ts-muted: #707070;
+
+  --ts-card-bg: #f8f9fa;
+  --ts-card-border: #e1e5e8;
+
+  --ts-teal-bar: #7fd1c4;
+  --ts-teal-bg: #dcefed;
+
+  --ts-coral-bar: #ff7c70;
+  --ts-coral-bg: #fbd5d2;
+
+  --ts-orange-bar: #ffb057;
+  --ts-orange-bg: #fde7ca;
+
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  color: var(--ts-sub-ink);
+
+  width: 100%;
+  max-width: 900px;   /* antes 1200px aprox */
+  margin: 30px auto 35px;
+}
+
+.ts-cards {
+  display: grid !important;
+  grid-template-columns: minmax(0, 2.5fr) minmax(180px, 1fr);
+  gap: 18px;
+  align-items: stretch;
+  width: 100%;
+}
+
+.ts-card {
+  box-sizing: border-box;
+  min-width: 0;
+
+  background: var(--ts-card-bg);
+  border: 2px solid var(--ts-card-border);
+  border-radius: 21px;
+
+  padding: 18px 20px 20px;
+}
+
+.ts-card-title {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ts-ink);
+  margin: 0 0 24px;
+}
+
+.ts-columns {
+  display: grid !important;
+  grid-template-columns: minmax(180px, 0.8fr) minmax(280px, 1.45fr);
+  gap: 20px;
+  align-items: start;
+  width: 100%;
+}
+
+.ts-col {
+  min-width: 0;
+}
+
+.ts-col-header {
+  font-weight: 650;
+  font-size: 0.78rem;
+  line-height: 1.2;
+  color: #555;
+  text-align: center;
+  margin: 0 0 13px;
+}
+
+.ts-list {
+  list-style: none;
+  margin: 0;
+  padding: 16px 15px 16px 20px;
+  border-left: 13px solid var(--ts-bar-color, #ccc);
+  background: var(--ts-bg-color, #f4f4f4);
+  border-radius: 9px;
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.ts-list--teal {
+  --ts-bar-color: var(--ts-teal-bar);
+  --ts-bg-color: var(--ts-teal-bg);
+}
+
+.ts-list--coral {
+  --ts-bar-color: var(--ts-coral-bar);
+  --ts-bg-color: var(--ts-coral-bg);
+}
+
+.ts-list--orange {
+  --ts-bar-color: var(--ts-orange-bar);
+  --ts-bg-color: var(--ts-orange-bg);
+}
+
+.ts-list li + li {
+  margin-top: 4px;
+}
+
+.ts-list a {
+  color: inherit !important;
+  text-decoration: none !important;
+  display: inline;
+  border-radius: 4px;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.ts-list a:hover,
+.ts-list a:focus-visible {
+  background-color: rgba(0, 0, 0, 0.08);
+  text-decoration: underline !important;
+  text-underline-offset: 3px;
+}
+
+.ts-card--narrow .ts-col {
+  margin-top: 0;
+}
+
+.ts-card--narrow .ts-list {
+  margin-top: 0;
+}
+
+.ts-card--narrow .ts-card-title {
+  margin-bottom: 24px;
+}
+
+.ts-footnote {
+  font-style: italic;
+  font-size: 0.64rem;
+  color: var(--ts-muted);
+  margin: 14px 4px 0;
+}
+
+@media (max-width: 900px) {
+  .ts-cards {
+    grid-template-columns: minmax(0, 2fr) minmax(160px, 0.8fr);
+    gap: 14px;
+  }
+
+  .ts-columns {
+    grid-template-columns: minmax(160px, 0.9fr) minmax(220px, 1.4fr);
+    gap: 14px;
+  }
+
+  .ts-card {
+    padding: 16px;
+  }
+
+  .ts-list {
+    font-size: 0.72rem;
+    padding: 14px 12px 14px 16px;
+    border-left-width: 10px;
+  }
+
+  .ts-card-title {
+    font-size: 1.1rem;
+  }
+
+  .ts-col-header {
+    font-size: 0.72rem;
+  }
+}
+
+@media (max-width: 650px) {
+  .ts-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .ts-card {
+    border-radius: 16px;
+    padding: 14px;
+  }
+
+  .ts-card-title {
+    margin-bottom: 18px;
+  }
+}
+</style>
+
+<div class="ts-wrap html-fill-item html-fill-container">
+
+  <div class="ts-cards html-fill-item html-fill-container">
+
+    <!-- ====================================================
+         TECNOLOGÍAS SANITARIAS
+         ==================================================== -->
+
+    <section class="ts-card ts-card--wide">
+
+      <h2 class="ts-card-title">
+        Tecnologías sanitarias*
+      </h2>
+
+      <div class="ts-columns html-fill-item html-fill-container">
+
+        <!-- Medicamentos, vacunas y otros -->
+
+        <div class="ts-col html-fill-item html-fill-container">
+
+          <h3 class="ts-col-header">
+            Medicamentos, vacunas y otros
+          </h3>
+
+          <ul class="ts-list ts-list--teal">
+
+            <li>
+              <a href="dashboard/medicamentos.html">
+                Medicamentos
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/vacunas-humanas.html">
+                Vacunas (humanas)
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/celulas-tejidos.html">
+                Células, tejidos y sustancias terapéuticas
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/hemoderivados.html">
+                Sangre, inmunoglobulinas y antisueros
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+
+        <!-- Dispositivos médicos -->
+
+        <div class="ts-col html-fill-item html-fill-container">
+
+          <h3 class="ts-col-header">
+            Dispositivos médicos
+          </h3>
+
+          <ul class="ts-list ts-list--coral">
+            <li>
+              <a href="dashboard/diagnostico-in-vitro.html">
+                Dispositivos de diagnóstico in vitro y laboratorio
+              </a>
+            </li>
+            
+            <li>
+              <a href="dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html">
+                Cuidado de heridas y dispositivos de protección
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/dispositivos-cardiovasculares.html">
+                Dispositivos cardiovasculares
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/diagnostico-por-imagen.html">
+                Dispositivos de diagnóstico por imagen
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/dispositivos-esterilizacion.html">
+                Dispositivos de esterilización y desinfección
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/dispositivos-odontologicos.html">
+                Dispositivos odontológicos
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/dispositivos-rehabilitacion.html">
+                Dispositivos para rehabilitación y asistencia
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/dispositivos-quirurgicos.html">
+                Dispositivos quirúrgicos e invasivos
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/equipos-diagnostico.html">
+                Equipos de diagnóstico y monitoreo
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/equipos-laboratorio.html">
+                Equipos de laboratorio
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/equipos-terapeuticos.html">
+                Equipos terapéuticos
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/insumos-medicos-y-suministros.html">
+                Insumos médicos y suministros para pacientes
+              </a>
+            </li>
+
+            <li>
+              <a href="dashboard/mobiliario-medico.html">
+                Mobiliario médico y elementos de soporte
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- ====================================================
+         INSUMOS
+         ==================================================== -->
+
+    <section class="ts-card ts-card--narrow">
+
+      <h2 class="ts-card-title">
+        Insumos
+      </h2>
+
+      <div class="ts-col html-fill-item html-fill-container">
+
+        <h3 class="ts-col-header">
+          IFAs
+        </h3>
+
+        <ul class="ts-list ts-list--orange">
+
+          <li>
+            <a href="dashboard/ifas.html">
+              Ingredientes farmacéuticos activos
+            </a>
+          </li>
+
+        </ul>
+
+      </div>
+
+    </section>
+
+  </div>
+
+  <p class="ts-footnote">
+    *Incluye medicamentos, vacunas, dispositivos médicos y otros.
+  </p>
+
+</div>
+</div>
+<section class="landing-kpi-section">
+<div class="landing-kpi-column landing-kpi-summary-grid html-fill-item html-fill-container">
+<div class="landing-kpi-card html-fill-item html-fill-container" style="border-left-color:#8dd3c7;">
+<h3>
+<a href="dashboard/panorama-regional.html#resumen">Medicamentos, vacunas y otros</a>
+</h3>
+<div class="landing-kpi-grid html-fill-item html-fill-container">
+<div class="landing-kpi-row landing-kpi-row-top html-fill-item html-fill-container">
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Comercio total global</span>
+<strong class="landing-kpi-metric-value">US$ 572,9 mil millones</strong>
+</div>
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">CAGR 2007-2024</span>
+<strong class="landing-kpi-metric-value">3,6%</strong>
+</div>
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">CAGR últimos 5 años</span>
+<strong class="landing-kpi-metric-value">-0,6%</strong>
+</div>
+</div>
+<div class="landing-kpi-row landing-kpi-row-bottom html-fill-item html-fill-container">
+<div class="landing-kpi-metric landing-kpi-metric-lac html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Importaciones LAC 2024</span>
+<strong class="landing-kpi-metric-value">US$ 26,1 mil millones</strong>
+</div>
+<div class="landing-kpi-metric landing-kpi-metric-lac html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Exportaciones LAC 2024</span>
+<strong class="landing-kpi-metric-value">US$ 6,6 mil millones</strong>
+</div>
+</div>
+</div>
+</div>
+<div class="landing-kpi-card html-fill-item html-fill-container" style="border-left-color:#fb8072;">
+<h3>
+<a href="dashboard/panorama-regional.html#resumen">Dispositivos médicos</a>
+</h3>
+<div class="landing-kpi-grid html-fill-item html-fill-container">
+<div class="landing-kpi-row landing-kpi-row-top html-fill-item html-fill-container">
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Comercio total global</span>
+<strong class="landing-kpi-metric-value">US$ 426,6 mil millones</strong>
+</div>
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">CAGR 2007-2024</span>
+<strong class="landing-kpi-metric-value">5,2%</strong>
+</div>
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">CAGR últimos 5 años</span>
+<strong class="landing-kpi-metric-value">5,4%</strong>
+</div>
+</div>
+<div class="landing-kpi-row landing-kpi-row-bottom html-fill-item html-fill-container">
+<div class="landing-kpi-metric landing-kpi-metric-lac html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Importaciones LAC 2024</span>
+<strong class="landing-kpi-metric-value">US$ 24,5 mil millones</strong>
+</div>
+<div class="landing-kpi-metric landing-kpi-metric-lac html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Exportaciones LAC 2024</span>
+<strong class="landing-kpi-metric-value">US$ 42,9 mil millones</strong>
+</div>
+</div>
+</div>
+</div>
+<div class="landing-kpi-card html-fill-item html-fill-container" style="border-left-color:#fdb462;">
+<h3>
+<a href="dashboard/panorama-regional.html#resumen">IFAs</a>
+</h3>
+<div class="landing-kpi-grid html-fill-item html-fill-container">
+<div class="landing-kpi-row landing-kpi-row-top html-fill-item html-fill-container">
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Comercio total global</span>
+<strong class="landing-kpi-metric-value">US$ 124,0 mil millones</strong>
+</div>
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">CAGR 2007-2024</span>
+<strong class="landing-kpi-metric-value">4,3%</strong>
+</div>
+<div class="landing-kpi-metric html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">CAGR últimos 5 años</span>
+<strong class="landing-kpi-metric-value">4,6%</strong>
+</div>
+</div>
+<div class="landing-kpi-row landing-kpi-row-bottom html-fill-item html-fill-container">
+<div class="landing-kpi-metric landing-kpi-metric-lac html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Importaciones LAC 2024</span>
+<strong class="landing-kpi-metric-value">US$ 6,5 mil millones</strong>
+</div>
+<div class="landing-kpi-metric landing-kpi-metric-lac html-fill-item html-fill-container">
+<span class="landing-kpi-metric-label">Exportaciones LAC 2024</span>
+<strong class="landing-kpi-metric-value">US$ 1,8 mil millones</strong>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="column-page html-fill-item html-fill-container">
+<p>Para mayor información sobre las fuentes de datos, los criterios de clasificación de productos y países, puede revisar el Anexo Metodológico.</p>
+<p><a href="dashboard/Anexo_Dashboard_PAHO_CEPAL.pdf" download="" class="btn btn-primary">Descargar Anexo</a></p>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+
+
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden">
+
+</div>
 </div>
 
 
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<script>
-  window.location.replace("dashboard/index.html");
-</script>
-<p>Si la página no redirige automáticamente, abre la página de <a href="dashboard/index.html">Presentación</a>.</p>
-
-
-
-</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -318,11 +808,6 @@ ul.task-list li input[type="checkbox"] {
           if (link.dataset.originalHref !== undefined) {
             link.href = link.dataset.originalHref;
           }
-            // target, if specified
-            link.setAttribute("target", "_blank");
-            if (link.getAttribute("rel") === null) {
-              link.setAttribute("rel", "noopener");
-            }
         }
       }
     function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
@@ -651,8 +1136,15 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </footer>
 
+<script type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (_event) {
+  if (window.bslib.Card) {
+    window.bslib.Card.initializeAllCards();
+  }
+}); 
+</script>
+  
 
 
 
-<script src="site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>

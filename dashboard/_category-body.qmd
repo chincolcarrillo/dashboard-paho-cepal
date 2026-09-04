@@ -318,9 +318,7 @@ if (has_sankey_data) {
 
 ## 8. Productos exportados por país de origen
 
-La tabla muestra productos HS07, dentro de la categoría **`r category`**, exportados por países de LAC en `r if (has_product_exports) latest_product_year else "el último año disponible"`. Puede buscarse, filtrarse y agruparse por código de producto.
-
-Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría **`r category`**. Dentro de cada producto, las columnas muestran:
+Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría **`r category`**. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:
 
 - **País exportador**: país de LAC que registra exportaciones del producto.
 - **Exportaciones, USD millones**: valor exportado por el país en ese producto, en `r if (has_product_exports) latest_product_year else "el último año disponible"`.
