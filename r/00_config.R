@@ -36,7 +36,7 @@ medical_device_categories <- setdiff(
 )
 
 region_levels <- c(
-  "LAC",
+  "ALC",
   "América del Norte",
   "Europa",
   "Asia central",
@@ -48,7 +48,7 @@ region_levels <- c(
 )
 
 region_long_labels <- c(
-  "LAC" = "América Latina y el Caribe",
+  "ALC" = "América Latina y el Caribe",
   "América del Norte" = "América del Norte",
   "Europa" = "Europa",
   "Asia central" = "Asia central",

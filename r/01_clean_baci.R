@@ -53,7 +53,7 @@ paises <- paises |>
                                      region == "Sub-Saharan Africa" ~ "África al sur del Sahara",
                                      TRUE ~ unclassified_region) ,
          region = case_when(region == "Middle East, North Africa, Afghanistan & Pakistan" ~ "MENA",
-                            region == "Latin America & Caribbean" ~ "LAC",
+                            region == "Latin America & Caribbean" ~ "ALC",
                             region == "East Asia & Pacific" ~ "Asia oriental y el Pacífico",
                             region == "Central Asia" ~ "Asia central",
                             region == "Europe" ~ "Europa",
@@ -330,7 +330,7 @@ validate_dashboard_base <- function(
 ## 4.1. Participacion regional en exp mundiales ----
 
 # Objetivo:
-#   Visualizar la participación de LAC en las exportaciones mundiales de
+#   Visualizar la participación de ALC en las exportaciones mundiales de
 #   productos farma o tec sanitarias, seleccionando por categoria
 #   de producto y comparando tendencias con otras regiones
 
@@ -366,7 +366,7 @@ save_dashboard_rds(
   "exports_region_hc_cat2.rds"
 )
 
-## 4.1.1. Panorama regional: tendencias de exportaciones Mundo/LAC ----
+## 4.1.1. Panorama regional: tendencias de exportaciones Mundo/ALC ----
 
 # Objetivo:
 #   Alimentar la hoja de panorama regional con series de exportaciones para:
@@ -376,13 +376,13 @@ save_dashboard_rds(
 
 overview_exports_by_scope_hc <- bind_rows(
   exports_region_hc_cat2 |>
-    filter(exp_region == "LAC") |>
+    filter(exp_region == "ALC") |>
     group_by(year, hc_cat2) |>
     summarise(
       exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
       .groups = "drop"
     ) |>
-    mutate(region_scope = "LAC"),
+    mutate(region_scope = "ALC"),
   exports_region_hc_cat2 |>
     group_by(year, hc_cat2) |>
     summarise(
@@ -451,7 +451,7 @@ save_dashboard_rds(
   "overview_exports_trends.rds"
 )
 
-## 4.2. Exportaciones, importaciones y balance comercial en LAC ----
+## 4.2. Exportaciones, importaciones y balance comercial en ALC ----
 
 # Objetivo:
 #   Alimentar un grafico combinado con:
@@ -462,9 +462,9 @@ save_dashboard_rds(
 # Balance comercial:
 #   balance_1000usd = exports_1000usd - imports_1000usd
 
-### 4.2.1 Exportaciones por pais LAC ----
+### 4.2.1 Exportaciones por pais ALC ----
 exports_lac_country <- comercio_hc_min |>
-  filter(exp_region == "LAC") |>
+  filter(exp_region == "ALC") |>
   mutate(
     ref_area_code = exporter,
     ref_area_name = exp_country_name,
@@ -477,9 +477,9 @@ exports_lac_country <- comercio_hc_min |>
     .groups = "drop"
   )
 
-### 4.2.2 Importaciones por pais LAC ----
+### 4.2.2 Importaciones por pais ALC ----
 imports_lac_country <- comercio_hc_min |>
-  filter(imp_region == "LAC") |>
+  filter(imp_region == "ALC") |>
   mutate(
     ref_area_code = importer,
     ref_area_name = imp_country_name,
@@ -492,11 +492,11 @@ imports_lac_country <- comercio_hc_min |>
     .groups = "drop"
   )
 
-### 4.2.3 Exportaciones del agregado regional LAC ----
+### 4.2.3 Exportaciones del agregado regional ALC ----
 exports_lac_region <- comercio_hc_min |>
-  filter(exp_region == "LAC") |>
+  filter(exp_region == "ALC") |>
   mutate(
-    ref_area_code = "LAC",
+    ref_area_code = "ALC",
     ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "exports_1000usd"
@@ -507,11 +507,11 @@ exports_lac_region <- comercio_hc_min |>
     .groups = "drop"
   )
 
-### 4.2.4 Importaciones del agregado regional LAC ----
+### 4.2.4 Importaciones del agregado regional ALC ----
 imports_lac_region <- comercio_hc_min |>
-  filter(imp_region == "LAC") |>
+  filter(imp_region == "ALC") |>
   mutate(
-    ref_area_code = "LAC",
+    ref_area_code = "ALC",
     ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "imports_1000usd"
@@ -557,7 +557,7 @@ save_dashboard_rds(
 
 # Objetivo:
 #   Alimentar gráficos de barras apiladas para importaciones y exportaciones
-#   por país LAC, coloreadas por categoría hc_cat2.
+#   por país ALC, coloreadas por categoría hc_cat2.
 
 overview_country_category_year <- max(trade_balance_lac$year, na.rm = TRUE)
 
@@ -601,22 +601,22 @@ save_dashboard_rds(
   "overview_lac_country_category_trade.rds"
 )
 
-## 4.3. Origen/destino regional del comercio de LAC en 2024 ----
+## 4.3. Origen/destino regional del comercio de ALC en 2024 ----
 
 # Objetivo:
 #   Crear una base para dos barras:
-#     - Exports: distribucion regional de los destinos de exports de LAC.
-#     - Imports: distribucion regional de los orígenes de imports de LAC.
+#     - Exports: distribucion regional de los destinos de exports de ALC.
+#     - Imports: distribucion regional de los orígenes de imports de ALC.
 
 # El usuario podra seleccionar:
-#   - pais LAC o agregado regional LAC;
+#   - pais ALC o agregado regional ALC;
 #   - categoria hc_cat2.
 
-### 4.3.1 Exportaciones por pais LAC, con destino regional ----
+### 4.3.1 Exportaciones por pais ALC, con destino regional ----
 partner_exports_country_2024 <- comercio_hc_min |>
   filter(
     year == target_year_partner,
-    exp_region == "LAC"
+    exp_region == "ALC"
   ) |>
   mutate(
     ref_area_code = exporter,
@@ -641,11 +641,11 @@ partner_exports_country_2024 <- comercio_hc_min |>
     .groups = "drop"
   )
 
-### 4.3.2 Importaciones por pais LAC, con origen regional ----
+### 4.3.2 Importaciones por pais ALC, con origen regional ----
 partner_imports_country_2024 <- comercio_hc_min |>
   filter(
     year == target_year_partner,
-    imp_region == "LAC"
+    imp_region == "ALC"
   ) |>
   mutate(
     ref_area_code = importer,
@@ -670,14 +670,14 @@ partner_imports_country_2024 <- comercio_hc_min |>
     .groups = "drop"
   )
 
-### 4.3.3 Exportaciones del agregado LAC, con destino regional ----
+### 4.3.3 Exportaciones del agregado ALC, con destino regional ----
 partner_exports_region_2024 <- comercio_hc_min |>
   filter(
     year == target_year_partner,
-    exp_region == "LAC"
+    exp_region == "ALC"
   ) |>
   mutate(
-    ref_area_code = "LAC",
+    ref_area_code = "ALC",
     ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "Exports",
@@ -699,14 +699,14 @@ partner_exports_region_2024 <- comercio_hc_min |>
     .groups = "drop"
   )
 
-### 4.3.4 Importaciones del agregado LAC, con origen regional ----
+### 4.3.4 Importaciones del agregado ALC, con origen regional ----
 partner_imports_region_2024 <- comercio_hc_min |>
   filter(
     year == target_year_partner,
-    imp_region == "LAC"
+    imp_region == "ALC"
   ) |>
   mutate(
-    ref_area_code = "LAC",
+    ref_area_code = "ALC",
     ref_area_name = "América Latina y el Caribe",
     ref_area_type = "region",
     flow_type = "Imports",
@@ -774,16 +774,16 @@ save_dashboard_rds(
 )
 
 
-## 4.4. Sankey de comercio intrarregional LAC ----
+## 4.4. Sankey de comercio intrarregional ALC ----
 
 # Objetivo:
-#   Construir una base para diagramas Sankey donde exportador e importador pertenecen a LAC.
+#   Construir una base para diagramas Sankey donde exportador e importador pertenecen a ALC.
 #   El grosor del flujo se define por value_1000usd.
 
 sankey_intra_lac <- comercio_hc_min |>
   filter(
-    exp_region == "LAC",
-    imp_region == "LAC",
+    exp_region == "ALC",
+    imp_region == "ALC",
     year %in% sankey_years
   ) |>
   mutate(
@@ -821,7 +821,7 @@ save_dashboard_rds(
 ## 4.5. Base auxiliar: productos exportados por país de origen, último año ----
 
 # Objetivo:
-#   Alimentar tablas de productos HS6 exportados por país LAC de origen para
+#   Alimentar tablas de productos HS6 exportados por país ALC de origen para
 #   todas las categorías hc_cat2 del dashboard.
 #
 # Unidad:
@@ -870,7 +870,7 @@ product_exports_lac_2024_by_country <- comercio_hc_world |>
   ) |>
   filter(
     year == product_exports_year,
-    exp_region == "LAC"
+    exp_region == "ALC"
   ) |>
   group_by(
     year,
@@ -923,12 +923,12 @@ save_dashboard_rds(
   "product_exports_lac_2024_by_country.rds"
 )
 
-## 4.6. Base auxiliar: exportaciones LAC de dispositivos médicos, 2024 ----
+## 4.6. Base auxiliar: exportaciones ALC de dispositivos médicos, 2024 ----
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
 #   el conjunto de categorías de dispositivos médicos en las exportaciones
-#   de LAC durante 2024.
+#   de ALC durante 2024.
 #
 # Unidad:
 #   - product: código HS07 a 6 dígitos
@@ -950,7 +950,7 @@ medical_devices_lac_exports_2024_product <- comercio_hc_world |>
   ) |>
   filter(
     year == 2024,
-    exp_region == "LAC",
+    exp_region == "ALC",
     hc_cat2 %in% medical_device_categories
   ) |>
   group_by(
@@ -1013,11 +1013,11 @@ revisar_exp_meddev <- medical_devices_lac_exports_2024_product |>
   ) |>
   arrange(product, desc(exports_1000usd))
 
-## 4.7. Base auxiliar: importaciones LAC de medicamentos, 2024 ----
+## 4.7. Base auxiliar: importaciones ALC de medicamentos, 2024 ----
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
-#   "Medicamentos" en las importaciones de LAC durante 2024.
+#   "Medicamentos" en las importaciones de ALC durante 2024.
 #
 # Unidad:
 #   - product: código HS07 a 6 dígitos
@@ -1040,7 +1040,7 @@ medicines_lac_imports_2024_product <- comercio_hc_world |>
   ) |>
   filter(
     year == 2024,
-    imp_region == "LAC",
+    imp_region == "ALC",
     hc_cat2 == "Medicamentos"
   ) |>
   group_by(
@@ -1102,11 +1102,11 @@ rev_paises <- medicines_lac_imports_2024_product |>
   arrange(product, desc(imports_1000usd))
 
 
-## 4.8. Base auxiliar: exportaciones LAC de IFAs, 2024 ----
+## 4.8. Base auxiliar: exportaciones ALC de IFAs, 2024 ----
 
 # Objetivo:
 #   Investigar qué productos HS6 explican los resultados observados para
-#   "Ingredientes farmacéuticos activos" en las exportaciones de LAC durante 2024.
+#   "Ingredientes farmacéuticos activos" en las exportaciones de ALC durante 2024.
 #
 # Unidad:
 #   - product: código HS07 a 6 dígitos
@@ -1128,7 +1128,7 @@ ifas_lac_exports_2024_product <- comercio_hc_world |>
   ) |>
   filter(
     year == 2024,
-    exp_region == "LAC",
+    exp_region == "ALC",
     hc_cat2 == ifa_category
   ) |>
   group_by(

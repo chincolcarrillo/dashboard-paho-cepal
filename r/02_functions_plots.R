@@ -81,13 +81,13 @@ hc_cat2_palette <- c(
 
 overview_line_palette <- c(
   "Mundo - Todos los productos" = "#4C78A8",
-  "LAC - Todos los productos" = "#4C78A8",
+  "ALC - Todos los productos" = "#4C78A8",
   "Mundo - Medicamentos y otras tecnologías sanitarias" = "#8DD3C7",
-  "LAC - Medicamentos y otras tecnologías sanitarias" = "#8DD3C7",
+  "ALC - Medicamentos y otras tecnologías sanitarias" = "#8DD3C7",
   "Mundo - Dispositivos médicos" = "#FB8072",
-  "LAC - Dispositivos médicos" = "#FB8072",
+  "ALC - Dispositivos médicos" = "#FB8072",
   "Mundo - Ingredientes farmacéuticos activos" = "#FDB462",
-  "LAC - Ingredientes farmacéuticos activos" = "#FDB462"
+  "ALC - Ingredientes farmacéuticos activos" = "#FDB462"
 )
 
 # 2. FXS AUXILIARES DE CARGA ----
@@ -275,7 +275,7 @@ get_area_choices <- function(data) {
   choices <- data |>
     dplyr::distinct(ref_area_code, ref_area_name) |>
     dplyr::filter(!is.na(ref_area_code), !is.na(ref_area_name)) |>
-    dplyr::arrange(dplyr::desc(ref_area_code == "LAC"), ref_area_name)
+    dplyr::arrange(dplyr::desc(ref_area_code == "ALC"), ref_area_name)
 
   stats::setNames(choices$ref_area_code, choices$ref_area_name)
 }
@@ -295,7 +295,7 @@ get_year_choices <- function(data) {
 
 # 5. GRAFICO: Stacked area chart de exportaciones mundiales ----
 
-#' Objetivo: construir un stacked area chart para comparar la participación de LAC
+#' Objetivo: construir un stacked area chart para comparar la participación de ALC
 #' y otras regiones en las exportaciones mundiales por categoria de producto.
 #' Argumentos principales:
 #'   data: base exports_region_hc_cat2.
@@ -309,7 +309,7 @@ plot_exports_region_area <- function(
   data,
   selected_hc_cat2 = NULL,
   value_var = "share_exports_value",
-  highlight_region = "LAC",
+  highlight_region = "ALC",
   interactive = TRUE
 ) {
   required_cols <- c(
@@ -414,7 +414,7 @@ plot_exports_region_area <- function(
 #' comercial neto como linea de tiempo
 #' Argumentos principales:
 #'   data: base trade_balance_lac.
-#'   selected_area: código de país o agregado regional, por defecto "LAC".
+#'   selected_area: código de país o agregado regional, por defecto "ALC".
 #'   selected_hc_cat2: categoría de producto. Si es NULL, usa todas las categorías
 #'     agregándolas por año y área.
 #'   interactive: si TRUE devuelve plotly; si FALSE devuelve ggplot.
@@ -422,7 +422,7 @@ plot_exports_region_area <- function(
 
 plot_trade_balance <- function(
   data,
-  selected_area = "LAC",
+  selected_area = "ALC",
   selected_hc_cat2 = NULL,
   interactive = TRUE
 ) {
@@ -573,10 +573,10 @@ plot_trade_balance <- function(
 # 7. GRAFICO: Barras apiladas al 100% de region origen/destino ---------
 
 #' Objetivo: construir barras apiladas al 100% para observar el destino de las
-#' exportaciones y el origen de las importaciones de LAC o un pais seleccionado.
+#' exportaciones y el origen de las importaciones de ALC o un pais seleccionado.
 #' Argumentos principales:
 #'   data: base partner_region_lac_2024.
-#'   selected_area: código de país o agregado regional, por defecto "LAC".
+#'   selected_area: código de país o agregado regional, por defecto "ALC".
 #'   selected_hc_cat2: categoría de producto. Si es NULL, usa todas las categorías
 #'     agregándolas por flujo y región contraparte.
 #'   interactive: si TRUE devuelve plotly; si FALSE devuelve ggplot.
@@ -587,7 +587,7 @@ plot_trade_balance <- function(
 #'   En importaciones, partner_region corresponde al origen.
 plot_partner_region_100pct <- function(
   data,
-  selected_area = "LAC",
+  selected_area = "ALC",
   selected_hc_cat2 = NULL,
   interactive = TRUE
 ) {
@@ -749,7 +749,7 @@ plot_partner_region_100pct <- function(
   p
 }
 
-# 8. GRAFICO: Sankey comercio intrarregional LAC ------
+# 8. GRAFICO: Sankey comercio intrarregional ALC ------
 
 #' Objetivo: construir tablas de nodos y links compatibles con networkD3.
 #' Argumentos principales:
@@ -857,9 +857,9 @@ prepare_sankey_data <- function(
   )
 }
 
-#' Graficar Sankey intrarregional LAC
+#' Graficar Sankey intrarregional ALC
 #'
-#' Objetivo: mostrar flujos de comercio intrarregional entre países de LAC.
+#' Objetivo: mostrar flujos de comercio intrarregional entre países de ALC.
 #' Base esperada: sankey_intra_lac.rds.
 #' Argumentos principales:
 #'   data: base sankey_intra_lac.
@@ -1011,7 +1011,7 @@ plot_sankey_intra_lac <- function(
     plotly::layout(
       title = list(
         text = glue::glue(
-          "Principales flujos intrarregionales LAC",
+          "Principales flujos intrarregionales ALC",
           "<br><sup>{selected_label}, {selected_year}</sup>"
         ),
         x = 0.5,
@@ -1295,7 +1295,7 @@ prepare_landing_category_kpis <- function(
 
   lac_latest <- trade_balance |>
     dplyr::filter(
-      .data$ref_area_code == "LAC",
+      .data$ref_area_code == "ALC",
       .data$ref_area_type == "region",
       .data$year == .env$latest_year
     ) |>
@@ -1416,7 +1416,7 @@ prepare_landing_group_kpis <- function(
 
   lac_latest <- trade_balance |>
     dplyr::filter(
-      .data$ref_area_code == "LAC",
+      .data$ref_area_code == "ALC",
       .data$ref_area_type == "region",
       .data$year == .env$latest_year
     ) |>
@@ -1515,12 +1515,12 @@ landing_category_kpi_card <- function(row) {
       htmltools::div(
         class = "landing-kpi-row landing-kpi-row-bottom",
         landing_kpi_metric(
-          glue::glue("Importaciones LAC {row$latest_year}"),
+          glue::glue("Importaciones ALC {row$latest_year}"),
           format_landing_kpi_value(row$lac_imports_1000usd, "money"),
           class = "landing-kpi-metric-lac"
         ),
         landing_kpi_metric(
-          glue::glue("Exportaciones LAC {row$latest_year}"),
+          glue::glue("Exportaciones ALC {row$latest_year}"),
           format_landing_kpi_value(row$lac_exports_1000usd, "money"),
           class = "landing-kpi-metric-lac"
         )
@@ -1572,7 +1572,7 @@ prepare_overview_summary_table <- function(trade_balance) {
 
   summary_year <- trade_balance |>
     dplyr::filter(
-      .data$ref_area_code == "LAC",
+      .data$ref_area_code == "ALC",
       .data$ref_area_type == "region"
     ) |>
     dplyr::pull(year) |>
@@ -1580,7 +1580,7 @@ prepare_overview_summary_table <- function(trade_balance) {
 
   category_values <- trade_balance |>
     dplyr::filter(
-      .data$ref_area_code == "LAC",
+      .data$ref_area_code == "ALC",
       .data$ref_area_type == "region",
       .data$year == .env$summary_year
     ) |>
@@ -1754,9 +1754,9 @@ render_overview_summary_table <- function(summary_data) {
     htmltools::tags$div(
       class = "overview-summary-header",
       htmltools::tags$div("Categoría"),
-      htmltools::tags$div("Imp. LAC"),
+      htmltools::tags$div("Imp. ALC"),
       htmltools::tags$div("% de imp. del nivel superior"),
-      htmltools::tags$div("Exp. LAC"),
+      htmltools::tags$div("Exp. ALC"),
       htmltools::tags$div("% de exp. del nivel superior")
     ),
     htmltools::tagList(
@@ -2575,20 +2575,20 @@ plot_lac_world_share_line <- function(
   plot_data <- data |>
     dplyr::filter(
       .data$hc_cat2 == .env$selected_hc_cat2,
-      .data$exp_region == "LAC"
+      .data$exp_region == "ALC"
     ) |>
     dplyr::arrange(year) |>
     dplyr::mutate(
       tooltip = make_tooltip(
         glue::glue("<b>Año:</b> {year}"),
         glue::glue("<b>Categoría:</b> {hc_cat2}"),
-        glue::glue("<b>Participación LAC:</b> {format_percent_label(share_exports_value)}")
+        glue::glue("<b>Participación ALC:</b> {format_percent_label(share_exports_value)}")
       )
     )
 
   if (nrow(plot_data) == 0) {
     rlang::abort(glue::glue(
-      "No hay datos de participación LAC para '{selected_hc_cat2}'."
+      "No hay datos de participación ALC para '{selected_hc_cat2}'."
     ))
   }
 
@@ -2618,7 +2618,7 @@ plot_lac_world_share_line <- function(
     ggplot2::coord_cartesian(ylim = c(0, max_share)) +
     ggplot2::scale_x_continuous(breaks = scales::pretty_breaks()) +
     ggplot2::labs(
-      title = glue::glue("Participación de LAC en las exportaciones mundiales"),
+      title = glue::glue("Participación de ALC en las exportaciones mundiales"),
       subtitle = glue::glue("{selected_hc_cat2}"),
       x = NULL,
       y = "Participación en exportaciones mundiales"
@@ -2640,7 +2640,7 @@ plot_lac_world_share_line <- function(
       plotly::layout(
         title = list(
           text = glue::glue(
-            "Participación de LAC en las exportaciones mundiales<br><sup>{selected_hc_cat2}</sup>"
+            "Participación de ALC en las exportaciones mundiales<br><sup>{selected_hc_cat2}</sup>"
           ),
           x = 0.5,
           xanchor = "center"
@@ -2872,7 +2872,7 @@ plot_lac_country_trade_ranking <- function(
       name = NULL
     ) +
     ggplot2::labs(
-      title = if (isTRUE(show_title)) glue::glue("Principales países LAC por comercio") else NULL,
+      title = if (isTRUE(show_title)) glue::glue("Principales países ALC por comercio") else NULL,
       subtitle = if (isTRUE(show_title)) "{selected_hc_cat2}, {year}" else NULL,
       x = NULL,
       y = "Millones de USD"
@@ -2885,7 +2885,7 @@ plot_lac_country_trade_ranking <- function(
     if (isTRUE(show_title)) {
       plot_widget <- plot_widget |>
         center_plotly_title(
-          title = glue::glue("Principales países LAC por comercio"),
+          title = glue::glue("Principales países ALC por comercio"),
           subtitle = glue::glue("{selected_hc_cat2}, {year}")
         )
     }
@@ -3095,16 +3095,16 @@ render_intra_lac_export_share_table <- function( # Esta es la de la seccion 6. C
     columns = list(
       pais = reactable::colDef(name = "País", minWidth = 180),
       proporcion_exportaciones_lac = reactable::colDef(
-        name = "% exportado hacia LAC",
+        name = "% exportado hacia ALC",
         align = "right",
         format = reactable::colFormat(percent = TRUE, digits = 1)
       ),
       principal_destino_lac = reactable::colDef(
-        name = "Principal destino dentro de LAC",
+        name = "Principal destino dentro de ALC",
         minWidth = 220
       ),
       exportaciones_lac_musd = reactable::colDef(
-        name = "Exportaciones a LAC, USD millones",
+        name = "Exportaciones a ALC, USD millones",
         align = "right",
         format = reactable::colFormat(digits = 1, separators = TRUE)
       ),

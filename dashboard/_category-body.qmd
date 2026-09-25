@@ -29,7 +29,7 @@ latest_product_year <- if (has_product_exports) max(product_exports$year, na.rm 
 
 lac_latest <- trade_balance |>
   dplyr::filter(
-    .data$ref_area_code == "LAC",
+    .data$ref_area_code == "ALC",
     .data$ref_area_type == "region",
     .data$year == .env$latest_year
   ) |>
@@ -41,7 +41,7 @@ lac_latest <- trade_balance |>
   )
 
 lac_world_share <- exports_region |>
-  dplyr::filter(.data$exp_region == "LAC", .data$year == .env$latest_year) |>
+  dplyr::filter(.data$exp_region == "ALC", .data$year == .env$latest_year) |>
   dplyr::slice_head(n = 1) |>
   dplyr::pull(share_exports_value)
 
@@ -58,12 +58,12 @@ country_latest <- prepare_country_snapshot(trade_balance, latest_year)
 htmltools::div(
   class = "dashboard-card-grid",
   dashboard_card(
-    "Exportaciones LAC",
+    "Exportaciones ALC",
     format_usd_millions(lac_latest$exports_1000usd),
     latest_year
   ),
   dashboard_card(
-    "Importaciones LAC",
+    "Importaciones ALC",
     format_usd_millions(lac_latest$imports_1000usd),
     latest_year
   ),
@@ -73,7 +73,7 @@ htmltools::div(
     "Exportaciones menos importaciones"
   ),
   dashboard_card(
-    "Participación mundial de LAC",
+    "Participación mundial de ALC",
     format_percent_label(lac_world_share),
     latest_year
   )
@@ -101,7 +101,7 @@ top_importer <- country_latest |>
 
 partner_latest <- partner_region |>
   dplyr::filter(
-    .data$ref_area_code == "LAC",
+    .data$ref_area_code == "ALC",
     .data$year == .env$latest_partner_year
   ) |>
   dplyr::mutate(
@@ -173,7 +173,7 @@ if (
 
 
 
-## 1. Participación de LAC en las exportaciones mundiales
+## 1. Participación de ALC en las exportaciones mundiales
 
 ```{r}
 #| label: category-lac-share-world-exports
@@ -199,7 +199,7 @@ plot_world_exports_region_structure(
 )
 ```
 
-## 3. Exportaciones, importaciones y balance de LAC
+## 3. Exportaciones, importaciones y balance de ALC
 
 ```{r}
 #| label: category-trade-balance
@@ -207,13 +207,13 @@ plot_world_exports_region_structure(
 
 plot_trade_balance(
   trade_balance,
-  selected_area = "LAC",
+  selected_area = "ALC",
   selected_hc_cat2 = category,
   interactive = TRUE
 )
 ```
 
-## 4. Países LAC con mayor comercio
+## 4. Países ALC con mayor comercio
 
 El ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país.
 
@@ -251,7 +251,7 @@ La composición corresponde a `r if (has_partner_data) latest_partner_year else 
 if (has_partner_data) {
   plot_partner_region_100pct(
     partner_region,
-    selected_area = "LAC",
+    selected_area = "ALC",
     selected_hc_cat2 = category,
     interactive = TRUE
   )
@@ -265,14 +265,14 @@ if (has_partner_data) {
 
 ## 7. Comercio intrarregional
 
-La tabla presenta, para `r if (has_sankey_data) latest_sankey_year else "el último año disponible"`, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de LAC.
+La tabla presenta, para `r if (has_sankey_data) latest_sankey_year else "el último año disponible"`, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.
 
 Las columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:
 
-- **País**: país exportador de LAC.
-- **% exportado hacia LAC**: proporción de las exportaciones totales de la categoría que el país destina a otros países de LAC.
-- **Exportaciones a LAC, USD millones**: valor de esas exportaciones intrarregionales.
-- **Principal destino dentro de LAC**: país de LAC que recibe el mayor flujo exportado por ese país.
+- **País**: país exportador de ALC.
+- **% exportado hacia ALC**: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.
+- **Exportaciones a ALC, USD millones**: valor de esas exportaciones intrarregionales.
+- **Principal destino dentro de ALC**: país de ALC que recibe el mayor flujo exportado por ese país.
 - **% hacia principal destino**: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.
 
 ```{r}
@@ -320,9 +320,9 @@ if (has_sankey_data) {
 
 Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría **`r category`**. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:
 
-- **País exportador**: país de LAC que registra exportaciones del producto.
+- **País exportador**: país de ALC que registra exportaciones del producto.
 - **Exportaciones, USD millones**: valor exportado por el país en ese producto, en `r if (has_product_exports) latest_product_year else "el último año disponible"`.
-- **% de la exportación regional**: proporción del país en las exportaciones regionales de LAC de ese producto.
+- **% de la exportación regional**: proporción del país en las exportaciones regionales de ALC de ese producto.
 - **RCA**: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA > 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.
 
 Para concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene **RCA > 1** o exportaciones del producto superiores a **US$ 1 millón**.

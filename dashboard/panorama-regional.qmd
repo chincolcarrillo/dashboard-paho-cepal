@@ -150,13 +150,13 @@ El gráfico muestra la evolución de las exportaciones, importaciones y balance 
 
 plot_trade_balance(
   trade_balance_lac,
-  selected_area = "LAC",
+  selected_area = "ALC",
   selected_hc_cat2 = NULL,
   interactive = TRUE
 )
 ```
 
-## 4. Países LAC con mayor comercio
+## 4. Países ALC con mayor comercio
 
 El ranking ordena los países por comercio total de tecnologías sanitarias e insumos en `r overview_year`. Las barras muestran exportaciones e importaciones, y el punto representa el balance comercial.
 
