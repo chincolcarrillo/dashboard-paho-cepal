@@ -271,7 +271,7 @@ Las columnas permiten distinguir la intensidad del comercio intrarregional y el 
 
 - **País**: país exportador de ALC.
 - **% exportado hacia ALC**: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.
-- **Exportaciones a ALC, USD millones**: valor de esas exportaciones intrarregionales.
+- **Exportaciones a ALC, miles de USD**: valor de esas exportaciones intrarregionales.
 - **Principal destino dentro de ALC**: país de ALC que recibe el mayor flujo exportado por ese país.
 - **% hacia principal destino**: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.
 
@@ -321,7 +321,7 @@ if (has_sankey_data) {
 Cada grupo de la tabla corresponde a un producto HS07, dentro de la categoría **`r category`**. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:
 
 - **País exportador**: país de ALC que registra exportaciones del producto.
-- **Exportaciones, USD millones**: valor exportado por el país en ese producto, en `r if (has_product_exports) latest_product_year else "el último año disponible"`.
+- **Exportaciones, miles de USD**: valor exportado por el país en ese producto, en `r if (has_product_exports) latest_product_year else "el último año disponible"`.
 - **% de la exportación regional**: proporción del país en las exportaciones regionales de ALC de ese producto.
 - **RCA**: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA > 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.
 

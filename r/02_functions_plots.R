@@ -1504,7 +1504,7 @@ landing_category_kpi_card <- function(row) {
           format_landing_kpi_value(row$market_total_global_1000usd, "money")
         ),
         landing_kpi_metric(
-          glue::glue("CAGR {row$first_year}-{row$latest_year}"),
+          glue::glue("Tasa de crecimiento anual compuesto (CAGR) {row$first_year}-{row$latest_year}"),
           format_landing_kpi_value(row$cagr_all_years, "percent")
         ),
         landing_kpi_metric(
@@ -3032,9 +3032,6 @@ prepare_intra_lac_export_share <- function(
     dplyr::mutate(
       intra_lac_exports_1000usd = tidyr::replace_na(intra_lac_exports_1000usd, 0),
       main_lac_destination_1000usd = tidyr::replace_na(main_lac_destination_1000usd, 0),
-      intra_lac_exports_musd = intra_lac_exports_1000usd / 1000,
-      main_lac_destination_musd = main_lac_destination_1000usd / 1000,
-      total_exports_musd = total_exports_1000usd / 1000,
       intra_lac_export_share = dplyr::if_else(
         total_exports_1000usd > 0,
         intra_lac_exports_1000usd / total_exports_1000usd,
@@ -3077,11 +3074,11 @@ render_intra_lac_export_share_table <- function( # Esta es la de la seccion 6. C
     dplyr::transmute(
       pais = ref_area_name,
       proporcion_exportaciones_lac = intra_lac_export_share,
-      exportaciones_lac_musd = intra_lac_exports_musd,
+      exportaciones_lac_1000usd = intra_lac_exports_1000usd,
       principal_destino_lac = main_lac_destination,
       proporcion_principal_destino_lac = main_lac_destination_share,
-      exportaciones_principal_destino_lac_musd = main_lac_destination_musd,
-      exportaciones_totales_musd = total_exports_musd
+      exportaciones_principal_destino_lac_1000usd = main_lac_destination_1000usd,
+      exportaciones_totales_1000usd = total_exports_1000usd
     )
 
   reactable::reactable(
@@ -3103,15 +3100,15 @@ render_intra_lac_export_share_table <- function( # Esta es la de la seccion 6. C
         name = "Principal destino dentro de ALC",
         minWidth = 220
       ),
-      exportaciones_lac_musd = reactable::colDef(
-        name = "Exportaciones a ALC, USD millones",
+      exportaciones_lac_1000usd = reactable::colDef(
+        name = "Exportaciones a ALC, miles de USD",
         align = "right",
-        format = reactable::colFormat(digits = 1, separators = TRUE)
+        format = reactable::colFormat(digits = 0, separators = TRUE)
       ),
-      exportaciones_totales_musd = reactable::colDef(
-        name = "Exportaciones totales, USD millones",
+      exportaciones_totales_1000usd = reactable::colDef(
+        name = "Exportaciones totales, miles de USD",
         align = "right",
-        format = reactable::colFormat(digits = 1, separators = TRUE),
+        format = reactable::colFormat(digits = 0, separators = TRUE),
         show = FALSE
       ),
       proporcion_principal_destino_lac = reactable::colDef(
@@ -3119,10 +3116,10 @@ render_intra_lac_export_share_table <- function( # Esta es la de la seccion 6. C
         align = "right",
         format = reactable::colFormat(percent = TRUE, digits = 1)
       ),
-      exportaciones_principal_destino_lac_musd = reactable::colDef(
-        name = "Exportaciones al principal destino, USD millones",
+      exportaciones_principal_destino_lac_1000usd = reactable::colDef(
+        name = "Exportaciones al principal destino, miles de USD",
         align = "right",
-        format = reactable::colFormat(digits = 1, separators = TRUE),
+        format = reactable::colFormat(digits = 0, separators = TRUE),
         show = FALSE
       )
     ),
@@ -3159,7 +3156,6 @@ render_product_exports_by_country_table <- function(product_exports) {
     dplyr::group_by(product, description_full, exp_country_name) |>
     dplyr::summarise(
       exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
-      exports_musd = exports_1000usd / 1000,
       rca_balassa = mean(rca_balassa, na.rm = TRUE),
       .groups = "drop"
     ) |>
@@ -3176,7 +3172,7 @@ render_product_exports_by_country_table <- function(product_exports) {
       share_product = exports_1000usd / sum(exports_1000usd, na.rm = TRUE)
     ) |>
     dplyr::filter(
-      rca_balassa > 1 | exports_musd > 1
+      rca_balassa > 1 | exports_1000usd > 1000
     ) |>
     dplyr::ungroup()
 
@@ -3187,7 +3183,7 @@ render_product_exports_by_country_table <- function(product_exports) {
     sortable = TRUE,
     pagination = TRUE,
     defaultPageSize = 20,
-    defaultSorted = list(exports_musd = "desc"),
+    defaultSorted = list(exports_1000usd = "desc"),
     highlight = TRUE,
     striped = TRUE,
     bordered = TRUE,
@@ -3200,16 +3196,10 @@ render_product_exports_by_country_table <- function(product_exports) {
       product = reactable::colDef(name = "Código HS07", show = FALSE),
       description_full = reactable::colDef(name = "Descripción", show = FALSE),
       exp_country_name = reactable::colDef(name = "País exportador", minWidth = 180),
-      exports_musd = reactable::colDef(
-        name = "Exportaciones, USD millones",
-        align = "right",
-        format = reactable::colFormat(digits = 1, separators = TRUE, prefix = "$")
-      ),
       exports_1000usd = reactable::colDef(
-        name = "Exportaciones, miles USD",
+        name = "Exportaciones, miles de USD",
         align = "right",
-        format = reactable::colFormat(digits = 0, separators = TRUE, prefix = "$"),
-        show = FALSE
+        format = reactable::colFormat(digits = 0, separators = TRUE)
       ),
       share_product = reactable::colDef(
         name = "% de la exportación regional",

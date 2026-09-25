@@ -4,8 +4,8 @@ project:
   execute-dir: project
 
 website:
-  title: "Dashboard PAHO/CEPAL"
-  description: "Comercio internacional de medicamentos, tecnologías sanitarias, dispositivos médicos e insumos en América Latina y el Caribe."
+  title: "Dashboard OPS/CEPAL"
+  description: "Comercio internacional de medicamentos, dispositivos médicos, otras tecnologías sanitarias e insumos en América Latina y el Caribe"
   navbar:
     left:
       - text: "Presentación"
@@ -55,8 +55,8 @@ website:
           - text: "Ingredientes farmacéuticos activos"
             href: dashboard/ifas.qmd
   page-footer:
-    left: "Fuente: elaboración propia con base en CEPII-BACI y clasificación PAHO/CEPAL."
-    right: "Dashboard PAHO/CEPAL"
+    left: "Elaboración OPS/CEPAL, con datos de BACI-CEPII."
+    right: "Dashboard OPS/CEPAL"
   search: false
   reader-mode: false
 

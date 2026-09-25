@@ -75,7 +75,7 @@ plot_overview_exports_trends(
 )
 ```
 
-### Insumos
+### IFAs
 
 ```{r}
 #| label: overview-export-trends-inputs
@@ -124,7 +124,7 @@ plot_overview_exports_growth_trends(
 )
 ```
 
-### Insumos
+### IFAs
 
 ```{r}
 #| label: overview-export-yoy-growth-inputs

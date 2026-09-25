@@ -451,6 +451,6 @@ render_landing_kpi_cards(landing_kpis)
 
 Para mayor información sobre las fuentes de datos, los criterios de clasificación de productos y países, puede revisar el Anexo Metodológico.
 
-<a href="dashboard/Anexo_Dashboard_PAHO_CEPAL.pdf" download class="btn btn-primary">Descargar Anexo</a>
+<a href="dashboard/Anexo_Dashboard_OPS_CEPAL.pdf" download class="btn btn-primary">Descargar Anexo</a>
 
 :::
