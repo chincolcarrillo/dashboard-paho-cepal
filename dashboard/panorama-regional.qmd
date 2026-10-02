@@ -43,7 +43,7 @@ La tabla resume el comercio de América Latina y el Caribe en `r overview_summar
 render_overview_summary_table(overview_summary)
 ```
 
-## 1. Evolución del comercio de tecnologías sanitarias e insumos, según principales categorías
+## 1. Evolución del comercio de tecnologías sanitarias e insumos
 
 El gráfico muestra la evolución de las exportaciones e importaciones de América Latina y el Caribe entre `r overview_first_year` y `r overview_last_year`. Los valores se desagregan en: medicamentos, vacunas y otros; dispositivos médicos; e ingredientes farmacéuticos activos (IFAs).
 
