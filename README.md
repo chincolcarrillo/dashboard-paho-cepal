@@ -2,7 +2,7 @@
 
 Dashboard estático construido con R y Quarto sobre comercio internacional de tecnologías sanitarias en América Latina y el Caribe.
 
-Demo: <https://chincolcarrillo.github.io/dashboard-paho-cepal/dashboard/>
+Demo: <https://chincolcarrillo.github.io/dashboard-paho-cepal/>
 
 ## Fuentes
 
