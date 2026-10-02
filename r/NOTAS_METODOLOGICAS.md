@@ -4,7 +4,6 @@
 
 - Fuente: BACI/CEPII, con clasificación de categorías de producto propia (`hc_cat2`, en "data/rev_paho_2026.xlsx").
 - **Unidad base de todas las variables de valor: miles de USD** (`_1000usd`). Las funciones de formato convierten sobre esa base:
-  - `format_usd_thousands()`: mantiene la unidad (miles de USD).
   - `format_usd_millions()` / `to_musd()`: `x / 1.000` -> millones de USD.
   - `format_usd_billions()`: `x / 1.000.000` -> miles de millones de USD.
   - `format_percent_label()`: formatea proporciones (0–1) como porcentaje.
@@ -29,7 +28,7 @@
 
 ### 3.1 Participación en exportaciones mundiales (*market share*)
 `share_exports_value = exports_1000usd / world_exports_1000usd`, agregado por año y región exportadora (y opcionalmente categoría). 
-Se usa en el stacked area chart regional (`plot_exports_region_area`) y en la línea de participación de LAC (`plot_lac_world_share_line`).
+Se usa en la línea de participación de LAC (`plot_lac_world_share_line`).
 
 ### 3.2 Balance comercial
 Por año, área y categoría: `balance_1000usd = exports_1000usd - imports_1000usd`. 
@@ -44,8 +43,7 @@ Para cada año/área/flujo (exportación o importación): `share_flow_value = va
 Alimenta las barras apiladas al 100 % (`plot_partner_region_100pct`).
 
 ### 3.5 Comercio intrarregional LAC (Sankey)
-`prepare_sankey_data()` agrega `value_1000usd` por par origen–destino dentro de LAC para un año y categoría dados. 
-Por defecto excluye flujos donde origen = destino (`keep_self_flows = FALSE`) y permite aplicar un umbral mínimo (`min_value_1000usd`) y quedarse solo con los `top_n_flows` de mayor valor.
+`plot_sankey_intra_lac()` agrega los flujos por par exportador–importador para el año y la categoría seleccionados. Excluye los flujos donde origen = destino y permite aplicar un umbral mínimo (`min_value_1000usd`) y conservar sólo los `top_n_flows` de mayor valor.
 
 ### 3.6 Participación de las exportaciones hacia LAC por país
 Para cada país de LAC:
@@ -62,7 +60,7 @@ CAGR = (valor_final / valor_inicial)^(1 / n_años) - 1
 ```
 
 Devuelve `NA` si el valor inicial es ≤ 0 o si `n_años ≤ 0`. 
-Se usa en dos ventanas para los KPI de la página de inicio (`prepare_landing_category_kpis()`), sobre exportaciones mundiales por categoría:
+Se usa en dos ventanas para los KPI agregados de la página de inicio (`prepare_landing_group_kpis()`), sobre exportaciones mundiales por grupo:
 - **CAGR histórico completo**: desde el primer año disponible hasta el último.
 - **CAGR de los últimos 5 años** (`cagr_window`, configurable, default = 5).
 
@@ -84,16 +82,16 @@ Muestra cómo se compone el comercio de tecnologías sanitarias de cada país po
 La columna `rca_balassa` llega ya calculada desde la base `product_exports_lac_2024_by_country` (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume:
 - En `render_product_exports_by_country_table()` **se promedia (`mean`) si hay múltiples registros por producto/país [quizás sacar???]**, y la tabla se filtra a productos con `rca_balassa > 1` **o** exportaciones `> US$ 1 millón`, para priorizar productos relevantes.
 
-### 3.11 KPI de la página de inicio, por categoría
-`prepare_landing_category_kpis()` combina, por categoría (`hc_cat2`) y último año disponible:
-- Comercio total global (exportaciones mundiales de la categoría).
+### 3.11 KPI agregados de la página de inicio
+`prepare_landing_group_kpis()` combina, para los tres grupos de la landing y el último año disponible:
+- Comercio total global (exportaciones mundiales del grupo).
 - CAGR histórico y CAGR a 5 años (ver 3.7).
 - Exportaciones e importaciones de LAC en el último año.
 
-Las categorías se agrupan en tres grupos temáticos (`landing_kpi_group`): dispositivos médicos, insumos/ingredientes farmacéuticos activos, y "otras tecnologías sanitarias" (resto), cada uno con un color asociado para las tarjetas de KPI.
+Las categorías se agrupan mediante `dashboard_category_hierarchy()` en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.
 
 ## 4. Notas generales
 
-- Todas las funciones de gráfico aceptan `interactive = TRUE/FALSE`: `TRUE` devuelve un widget `plotly`/`networkD3`; `FALSE` devuelve el objeto `ggplot` estático equivalente (mismo cálculo subyacente).
+- Los gráficos basados en `ggplot2` aceptan, en general, `interactive = TRUE/FALSE`: `TRUE` devuelve un widget Plotly y `FALSE` devuelve el objeto `ggplot` estático equivalente. El Sankey se construye directamente con Plotly.
 - `check_required_columns()` se llama al inicio de casi toda función que recibe una base externa: si falta una columna requerida, la función se detiene con un mensaje explícito en vez de fallar más adelante de forma críptica.
 - Los `NA` en tasas de crecimiento y en participaciones (`share_*`) ocurren cuando el denominador es 0, negativo o no disponible; se excluyen o se muestran como "n/d" según el contexto (`format_landing_kpi_value`).

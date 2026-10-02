@@ -203,7 +203,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#crecimiento-interanual-a-n-años-series-de-tendencia" id="toc-crecimiento-interanual-a-n-años-series-de-tendencia" class="nav-link" data-scroll-target="#crecimiento-interanual-a-n-años-series-de-tendencia">3.8 Crecimiento interanual / a n años (series de tendencia)</a></li>
   <li><a href="#distribución-del-comercio-de-un-país-entre-categorías" id="toc-distribución-del-comercio-de-un-país-entre-categorías" class="nav-link" data-scroll-target="#distribución-del-comercio-de-un-país-entre-categorías">3.9 Distribución del comercio de un país entre categorías</a></li>
   <li><a href="#índice-de-ventaja-comparativa-revelada-rca-de-balassa" id="toc-índice-de-ventaja-comparativa-revelada-rca-de-balassa" class="nav-link" data-scroll-target="#índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</a></li>
-  <li><a href="#kpi-de-la-página-de-inicio-por-categoría" id="toc-kpi-de-la-página-de-inicio-por-categoría" class="nav-link" data-scroll-target="#kpi-de-la-página-de-inicio-por-categoría">3.11 KPI de la página de inicio, por categoría</a></li>
+  <li><a href="#kpi-agregados-de-la-página-de-inicio" id="toc-kpi-agregados-de-la-página-de-inicio" class="nav-link" data-scroll-target="#kpi-agregados-de-la-página-de-inicio">3.11 KPI agregados de la página de inicio</a></li>
   </ul></li>
   <li><a href="#notas-generales" id="toc-notas-generales" class="nav-link" data-scroll-target="#notas-generales">4. Notas generales</a></li>
   </ul></li>
@@ -224,7 +224,6 @@ ul.task-list li input[type="checkbox"] {
 <li>Fuente: BACI/CEPII, con clasificación de categorías de producto propia (<code>hc_cat2</code>, en “data/rev_paho_2026.xlsx”).</li>
 <li><strong>Unidad base de todas las variables de valor: miles de USD</strong> (<code>_1000usd</code>). Las funciones de formato convierten sobre esa base:
 <ul>
-<li><code>format_usd_thousands()</code>: mantiene la unidad (miles de USD).</li>
 <li><code>format_usd_millions()</code> / <code>to_musd()</code>: <code>x / 1.000</code> -&gt; millones de USD.</li>
 <li><code>format_usd_billions()</code>: <code>x / 1.000.000</code> -&gt; miles de millones de USD.</li>
 <li><code>format_percent_label()</code>: formatea proporciones (0–1) como porcentaje.</li>
@@ -283,7 +282,7 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="indicadores-calculados">3. Indicadores calculados</h2>
 <section id="participación-en-exportaciones-mundiales-market-share" class="level3">
 <h3 class="anchored" data-anchor-id="participación-en-exportaciones-mundiales-market-share">3.1 Participación en exportaciones mundiales (<em>market share</em>)</h3>
-<p><code>share_exports_value = exports_1000usd / world_exports_1000usd</code>, agregado por año y región exportadora (y opcionalmente categoría). Se usa en el stacked area chart regional (<code>plot_exports_region_area</code>) y en la línea de participación de LAC (<code>plot_lac_world_share_line</code>).</p>
+<p><code>share_exports_value = exports_1000usd / world_exports_1000usd</code>, agregado por año y región exportadora (y opcionalmente categoría). Se usa en la línea de participación de LAC (<code>plot_lac_world_share_line</code>).</p>
 </section>
 <section id="balance-comercial" class="level3">
 <h3 class="anchored" data-anchor-id="balance-comercial">3.2 Balance comercial</h3>
@@ -299,7 +298,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="comercio-intrarregional-lac-sankey" class="level3">
 <h3 class="anchored" data-anchor-id="comercio-intrarregional-lac-sankey">3.5 Comercio intrarregional LAC (Sankey)</h3>
-<p><code>prepare_sankey_data()</code> agrega <code>value_1000usd</code> por par origen–destino dentro de LAC para un año y categoría dados. Por defecto excluye flujos donde origen = destino (<code>keep_self_flows = FALSE</code>) y permite aplicar un umbral mínimo (<code>min_value_1000usd</code>) y quedarse solo con los <code>top_n_flows</code> de mayor valor.</p>
+<p><code>plot_sankey_intra_lac()</code> agrega los flujos por par exportador–importador para el año y la categoría seleccionados. Excluye los flujos donde origen = destino y permite aplicar un umbral mínimo (<code>min_value_1000usd</code>) y conservar sólo los <code>top_n_flows</code> de mayor valor.</p>
 </section>
 <section id="participación-de-las-exportaciones-hacia-lac-por-país" class="level3">
 <h3 class="anchored" data-anchor-id="participación-de-las-exportaciones-hacia-lac-por-país">3.6 Participación de las exportaciones hacia LAC por país</h3>
@@ -310,7 +309,7 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="cagr-tasa-de-crecimiento-anual-compuesta">3.7 CAGR (tasa de crecimiento anual compuesta)</h3>
 <p>Fórmula general (<code>calculate_cagr()</code>):</p>
 <pre><code>CAGR = (valor_final / valor_inicial)^(1 / n_años) - 1</code></pre>
-<p>Devuelve <code>NA</code> si el valor inicial es ≤ 0 o si <code>n_años ≤ 0</code>. Se usa en dos ventanas para los KPI de la página de inicio (<code>prepare_landing_category_kpis()</code>), sobre exportaciones mundiales por categoría: - <strong>CAGR histórico completo</strong>: desde el primer año disponible hasta el último. - <strong>CAGR de los últimos 5 años</strong> (<code>cagr_window</code>, configurable, default = 5).</p>
+<p>Devuelve <code>NA</code> si el valor inicial es ≤ 0 o si <code>n_años ≤ 0</code>. Se usa en dos ventanas para los KPI agregados de la página de inicio (<code>prepare_landing_group_kpis()</code>), sobre exportaciones mundiales por grupo: - <strong>CAGR histórico completo</strong>: desde el primer año disponible hasta el último. - <strong>CAGR de los últimos 5 años</strong> (<code>cagr_window</code>, configurable, default = 5).</p>
 </section>
 <section id="crecimiento-interanual-a-n-años-series-de-tendencia" class="level3">
 <h3 class="anchored" data-anchor-id="crecimiento-interanual-a-n-años-series-de-tendencia">3.8 Crecimiento interanual / a n años (series de tendencia)</h3>
@@ -326,16 +325,16 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</h3>
 <p><strong>Se calcula en el script 03_trade_indicators.R</strong> La columna <code>rca_balassa</code> llega ya calculada desde la base <code>product_exports_lac_2024_by_country</code> (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En <code>render_product_exports_by_country_table()</code> <strong>se promedia (<code>mean</code>) si hay múltiples registros por producto/país [quizás sacar???]</strong>, y la tabla se filtra a productos con <code>rca_balassa &gt; 1</code> <strong>o</strong> exportaciones <code>&gt; US$ 1 millón</code>, para priorizar productos relevantes.</p>
 </section>
-<section id="kpi-de-la-página-de-inicio-por-categoría" class="level3">
-<h3 class="anchored" data-anchor-id="kpi-de-la-página-de-inicio-por-categoría">3.11 KPI de la página de inicio, por categoría</h3>
-<p><code>prepare_landing_category_kpis()</code> combina, por categoría (<code>hc_cat2</code>) y último año disponible: - Comercio total global (exportaciones mundiales de la categoría). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.</p>
-<p>Las categorías se agrupan en tres grupos temáticos (<code>landing_kpi_group</code>): dispositivos médicos, insumos/ingredientes farmacéuticos activos, y “otras tecnologías sanitarias” (resto), cada uno con un color asociado para las tarjetas de KPI.</p>
+<section id="kpi-agregados-de-la-página-de-inicio" class="level3">
+<h3 class="anchored" data-anchor-id="kpi-agregados-de-la-página-de-inicio">3.11 KPI agregados de la página de inicio</h3>
+<p><code>prepare_landing_group_kpis()</code> combina, para los tres grupos de la landing y el último año disponible: - Comercio total global (exportaciones mundiales del grupo). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.</p>
+<p>Las categorías se agrupan mediante <code>dashboard_category_hierarchy()</code> en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.</p>
 </section>
 </section>
 <section id="notas-generales" class="level2">
 <h2 class="anchored" data-anchor-id="notas-generales">4. Notas generales</h2>
 <ul>
-<li>Todas las funciones de gráfico aceptan <code>interactive = TRUE/FALSE</code>: <code>TRUE</code> devuelve un widget <code>plotly</code>/<code>networkD3</code>; <code>FALSE</code> devuelve el objeto <code>ggplot</code> estático equivalente (mismo cálculo subyacente).</li>
+<li>Los gráficos basados en <code>ggplot2</code> aceptan, en general, <code>interactive = TRUE/FALSE</code>: <code>TRUE</code> devuelve un widget Plotly y <code>FALSE</code> devuelve el objeto <code>ggplot</code> estático equivalente. El Sankey se construye directamente con Plotly.</li>
 <li><code>check_required_columns()</code> se llama al inicio de casi toda función que recibe una base externa: si falta una columna requerida, la función se detiene con un mensaje explícito en vez de fallar más adelante de forma críptica.</li>
 <li>Los <code>NA</code> en tasas de crecimiento y en participaciones (<code>share_*</code>) ocurren cuando el denominador es 0, negativo o no disponible; se excluyen o se muestran como “n/d” según el contexto (<code>format_landing_kpi_value</code>).</li>
 </ul>
