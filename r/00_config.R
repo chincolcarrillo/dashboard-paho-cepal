@@ -35,6 +35,11 @@ medical_device_categories <- setdiff(
   c(ifa_category, medicines_other_health_categories)
 )
 
+# Categoría virtual usada sólo en la capa de presentación. No se incorpora a
+# hc_cat2_levels porque no existe como categoría independiente en los datos.
+medical_devices_all_category <- "Dispositivos médicos (todos)"
+dashboard_category_levels <- c(hc_cat2_levels, medical_devices_all_category)
+
 region_levels <- c(
   "ALC",
   "América del Norte",

@@ -107,6 +107,10 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li class="dropdown-header">── Dispositivos médicos ──</li>
         <li>
+    <a class="dropdown-item" href="../dashboard/dispositivos-medicos-todos.html">
+ <span class="dropdown-text">Dispositivos médicos (todos)</span></a>
+  </li>  
+        <li>
     <a class="dropdown-item" href="../dashboard/diagnostico-in-vitro.html">
  <span class="dropdown-text">Dispositivos de diagnóstico in vitro y laboratorio</span></a>
   </li>  
@@ -204,6 +208,7 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#distribución-del-comercio-de-un-país-entre-categorías" id="toc-distribución-del-comercio-de-un-país-entre-categorías" class="nav-link" data-scroll-target="#distribución-del-comercio-de-un-país-entre-categorías">3.9 Distribución del comercio de un país entre categorías</a></li>
   <li><a href="#índice-de-ventaja-comparativa-revelada-rca-de-balassa" id="toc-índice-de-ventaja-comparativa-revelada-rca-de-balassa" class="nav-link" data-scroll-target="#índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</a></li>
   <li><a href="#kpi-agregados-de-la-página-de-inicio" id="toc-kpi-agregados-de-la-página-de-inicio" class="nav-link" data-scroll-target="#kpi-agregados-de-la-página-de-inicio">3.11 KPI agregados de la página de inicio</a></li>
+  <li><a href="#categoría-agregada-de-dispositivos-médicos" id="toc-categoría-agregada-de-dispositivos-médicos" class="nav-link" data-scroll-target="#categoría-agregada-de-dispositivos-médicos">3.12 Categoría agregada de dispositivos médicos</a></li>
   </ul></li>
   <li><a href="#notas-generales" id="toc-notas-generales" class="nav-link" data-scroll-target="#notas-generales">4. Notas generales</a></li>
   </ul></li>
@@ -329,6 +334,11 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="kpi-agregados-de-la-página-de-inicio">3.11 KPI agregados de la página de inicio</h3>
 <p><code>prepare_landing_group_kpis()</code> combina, para los tres grupos de la landing y el último año disponible: - Comercio total global (exportaciones mundiales del grupo). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.</p>
 <p>Las categorías se agrupan mediante <code>dashboard_category_hierarchy()</code> en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.</p>
+</section>
+<section id="categoría-agregada-de-dispositivos-médicos" class="level3">
+<h3 class="anchored" data-anchor-id="categoría-agregada-de-dispositivos-médicos">3.12 Categoría agregada de dispositivos médicos</h3>
+<p><code>Dispositivos médicos (todos)</code> es una categoría virtual de presentación y no un nivel adicional de <code>hc_cat2</code>. <code>dashboard_category_members()</code> la vincula dinámicamente con todas las categorías enumeradas en <code>medical_device_categories</code>.</p>
+<p>Al cargar su página, las bases livianas se agregan nuevamente desde sus valores absolutos. Las participaciones mundiales y por región contraparte, los balances comerciales y los totales de flujo se recalculan después de la suma para evitar agregar porcentajes preexistentes. De este modo, cualquier nueva categoría incorporada correctamente a <code>medical_device_categories</code> queda incluida automáticamente.</p>
 </section>
 </section>
 <section id="notas-generales" class="level2">

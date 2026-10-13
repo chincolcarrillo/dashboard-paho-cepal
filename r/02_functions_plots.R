@@ -756,10 +756,155 @@ resolve_dashboard_data_dir <- function(data_dir = dashboard_data_dir) {
   existing[[1]]
 }
 
-validate_category_data <- function(data_list, category) {
-  if (!category %in% hc_cat2_levels) {
-    rlang::abort(glue::glue("La categoría '{category}' no pertenece a hc_cat2."))
+dashboard_category_members <- function(category) {
+  if (!category %in% dashboard_category_levels) {
+    rlang::abort(glue::glue(
+      "La categoría '{category}' no está definida para el dashboard."
+    ))
   }
+
+  if (identical(category, medical_devices_all_category)) {
+    return(medical_device_categories)
+  }
+
+  category
+}
+
+aggregate_exports_region_category <- function(data, category_members, category) {
+  data |>
+    dplyr::filter(.data$hc_cat2 %in% .env$category_members) |>
+    dplyr::group_by(year, exp_region) |>
+    dplyr::summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::group_by(year) |>
+    dplyr::mutate(
+      world_exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      share_exports_value = dplyr::if_else(
+        world_exports_1000usd > 0,
+        exports_1000usd / world_exports_1000usd,
+        NA_real_
+      ),
+      hc_cat2 = .env$category
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(year, dplyr::desc(exports_1000usd))
+}
+
+aggregate_trade_balance_category <- function(data, category_members, category) {
+  data |>
+    dplyr::filter(.data$hc_cat2 %in% .env$category_members) |>
+    dplyr::group_by(
+      year, ref_area_code, ref_area_name, ref_area_type
+    ) |>
+    dplyr::summarise(
+      exports_1000usd = sum(exports_1000usd, na.rm = TRUE),
+      imports_1000usd = sum(imports_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(
+      hc_cat2 = .env$category,
+      balance_1000usd = exports_1000usd - imports_1000usd
+    ) |>
+    dplyr::arrange(ref_area_type, ref_area_name, year)
+}
+
+aggregate_partner_region_category <- function(data, category_members, category) {
+  if (!"partner_region_longname" %in% names(data)) {
+    data <- data |>
+      dplyr::mutate(
+        partner_region_longname = recode_region_names(.data$partner_region)
+      )
+  }
+
+  data |>
+    dplyr::filter(.data$hc_cat2 %in% .env$category_members) |>
+    dplyr::group_by(
+      year, ref_area_code, ref_area_name, ref_area_type, flow_type,
+      partner_region, partner_region_longname
+    ) |>
+    dplyr::summarise(
+      value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::group_by(
+      year, ref_area_code, ref_area_name, ref_area_type, flow_type
+    ) |>
+    dplyr::mutate(
+      hc_cat2 = .env$category,
+      total_flow_1000usd = sum(value_1000usd, na.rm = TRUE),
+      share_flow_value = dplyr::if_else(
+        total_flow_1000usd > 0,
+        value_1000usd / total_flow_1000usd,
+        NA_real_
+      )
+    ) |>
+    dplyr::ungroup() |>
+    dplyr::arrange(
+      ref_area_type, ref_area_name, flow_type,
+      dplyr::desc(value_1000usd)
+    )
+}
+
+aggregate_sankey_category <- function(data, category_members, category) {
+  filtered_data <- data |>
+    dplyr::filter(.data$hc_cat2 %in% .env$category_members)
+
+  if ("quantity_tons" %in% names(filtered_data)) {
+    return(
+      filtered_data |>
+        dplyr::group_by(
+          year, source, source_name, target, target_name
+        ) |>
+        dplyr::summarise(
+          value_1000usd = sum(value_1000usd, na.rm = TRUE),
+          quantity_tons = sum(quantity_tons, na.rm = TRUE),
+          .groups = "drop"
+        ) |>
+        dplyr::mutate(hc_cat2 = .env$category) |>
+        dplyr::arrange(year, source_name, target_name)
+    )
+  }
+
+  filtered_data |>
+    dplyr::group_by(year, source, source_name, target, target_name) |>
+    dplyr::summarise(
+      value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      .groups = "drop"
+    ) |>
+    dplyr::mutate(hc_cat2 = .env$category) |>
+    dplyr::arrange(year, source_name, target_name)
+}
+
+aggregate_dashboard_category_data <- function(
+  data,
+  data_name,
+  category_members,
+  category
+) {
+  switch(
+    data_name,
+    exports_region_hc_cat2 = aggregate_exports_region_category(
+      data, category_members, category
+    ),
+    trade_balance_lac = aggregate_trade_balance_category(
+      data, category_members, category
+    ),
+    partner_region_lac_2024 = aggregate_partner_region_category(
+      data, category_members, category
+    ),
+    sankey_intra_lac = aggregate_sankey_category(
+      data, category_members, category
+    ),
+    rlang::abort(glue::glue(
+      "No existe una regla de agregación para la base '{data_name}'."
+    ))
+  )
+}
+
+validate_category_data <- function(data_list, category) {
+  category_members <- dashboard_category_members(category)
 
   purrr::iwalk(data_list, function(data, data_name) {
     check_required_columns(data, "hc_cat2", data_name)
@@ -770,9 +915,15 @@ validate_category_data <- function(data_list, category) {
     "trade_balance_lac"
   )
   purrr::walk(required_category_data, function(data_name) {
-    if (!category %in% data_list[[data_name]]$hc_cat2) {
+    missing_categories <- setdiff(
+      category_members,
+      unique(as.character(data_list[[data_name]]$hc_cat2))
+    )
+
+    if (length(missing_categories) > 0) {
       rlang::abort(glue::glue(
-        "La categoría '{category}' no está disponible en '{data_name}'."
+        "La categoría '{category}' no puede construirse desde '{data_name}'. ",
+        "Faltan: {paste(missing_categories, collapse = ', ')}."
       ))
     }
   })
@@ -787,8 +938,23 @@ load_category_dashboard_data <- function(
   resolved_dir <- resolve_dashboard_data_dir(data_dir)
   data <- load_all_dashboard_data(resolved_dir)
   validate_category_data(data, category)
+  category_members <- dashboard_category_members(category)
 
-  purrr::map(data, ~ dplyr::filter(.x, .data$hc_cat2 == .env$category))
+  if (!identical(category, medical_devices_all_category)) {
+    return(
+      purrr::map(data, ~ dplyr::filter(.x, .data$hc_cat2 == .env$category))
+    )
+  }
+
+  purrr::imap(
+    data,
+    ~ aggregate_dashboard_category_data(
+      data = .x,
+      data_name = .y,
+      category_members = category_members,
+      category = category
+    )
+  )
 }
 
 load_overview_dashboard_data <- function(data_dir = dashboard_data_dir) {
@@ -919,7 +1085,10 @@ dashboard_category_hierarchy <- function(category_names = hc_cat2_levels) {
       ),
       summary_level_2 = dplyr::case_when(
         .data$hc_cat2 == ifa_category ~ "IFAs",
-        .data$hc_cat2 %in% medical_device_categories ~ "Dispositivos médicos",
+        .data$hc_cat2 %in% c(
+          medical_device_categories,
+          medical_devices_all_category
+        ) ~ "Dispositivos médicos",
         TRUE ~ "Medicamentos, vacunas y otros"
       ),
       summary_color = dplyr::case_when(
@@ -2291,8 +2460,11 @@ load_category_product_exports <- function(
     file_name
   )
 
+  category_members <- dashboard_category_members(category)
+
   product_exports |>
-    dplyr::filter(.data$hc_cat2 == .env$category)
+    dplyr::filter(.data$hc_cat2 %in% .env$category_members) |>
+    dplyr::mutate(hc_cat2 = .env$category)
 }
 
 ## 8.2. Participación de ALC en las exportaciones mundiales ----

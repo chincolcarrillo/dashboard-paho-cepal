@@ -90,6 +90,11 @@ La columna `rca_balassa` llega ya calculada desde la base `product_exports_lac_2
 
 Las categorías se agrupan mediante `dashboard_category_hierarchy()` en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.
 
+### 3.12 Categoría agregada de dispositivos médicos
+`Dispositivos médicos (todos)` es una categoría virtual de presentación y no un nivel adicional de `hc_cat2`. `dashboard_category_members()` la vincula dinámicamente con todas las categorías enumeradas en `medical_device_categories`.
+
+Al cargar su página, las bases livianas se agregan nuevamente desde sus valores absolutos. Las participaciones mundiales y por región contraparte, los balances comerciales y los totales de flujo se recalculan después de la suma para evitar agregar porcentajes preexistentes. De este modo, cualquier nueva categoría incorporada correctamente a `medical_device_categories` queda incluida automáticamente.
+
 ## 4. Notas generales
 
 - Los gráficos basados en `ggplot2` aceptan, en general, `interactive = TRUE/FALSE`: `TRUE` devuelve un widget Plotly y `FALSE` devuelve el objeto `ggplot` estático equivalente. El Sankey se construye directamente con Plotly.

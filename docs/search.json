@@ -4,7 +4,7 @@
     "href": "r/NOTAS_METODOLOGICAS.html",
     "title": "Notas metodológicas - Plots y tablas del dashboard",
     "section": "",
-    "text": "Fuente: BACI/CEPII, con clasificación de categorías de producto propia (hc_cat2, en “data/rev_paho_2026.xlsx”).\nUnidad base de todas las variables de valor: miles de USD (_1000usd). Las funciones de formato convierten sobre esa base:\n\nformat_usd_millions() / to_musd(): x / 1.000 -&gt; millones de USD.\nformat_usd_billions(): x / 1.000.000 -&gt; miles de millones de USD.\nformat_percent_label(): formatea proporciones (0–1) como porcentaje.\n\nFormato: separador de miles ., decimal , (español).\nLos niveles y colores de región (region_levels, region_long_labels, region_colors) y de categoría (hc_cat2_levels) se definen en r/00_config.R.\n\n\n\n\n\n\n\n\n\n\n\nBase (.rds)\nUso principal\n\n\n\n\nexports_region_hc_cat2\nExportaciones mundiales por año, región exportadora y categoría\n\n\ntrade_balance_lac\nExportaciones, importaciones y balance por año, área (país o LAC) y categoría\n\n\npartner_region_lac_2024\nComercio por región contraparte (destino en exportaciones, origen en importaciones)\n\n\nsankey_intra_lac\nFlujos bilaterales de exportación entre países de LAC\n\n\noverview_exports_trends\nSeries Mundo/LAC por grupo de producto, para la página de resumen\n\n\noverview_lac_country_category_trade\nComercio por país de LAC y categoría, para la página de resumen\n\n\nproduct_exports_lac_2024_by_country\nExportaciones por producto (HS07) y país, con RCA ya calculado\n\n\n\ncheck_required_columns() valida que cada base tenga las columnas necesarias antes de calcular nada, y load_dashboard_data() centraliza la lectura desde data/dashboard/.\n\n\n\n\n\nshare_exports_value = exports_1000usd / world_exports_1000usd, agregado por año y región exportadora (y opcionalmente categoría). Se usa en la línea de participación de LAC (plot_lac_world_share_line).\n\n\n\nPor año, área y categoría: balance_1000usd = exports_1000usd - imports_1000usd. Se grafica como exportaciones (positivas) e importaciones (negativas) más una línea de balance neto (plot_trade_balance).\n\n\n\nrazon_import_export = imports_musd / exports_musd (si exports_musd &gt; 0, si no NA). Se calcula en la tabla de resultados por país (render_country_results_table).\n\n\n\nPara cada año/área/flujo (exportación o importación): share_flow_value = value_1000usd / sum(value_1000usd) dentro de ese grupo, donde la región contraparte es el destino en exportaciones y el origen en importaciones. Alimenta las barras apiladas al 100 % (plot_partner_region_100pct).\n\n\n\nplot_sankey_intra_lac() agrega los flujos por par exportador–importador para el año y la categoría seleccionados. Excluye los flujos donde origen = destino y permite aplicar un umbral mínimo (min_value_1000usd) y conservar sólo los top_n_flows de mayor valor.\n\n\n\nPara cada país de LAC: - intra_lac_export_share = exportaciones intrarregionales / exportaciones totales del país - Principal destino LAC: el país socio con mayor valor de exportación intrarregional, con su participación (main_lac_destination_share) sobre el total exportado por el país.\nAmbos se calculan en prepare_intra_lac_export_share(), cruzando trade_balance_lac (total exportado) con sankey_intra_lac (flujos bilaterales).\n\n\n\nFórmula general (calculate_cagr()):\nCAGR = (valor_final / valor_inicial)^(1 / n_años) - 1\nDevuelve NA si el valor inicial es ≤ 0 o si n_años ≤ 0. Se usa en dos ventanas para los KPI agregados de la página de inicio (prepare_landing_group_kpis()), sobre exportaciones mundiales por grupo: - CAGR histórico completo: desde el primer año disponible hasta el último. - CAGR de los últimos 5 años (cagr_window, configurable, default = 5).\n\n\n\nEn plot_overview_exports_growth_trends(), para cada serie (line_label = ámbito × grupo de producto):\ngrowth_rate = exports_1000usd(t) / exports_1000usd(t - lag_years) - 1\nSi annualized = TRUE y lag_years &gt; 1, el resultado se anualiza: (1 + growth_rate)^(1/lag_years) - 1. Con lag_years = 1 (default) es simplemente el crecimiento interanual.\n\n\n\nDentro de cada país y flujo (exportación/importación): share_value = value_1000usd / total_value_1000usd_del_país. Muestra cómo se compone el comercio de tecnologías sanitarias de cada país por categoría (plot_overview_lac_country_category_share).\n\n\n\nSe calcula en el script 03_trade_indicators.R La columna rca_balassa llega ya calculada desde la base product_exports_lac_2024_by_country (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En render_product_exports_by_country_table() se promedia (mean) si hay múltiples registros por producto/país [quizás sacar???], y la tabla se filtra a productos con rca_balassa &gt; 1 o exportaciones &gt; US$ 1 millón, para priorizar productos relevantes.\n\n\n\nprepare_landing_group_kpis() combina, para los tres grupos de la landing y el último año disponible: - Comercio total global (exportaciones mundiales del grupo). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.\nLas categorías se agrupan mediante dashboard_category_hierarchy() en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.\n\n\n\n\n\nLos gráficos basados en ggplot2 aceptan, en general, interactive = TRUE/FALSE: TRUE devuelve un widget Plotly y FALSE devuelve el objeto ggplot estático equivalente. El Sankey se construye directamente con Plotly.\ncheck_required_columns() se llama al inicio de casi toda función que recibe una base externa: si falta una columna requerida, la función se detiene con un mensaje explícito en vez de fallar más adelante de forma críptica.\nLos NA en tasas de crecimiento y en participaciones (share_*) ocurren cuando el denominador es 0, negativo o no disponible; se excluyen o se muestran como “n/d” según el contexto (format_landing_kpi_value)."
+    "text": "Fuente: BACI/CEPII, con clasificación de categorías de producto propia (hc_cat2, en “data/rev_paho_2026.xlsx”).\nUnidad base de todas las variables de valor: miles de USD (_1000usd). Las funciones de formato convierten sobre esa base:\n\nformat_usd_millions() / to_musd(): x / 1.000 -&gt; millones de USD.\nformat_usd_billions(): x / 1.000.000 -&gt; miles de millones de USD.\nformat_percent_label(): formatea proporciones (0–1) como porcentaje.\n\nFormato: separador de miles ., decimal , (español).\nLos niveles y colores de región (region_levels, region_long_labels, region_colors) y de categoría (hc_cat2_levels) se definen en r/00_config.R.\n\n\n\n\n\n\n\n\n\n\n\nBase (.rds)\nUso principal\n\n\n\n\nexports_region_hc_cat2\nExportaciones mundiales por año, región exportadora y categoría\n\n\ntrade_balance_lac\nExportaciones, importaciones y balance por año, área (país o LAC) y categoría\n\n\npartner_region_lac_2024\nComercio por región contraparte (destino en exportaciones, origen en importaciones)\n\n\nsankey_intra_lac\nFlujos bilaterales de exportación entre países de LAC\n\n\noverview_exports_trends\nSeries Mundo/LAC por grupo de producto, para la página de resumen\n\n\noverview_lac_country_category_trade\nComercio por país de LAC y categoría, para la página de resumen\n\n\nproduct_exports_lac_2024_by_country\nExportaciones por producto (HS07) y país, con RCA ya calculado\n\n\n\ncheck_required_columns() valida que cada base tenga las columnas necesarias antes de calcular nada, y load_dashboard_data() centraliza la lectura desde data/dashboard/.\n\n\n\n\n\nshare_exports_value = exports_1000usd / world_exports_1000usd, agregado por año y región exportadora (y opcionalmente categoría). Se usa en la línea de participación de LAC (plot_lac_world_share_line).\n\n\n\nPor año, área y categoría: balance_1000usd = exports_1000usd - imports_1000usd. Se grafica como exportaciones (positivas) e importaciones (negativas) más una línea de balance neto (plot_trade_balance).\n\n\n\nrazon_import_export = imports_musd / exports_musd (si exports_musd &gt; 0, si no NA). Se calcula en la tabla de resultados por país (render_country_results_table).\n\n\n\nPara cada año/área/flujo (exportación o importación): share_flow_value = value_1000usd / sum(value_1000usd) dentro de ese grupo, donde la región contraparte es el destino en exportaciones y el origen en importaciones. Alimenta las barras apiladas al 100 % (plot_partner_region_100pct).\n\n\n\nplot_sankey_intra_lac() agrega los flujos por par exportador–importador para el año y la categoría seleccionados. Excluye los flujos donde origen = destino y permite aplicar un umbral mínimo (min_value_1000usd) y conservar sólo los top_n_flows de mayor valor.\n\n\n\nPara cada país de LAC: - intra_lac_export_share = exportaciones intrarregionales / exportaciones totales del país - Principal destino LAC: el país socio con mayor valor de exportación intrarregional, con su participación (main_lac_destination_share) sobre el total exportado por el país.\nAmbos se calculan en prepare_intra_lac_export_share(), cruzando trade_balance_lac (total exportado) con sankey_intra_lac (flujos bilaterales).\n\n\n\nFórmula general (calculate_cagr()):\nCAGR = (valor_final / valor_inicial)^(1 / n_años) - 1\nDevuelve NA si el valor inicial es ≤ 0 o si n_años ≤ 0. Se usa en dos ventanas para los KPI agregados de la página de inicio (prepare_landing_group_kpis()), sobre exportaciones mundiales por grupo: - CAGR histórico completo: desde el primer año disponible hasta el último. - CAGR de los últimos 5 años (cagr_window, configurable, default = 5).\n\n\n\nEn plot_overview_exports_growth_trends(), para cada serie (line_label = ámbito × grupo de producto):\ngrowth_rate = exports_1000usd(t) / exports_1000usd(t - lag_years) - 1\nSi annualized = TRUE y lag_years &gt; 1, el resultado se anualiza: (1 + growth_rate)^(1/lag_years) - 1. Con lag_years = 1 (default) es simplemente el crecimiento interanual.\n\n\n\nDentro de cada país y flujo (exportación/importación): share_value = value_1000usd / total_value_1000usd_del_país. Muestra cómo se compone el comercio de tecnologías sanitarias de cada país por categoría (plot_overview_lac_country_category_share).\n\n\n\nSe calcula en el script 03_trade_indicators.R La columna rca_balassa llega ya calculada desde la base product_exports_lac_2024_by_country (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En render_product_exports_by_country_table() se promedia (mean) si hay múltiples registros por producto/país [quizás sacar???], y la tabla se filtra a productos con rca_balassa &gt; 1 o exportaciones &gt; US$ 1 millón, para priorizar productos relevantes.\n\n\n\nprepare_landing_group_kpis() combina, para los tres grupos de la landing y el último año disponible: - Comercio total global (exportaciones mundiales del grupo). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.\nLas categorías se agrupan mediante dashboard_category_hierarchy() en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.\n\n\n\nDispositivos médicos (todos) es una categoría virtual de presentación y no un nivel adicional de hc_cat2. dashboard_category_members() la vincula dinámicamente con todas las categorías enumeradas en medical_device_categories.\nAl cargar su página, las bases livianas se agregan nuevamente desde sus valores absolutos. Las participaciones mundiales y por región contraparte, los balances comerciales y los totales de flujo se recalculan después de la suma para evitar agregar porcentajes preexistentes. De este modo, cualquier nueva categoría incorporada correctamente a medical_device_categories queda incluida automáticamente.\n\n\n\n\n\nLos gráficos basados en ggplot2 aceptan, en general, interactive = TRUE/FALSE: TRUE devuelve un widget Plotly y FALSE devuelve el objeto ggplot estático equivalente. El Sankey se construye directamente con Plotly.\ncheck_required_columns() se llama al inicio de casi toda función que recibe una base externa: si falta una columna requerida, la función se detiene con un mensaje explícito en vez de fallar más adelante de forma críptica.\nLos NA en tasas de crecimiento y en participaciones (share_*) ocurren cuando el denominador es 0, negativo o no disponible; se excluyen o se muestran como “n/d” según el contexto (format_landing_kpi_value)."
   },
   {
     "objectID": "r/NOTAS_METODOLOGICAS.html#fuente-y-unidades-de-los-datos",
@@ -25,7 +25,7 @@
     "href": "r/NOTAS_METODOLOGICAS.html#indicadores-calculados",
     "title": "Notas metodológicas - Plots y tablas del dashboard",
     "section": "",
-    "text": "share_exports_value = exports_1000usd / world_exports_1000usd, agregado por año y región exportadora (y opcionalmente categoría). Se usa en la línea de participación de LAC (plot_lac_world_share_line).\n\n\n\nPor año, área y categoría: balance_1000usd = exports_1000usd - imports_1000usd. Se grafica como exportaciones (positivas) e importaciones (negativas) más una línea de balance neto (plot_trade_balance).\n\n\n\nrazon_import_export = imports_musd / exports_musd (si exports_musd &gt; 0, si no NA). Se calcula en la tabla de resultados por país (render_country_results_table).\n\n\n\nPara cada año/área/flujo (exportación o importación): share_flow_value = value_1000usd / sum(value_1000usd) dentro de ese grupo, donde la región contraparte es el destino en exportaciones y el origen en importaciones. Alimenta las barras apiladas al 100 % (plot_partner_region_100pct).\n\n\n\nplot_sankey_intra_lac() agrega los flujos por par exportador–importador para el año y la categoría seleccionados. Excluye los flujos donde origen = destino y permite aplicar un umbral mínimo (min_value_1000usd) y conservar sólo los top_n_flows de mayor valor.\n\n\n\nPara cada país de LAC: - intra_lac_export_share = exportaciones intrarregionales / exportaciones totales del país - Principal destino LAC: el país socio con mayor valor de exportación intrarregional, con su participación (main_lac_destination_share) sobre el total exportado por el país.\nAmbos se calculan en prepare_intra_lac_export_share(), cruzando trade_balance_lac (total exportado) con sankey_intra_lac (flujos bilaterales).\n\n\n\nFórmula general (calculate_cagr()):\nCAGR = (valor_final / valor_inicial)^(1 / n_años) - 1\nDevuelve NA si el valor inicial es ≤ 0 o si n_años ≤ 0. Se usa en dos ventanas para los KPI agregados de la página de inicio (prepare_landing_group_kpis()), sobre exportaciones mundiales por grupo: - CAGR histórico completo: desde el primer año disponible hasta el último. - CAGR de los últimos 5 años (cagr_window, configurable, default = 5).\n\n\n\nEn plot_overview_exports_growth_trends(), para cada serie (line_label = ámbito × grupo de producto):\ngrowth_rate = exports_1000usd(t) / exports_1000usd(t - lag_years) - 1\nSi annualized = TRUE y lag_years &gt; 1, el resultado se anualiza: (1 + growth_rate)^(1/lag_years) - 1. Con lag_years = 1 (default) es simplemente el crecimiento interanual.\n\n\n\nDentro de cada país y flujo (exportación/importación): share_value = value_1000usd / total_value_1000usd_del_país. Muestra cómo se compone el comercio de tecnologías sanitarias de cada país por categoría (plot_overview_lac_country_category_share).\n\n\n\nSe calcula en el script 03_trade_indicators.R La columna rca_balassa llega ya calculada desde la base product_exports_lac_2024_by_country (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En render_product_exports_by_country_table() se promedia (mean) si hay múltiples registros por producto/país [quizás sacar???], y la tabla se filtra a productos con rca_balassa &gt; 1 o exportaciones &gt; US$ 1 millón, para priorizar productos relevantes.\n\n\n\nprepare_landing_group_kpis() combina, para los tres grupos de la landing y el último año disponible: - Comercio total global (exportaciones mundiales del grupo). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.\nLas categorías se agrupan mediante dashboard_category_hierarchy() en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards."
+    "text": "share_exports_value = exports_1000usd / world_exports_1000usd, agregado por año y región exportadora (y opcionalmente categoría). Se usa en la línea de participación de LAC (plot_lac_world_share_line).\n\n\n\nPor año, área y categoría: balance_1000usd = exports_1000usd - imports_1000usd. Se grafica como exportaciones (positivas) e importaciones (negativas) más una línea de balance neto (plot_trade_balance).\n\n\n\nrazon_import_export = imports_musd / exports_musd (si exports_musd &gt; 0, si no NA). Se calcula en la tabla de resultados por país (render_country_results_table).\n\n\n\nPara cada año/área/flujo (exportación o importación): share_flow_value = value_1000usd / sum(value_1000usd) dentro de ese grupo, donde la región contraparte es el destino en exportaciones y el origen en importaciones. Alimenta las barras apiladas al 100 % (plot_partner_region_100pct).\n\n\n\nplot_sankey_intra_lac() agrega los flujos por par exportador–importador para el año y la categoría seleccionados. Excluye los flujos donde origen = destino y permite aplicar un umbral mínimo (min_value_1000usd) y conservar sólo los top_n_flows de mayor valor.\n\n\n\nPara cada país de LAC: - intra_lac_export_share = exportaciones intrarregionales / exportaciones totales del país - Principal destino LAC: el país socio con mayor valor de exportación intrarregional, con su participación (main_lac_destination_share) sobre el total exportado por el país.\nAmbos se calculan en prepare_intra_lac_export_share(), cruzando trade_balance_lac (total exportado) con sankey_intra_lac (flujos bilaterales).\n\n\n\nFórmula general (calculate_cagr()):\nCAGR = (valor_final / valor_inicial)^(1 / n_años) - 1\nDevuelve NA si el valor inicial es ≤ 0 o si n_años ≤ 0. Se usa en dos ventanas para los KPI agregados de la página de inicio (prepare_landing_group_kpis()), sobre exportaciones mundiales por grupo: - CAGR histórico completo: desde el primer año disponible hasta el último. - CAGR de los últimos 5 años (cagr_window, configurable, default = 5).\n\n\n\nEn plot_overview_exports_growth_trends(), para cada serie (line_label = ámbito × grupo de producto):\ngrowth_rate = exports_1000usd(t) / exports_1000usd(t - lag_years) - 1\nSi annualized = TRUE y lag_years &gt; 1, el resultado se anualiza: (1 + growth_rate)^(1/lag_years) - 1. Con lag_years = 1 (default) es simplemente el crecimiento interanual.\n\n\n\nDentro de cada país y flujo (exportación/importación): share_value = value_1000usd / total_value_1000usd_del_país. Muestra cómo se compone el comercio de tecnologías sanitarias de cada país por categoría (plot_overview_lac_country_category_share).\n\n\n\nSe calcula en el script 03_trade_indicators.R La columna rca_balassa llega ya calculada desde la base product_exports_lac_2024_by_country (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En render_product_exports_by_country_table() se promedia (mean) si hay múltiples registros por producto/país [quizás sacar???], y la tabla se filtra a productos con rca_balassa &gt; 1 o exportaciones &gt; US$ 1 millón, para priorizar productos relevantes.\n\n\n\nprepare_landing_group_kpis() combina, para los tres grupos de la landing y el último año disponible: - Comercio total global (exportaciones mundiales del grupo). - CAGR histórico y CAGR a 5 años (ver 3.7). - Exportaciones e importaciones de LAC en el último año.\nLas categorías se agrupan mediante dashboard_category_hierarchy() en dispositivos médicos, IFAs y medicamentos, vacunas y otros; cada grupo conserva el color asociado a sus cards.\n\n\n\nDispositivos médicos (todos) es una categoría virtual de presentación y no un nivel adicional de hc_cat2. dashboard_category_members() la vincula dinámicamente con todas las categorías enumeradas en medical_device_categories.\nAl cargar su página, las bases livianas se agregan nuevamente desde sus valores absolutos. Las participaciones mundiales y por región contraparte, los balances comerciales y los totales de flujo se recalculan después de la suma para evitar agregar porcentajes preexistentes. De este modo, cualquier nueva categoría incorporada correctamente a medical_device_categories queda incluida automáticamente."
   },
   {
     "objectID": "r/NOTAS_METODOLOGICAS.html#notas-generales",
@@ -501,14 +501,14 @@
     "href": "dashboard/dispositivos-odontologicos.html",
     "title": "Dispositivos odontológicos",
     "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16.833,9 millones e importó US$ 6.199,3 millones en Dispositivos odontológicos, con un balance comercial de US$ 10.634,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 11.270,6 millones) y el mayor importador fue México (US$ 3.288,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 460,7 millones e importó US$ 727,7 millones en Dispositivos odontológicos, con un balance comercial de -US$ 267,0 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 251,5 millones) y el mayor importador fue México (US$ 216,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/dispositivos-odontologicos.html#panorama-regional",
     "href": "dashboard/dispositivos-odontologicos.html#panorama-regional",
     "title": "Dispositivos odontológicos",
     "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16.833,9 millones e importó US$ 6.199,3 millones en Dispositivos odontológicos, con un balance comercial de US$ 10.634,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 11.270,6 millones) y el mayor importador fue México (US$ 3.288,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 460,7 millones e importó US$ 727,7 millones en Dispositivos odontológicos, con un balance comercial de -US$ 267,0 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 251,5 millones) y el mayor importador fue México (US$ 216,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
   },
   {
     "objectID": "dashboard/dispositivos-odontologicos.html#participación-de-alc-en-las-exportaciones-mundiales",
@@ -570,391 +570,6 @@
     "objectID": "dashboard/dispositivos-odontologicos.html#notas-metodológicas",
     "href": "dashboard/dispositivos-odontologicos.html#notas-metodológicas",
     "title": "Dispositivos odontológicos",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html",
-    "href": "dashboard/dispositivos-cardiovasculares.html",
-    "title": "Dispositivos cardiovasculares",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 172,7 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 156,3 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brasil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#panorama-regional",
-    "href": "dashboard/dispositivos-cardiovasculares.html#panorama-regional",
-    "title": "Dispositivos cardiovasculares",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 172,7 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 156,3 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brasil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "href": "dashboard/dispositivos-cardiovasculares.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "title": "Dispositivos cardiovasculares",
-    "section": "1. Participación de ALC en las exportaciones mundiales",
-    "text": "1. Participación de ALC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/dispositivos-cardiovasculares.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Dispositivos cardiovasculares",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#exportaciones-importaciones-y-balance-de-alc",
-    "href": "dashboard/dispositivos-cardiovasculares.html#exportaciones-importaciones-y-balance-de-alc",
-    "title": "Dispositivos cardiovasculares",
-    "section": "3. Exportaciones, importaciones y balance de ALC",
-    "text": "3. Exportaciones, importaciones y balance de ALC"
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#países-alc-con-mayor-comercio",
-    "href": "dashboard/dispositivos-cardiovasculares.html#países-alc-con-mayor-comercio",
-    "title": "Dispositivos cardiovasculares",
-    "section": "4. Países ALC con mayor comercio",
-    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#resultados-por-país",
-    "href": "dashboard/dispositivos-cardiovasculares.html#resultados-por-país",
-    "title": "Dispositivos cardiovasculares",
-    "section": "5. Resultados por país",
-    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/dispositivos-cardiovasculares.html#origen-y-destino-regional-del-comercio",
-    "title": "Dispositivos cardiovasculares",
-    "section": "6. Origen y destino regional del comercio",
-    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#comercio-intrarregional",
-    "href": "dashboard/dispositivos-cardiovasculares.html#comercio-intrarregional",
-    "title": "Dispositivos cardiovasculares",
-    "section": "7. Comercio intrarregional",
-    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos cardiovasculares."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/dispositivos-cardiovasculares.html#productos-exportados-por-país-de-origen",
-    "title": "Dispositivos cardiovasculares",
-    "section": "8. Productos exportados por país de origen",
-    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos cardiovasculares. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
-  },
-  {
-    "objectID": "dashboard/dispositivos-cardiovasculares.html#notas-metodológicas",
-    "href": "dashboard/dispositivos-cardiovasculares.html#notas-metodológicas",
-    "title": "Dispositivos cardiovasculares",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html",
-    "href": "dashboard/diagnostico-in-vitro.html",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 334,2 millones e importó US$ 3.239,4 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.905,2 millones. Entre los países de la región, el mayor exportador fue México (US$ 160,0 millones) y el mayor importador fue México (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#panorama-regional",
-    "href": "dashboard/diagnostico-in-vitro.html#panorama-regional",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 334,2 millones e importó US$ 3.239,4 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.905,2 millones. Entre los países de la región, el mayor exportador fue México (US$ 160,0 millones) y el mayor importador fue México (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "href": "dashboard/diagnostico-in-vitro.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "1. Participación de ALC en las exportaciones mundiales",
-    "text": "1. Participación de ALC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/diagnostico-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#exportaciones-importaciones-y-balance-de-alc",
-    "href": "dashboard/diagnostico-in-vitro.html#exportaciones-importaciones-y-balance-de-alc",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "3. Exportaciones, importaciones y balance de ALC",
-    "text": "3. Exportaciones, importaciones y balance de ALC"
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#países-alc-con-mayor-comercio",
-    "href": "dashboard/diagnostico-in-vitro.html#países-alc-con-mayor-comercio",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "4. Países ALC con mayor comercio",
-    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#resultados-por-país",
-    "href": "dashboard/diagnostico-in-vitro.html#resultados-por-país",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "5. Resultados por país",
-    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/diagnostico-in-vitro.html#origen-y-destino-regional-del-comercio",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "6. Origen y destino regional del comercio",
-    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#comercio-intrarregional",
-    "href": "dashboard/diagnostico-in-vitro.html#comercio-intrarregional",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "7. Comercio intrarregional",
-    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos de diagnóstico in vitro y de laboratorio."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/diagnostico-in-vitro.html#productos-exportados-por-país-de-origen",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "8. Productos exportados por país de origen",
-    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos de diagnóstico in vitro y de laboratorio. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
-  },
-  {
-    "objectID": "dashboard/diagnostico-in-vitro.html#notas-metodológicas",
-    "href": "dashboard/diagnostico-in-vitro.html#notas-metodológicas",
-    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html",
-    "href": "dashboard/celulas-tejidos.html",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,4 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,4 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 64,6 millones) y el mayor importador fue Brasil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Asia oriental y el Pacífico y el principal origen de las importaciones fue Asia oriental y el Pacífico."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#panorama-regional",
-    "href": "dashboard/celulas-tejidos.html#panorama-regional",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,4 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,4 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 64,6 millones) y el mayor importador fue Brasil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Asia oriental y el Pacífico y el principal origen de las importaciones fue Asia oriental y el Pacífico."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "href": "dashboard/celulas-tejidos.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "1. Participación de ALC en las exportaciones mundiales",
-    "text": "1. Participación de ALC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/celulas-tejidos.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#exportaciones-importaciones-y-balance-de-alc",
-    "href": "dashboard/celulas-tejidos.html#exportaciones-importaciones-y-balance-de-alc",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "3. Exportaciones, importaciones y balance de ALC",
-    "text": "3. Exportaciones, importaciones y balance de ALC"
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#países-alc-con-mayor-comercio",
-    "href": "dashboard/celulas-tejidos.html#países-alc-con-mayor-comercio",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "4. Países ALC con mayor comercio",
-    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#resultados-por-país",
-    "href": "dashboard/celulas-tejidos.html#resultados-por-país",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "5. Resultados por país",
-    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/celulas-tejidos.html#origen-y-destino-regional-del-comercio",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "6. Origen y destino regional del comercio",
-    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#comercio-intrarregional",
-    "href": "dashboard/celulas-tejidos.html#comercio-intrarregional",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "7. Comercio intrarregional",
-    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/celulas-tejidos.html#productos-exportados-por-país-de-origen",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "8. Productos exportados por país de origen",
-    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
-  },
-  {
-    "objectID": "dashboard/celulas-tejidos.html#notas-metodológicas",
-    "href": "dashboard/celulas-tejidos.html#notas-metodológicas",
-    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,6 millones e importó US$ 1.285,1 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 802,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 258,0 millones) y el mayor importador fue México (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#panorama-regional",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#panorama-regional",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,6 millones e importó US$ 1.285,1 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 802,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 258,0 millones) y el mayor importador fue México (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "1. Participación de ALC en las exportaciones mundiales",
-    "text": "1. Participación de ALC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#exportaciones-importaciones-y-balance-de-alc",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#exportaciones-importaciones-y-balance-de-alc",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "3. Exportaciones, importaciones y balance de ALC",
-    "text": "3. Exportaciones, importaciones y balance de ALC"
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#países-alc-con-mayor-comercio",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#países-alc-con-mayor-comercio",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "4. Países ALC con mayor comercio",
-    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#resultados-por-país",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#resultados-por-país",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "5. Resultados por país",
-    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#origen-y-destino-regional-del-comercio",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "6. Origen y destino regional del comercio",
-    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#comercio-intrarregional",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#comercio-intrarregional",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "7. Comercio intrarregional",
-    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Cuidado de heridas y dispositivos de protección."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#productos-exportados-por-país-de-origen",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "8. Productos exportados por país de origen",
-    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Cuidado de heridas y dispositivos de protección. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
-  },
-  {
-    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#notas-metodológicas",
-    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#notas-metodológicas",
-    "title": "Cuidado de heridas y dispositivos de protección",
-    "section": "Notas metodológicas",
-    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html",
-    "href": "dashboard/diagnostico-por-imagen.html",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 612,8 millones e importó US$ 2.130,4 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.517,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 498,9 millones) y el mayor importador fue México (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#panorama-regional",
-    "href": "dashboard/diagnostico-por-imagen.html#panorama-regional",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 612,8 millones e importó US$ 2.130,4 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.517,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 498,9 millones) y el mayor importador fue México (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "href": "dashboard/diagnostico-por-imagen.html#participación-de-alc-en-las-exportaciones-mundiales",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "1. Participación de ALC en las exportaciones mundiales",
-    "text": "1. Participación de ALC en las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#estructura-regional-de-las-exportaciones-mundiales",
-    "href": "dashboard/diagnostico-por-imagen.html#estructura-regional-de-las-exportaciones-mundiales",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "2. Estructura regional de las exportaciones mundiales",
-    "text": "2. Estructura regional de las exportaciones mundiales"
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#exportaciones-importaciones-y-balance-de-alc",
-    "href": "dashboard/diagnostico-por-imagen.html#exportaciones-importaciones-y-balance-de-alc",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "3. Exportaciones, importaciones y balance de ALC",
-    "text": "3. Exportaciones, importaciones y balance de ALC"
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#países-alc-con-mayor-comercio",
-    "href": "dashboard/diagnostico-por-imagen.html#países-alc-con-mayor-comercio",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "4. Países ALC con mayor comercio",
-    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#resultados-por-país",
-    "href": "dashboard/diagnostico-por-imagen.html#resultados-por-país",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "5. Resultados por país",
-    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#origen-y-destino-regional-del-comercio",
-    "href": "dashboard/diagnostico-por-imagen.html#origen-y-destino-regional-del-comercio",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "6. Origen y destino regional del comercio",
-    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#comercio-intrarregional",
-    "href": "dashboard/diagnostico-por-imagen.html#comercio-intrarregional",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "7. Comercio intrarregional",
-    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos de diagnóstico por imagen."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#productos-exportados-por-país-de-origen",
-    "href": "dashboard/diagnostico-por-imagen.html#productos-exportados-por-país-de-origen",
-    "title": "Dispositivos de diagnóstico por imagen",
-    "section": "8. Productos exportados por país de origen",
-    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos de diagnóstico por imagen. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
-  },
-  {
-    "objectID": "dashboard/diagnostico-por-imagen.html#notas-metodológicas",
-    "href": "dashboard/diagnostico-por-imagen.html#notas-metodológicas",
-    "title": "Dispositivos de diagnóstico por imagen",
     "section": "Notas metodológicas",
     "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
   },
@@ -1036,18 +651,480 @@
     "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
   },
   {
+    "objectID": "dashboard/diagnostico-por-imagen.html",
+    "href": "dashboard/diagnostico-por-imagen.html",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 612,8 millones e importó US$ 2.130,4 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.517,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 498,9 millones) y el mayor importador fue México (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#panorama-regional",
+    "href": "dashboard/diagnostico-por-imagen.html#panorama-regional",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 612,8 millones e importó US$ 2.130,4 millones en Dispositivos de diagnóstico por imagen, con un balance comercial de -US$ 1.517,6 millones. Entre los países de la región, el mayor exportador fue México (US$ 498,9 millones) y el mayor importador fue México (US$ 676,5 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "href": "dashboard/diagnostico-por-imagen.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "1. Participación de ALC en las exportaciones mundiales",
+    "text": "1. Participación de ALC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/diagnostico-por-imagen.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#exportaciones-importaciones-y-balance-de-alc",
+    "href": "dashboard/diagnostico-por-imagen.html#exportaciones-importaciones-y-balance-de-alc",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "3. Exportaciones, importaciones y balance de ALC",
+    "text": "3. Exportaciones, importaciones y balance de ALC"
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#países-alc-con-mayor-comercio",
+    "href": "dashboard/diagnostico-por-imagen.html#países-alc-con-mayor-comercio",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "4. Países ALC con mayor comercio",
+    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#resultados-por-país",
+    "href": "dashboard/diagnostico-por-imagen.html#resultados-por-país",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/diagnostico-por-imagen.html#origen-y-destino-regional-del-comercio",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#comercio-intrarregional",
+    "href": "dashboard/diagnostico-por-imagen.html#comercio-intrarregional",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos de diagnóstico por imagen."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/diagnostico-por-imagen.html#productos-exportados-por-país-de-origen",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos de diagnóstico por imagen. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/diagnostico-por-imagen.html#notas-metodológicas",
+    "href": "dashboard/diagnostico-por-imagen.html#notas-metodológicas",
+    "title": "Dispositivos de diagnóstico por imagen",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,6 millones e importó US$ 1.285,1 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 802,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 258,0 millones) y el mayor importador fue México (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#panorama-regional",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#panorama-regional",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 482,6 millones e importó US$ 1.285,1 millones en Cuidado de heridas y dispositivos de protección, con un balance comercial de -US$ 802,5 millones. Entre los países de la región, el mayor exportador fue México (US$ 258,0 millones) y el mayor importador fue México (US$ 547,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Asia oriental y el Pacífico."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "1. Participación de ALC en las exportaciones mundiales",
+    "text": "1. Participación de ALC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#exportaciones-importaciones-y-balance-de-alc",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#exportaciones-importaciones-y-balance-de-alc",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "3. Exportaciones, importaciones y balance de ALC",
+    "text": "3. Exportaciones, importaciones y balance de ALC"
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#países-alc-con-mayor-comercio",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#países-alc-con-mayor-comercio",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "4. Países ALC con mayor comercio",
+    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#resultados-por-país",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#resultados-por-país",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#origen-y-destino-regional-del-comercio",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#comercio-intrarregional",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#comercio-intrarregional",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Cuidado de heridas y dispositivos de protección."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#productos-exportados-por-país-de-origen",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Cuidado de heridas y dispositivos de protección. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#notas-metodológicas",
+    "href": "dashboard/cuidado-de-heridas-y-dispositivos-proteccion.html#notas-metodológicas",
+    "title": "Cuidado de heridas y dispositivos de protección",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html",
+    "href": "dashboard/celulas-tejidos.html",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,4 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,4 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 64,6 millones) y el mayor importador fue Brasil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Asia oriental y el Pacífico y el principal origen de las importaciones fue Asia oriental y el Pacífico."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#panorama-regional",
+    "href": "dashboard/celulas-tejidos.html#panorama-regional",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 122,1 millones e importó US$ 166,4 millones en Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico, con un balance comercial de -US$ 44,4 millones. Entre los países de la región, el mayor exportador fue Brasil (US$ 64,6 millones) y el mayor importador fue Brasil (US$ 59,0 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue Asia oriental y el Pacífico y el principal origen de las importaciones fue Asia oriental y el Pacífico."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "href": "dashboard/celulas-tejidos.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "1. Participación de ALC en las exportaciones mundiales",
+    "text": "1. Participación de ALC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/celulas-tejidos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#exportaciones-importaciones-y-balance-de-alc",
+    "href": "dashboard/celulas-tejidos.html#exportaciones-importaciones-y-balance-de-alc",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "3. Exportaciones, importaciones y balance de ALC",
+    "text": "3. Exportaciones, importaciones y balance de ALC"
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#países-alc-con-mayor-comercio",
+    "href": "dashboard/celulas-tejidos.html#países-alc-con-mayor-comercio",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "4. Países ALC con mayor comercio",
+    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#resultados-por-país",
+    "href": "dashboard/celulas-tejidos.html#resultados-por-país",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/celulas-tejidos.html#origen-y-destino-regional-del-comercio",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#comercio-intrarregional",
+    "href": "dashboard/celulas-tejidos.html#comercio-intrarregional",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/celulas-tejidos.html#productos-exportados-por-país-de-origen",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/celulas-tejidos.html#notas-metodológicas",
+    "href": "dashboard/celulas-tejidos.html#notas-metodológicas",
+    "title": "Células, tejidos y otras sustancias de origen humano o animal para uso terapéutico",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html",
+    "href": "dashboard/diagnostico-in-vitro.html",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 334,2 millones e importó US$ 3.239,4 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.905,2 millones. Entre los países de la región, el mayor exportador fue México (US$ 160,0 millones) y el mayor importador fue México (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#panorama-regional",
+    "href": "dashboard/diagnostico-in-vitro.html#panorama-regional",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 334,2 millones e importó US$ 3.239,4 millones en Dispositivos de diagnóstico in vitro y de laboratorio, con un balance comercial de -US$ 2.905,2 millones. Entre los países de la región, el mayor exportador fue México (US$ 160,0 millones) y el mayor importador fue México (US$ 866,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "href": "dashboard/diagnostico-in-vitro.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "1. Participación de ALC en las exportaciones mundiales",
+    "text": "1. Participación de ALC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/diagnostico-in-vitro.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#exportaciones-importaciones-y-balance-de-alc",
+    "href": "dashboard/diagnostico-in-vitro.html#exportaciones-importaciones-y-balance-de-alc",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "3. Exportaciones, importaciones y balance de ALC",
+    "text": "3. Exportaciones, importaciones y balance de ALC"
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#países-alc-con-mayor-comercio",
+    "href": "dashboard/diagnostico-in-vitro.html#países-alc-con-mayor-comercio",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "4. Países ALC con mayor comercio",
+    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#resultados-por-país",
+    "href": "dashboard/diagnostico-in-vitro.html#resultados-por-país",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/diagnostico-in-vitro.html#origen-y-destino-regional-del-comercio",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#comercio-intrarregional",
+    "href": "dashboard/diagnostico-in-vitro.html#comercio-intrarregional",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos de diagnóstico in vitro y de laboratorio."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/diagnostico-in-vitro.html#productos-exportados-por-país-de-origen",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos de diagnóstico in vitro y de laboratorio. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/diagnostico-in-vitro.html#notas-metodológicas",
+    "href": "dashboard/diagnostico-in-vitro.html#notas-metodológicas",
+    "title": "Dispositivos de diagnóstico in vitro y de laboratorio",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html",
+    "href": "dashboard/dispositivos-cardiovasculares.html",
+    "title": "Dispositivos cardiovasculares",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 172,7 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 156,3 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brasil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#panorama-regional",
+    "href": "dashboard/dispositivos-cardiovasculares.html#panorama-regional",
+    "title": "Dispositivos cardiovasculares",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 16,4 millones e importó US$ 172,7 millones en Dispositivos cardiovasculares, con un balance comercial de -US$ 156,3 millones. Entre los países de la región, el mayor exportador fue Uruguay (US$ 10,5 millones) y el mayor importador fue Brasil (US$ 47,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue Europa."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "href": "dashboard/dispositivos-cardiovasculares.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "title": "Dispositivos cardiovasculares",
+    "section": "1. Participación de ALC en las exportaciones mundiales",
+    "text": "1. Participación de ALC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/dispositivos-cardiovasculares.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Dispositivos cardiovasculares",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#exportaciones-importaciones-y-balance-de-alc",
+    "href": "dashboard/dispositivos-cardiovasculares.html#exportaciones-importaciones-y-balance-de-alc",
+    "title": "Dispositivos cardiovasculares",
+    "section": "3. Exportaciones, importaciones y balance de ALC",
+    "text": "3. Exportaciones, importaciones y balance de ALC"
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#países-alc-con-mayor-comercio",
+    "href": "dashboard/dispositivos-cardiovasculares.html#países-alc-con-mayor-comercio",
+    "title": "Dispositivos cardiovasculares",
+    "section": "4. Países ALC con mayor comercio",
+    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#resultados-por-país",
+    "href": "dashboard/dispositivos-cardiovasculares.html#resultados-por-país",
+    "title": "Dispositivos cardiovasculares",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/dispositivos-cardiovasculares.html#origen-y-destino-regional-del-comercio",
+    "title": "Dispositivos cardiovasculares",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#comercio-intrarregional",
+    "href": "dashboard/dispositivos-cardiovasculares.html#comercio-intrarregional",
+    "title": "Dispositivos cardiovasculares",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos cardiovasculares."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/dispositivos-cardiovasculares.html#productos-exportados-por-país-de-origen",
+    "title": "Dispositivos cardiovasculares",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos cardiovasculares. Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/dispositivos-cardiovasculares.html#notas-metodológicas",
+    "href": "dashboard/dispositivos-cardiovasculares.html#notas-metodológicas",
+    "title": "Dispositivos cardiovasculares",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html",
+    "href": "dashboard/dispositivos-medicos-todos.html",
+    "title": "Dispositivos médicos (todos)",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 43.050,5 millones e importó US$ 24.819,1 millones en Dispositivos médicos (todos), con un balance comercial de US$ 18.231,4 millones. Entre los países de la región, el mayor exportador fue México (US$ 27.964,7 millones) y el mayor importador fue México (US$ 10.026,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#panorama-regional",
+    "href": "dashboard/dispositivos-medicos-todos.html#panorama-regional",
+    "title": "Dispositivos médicos (todos)",
+    "section": "",
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 43.050,5 millones e importó US$ 24.819,1 millones en Dispositivos médicos (todos), con un balance comercial de US$ 18.231,4 millones. Entre los países de la región, el mayor exportador fue México (US$ 27.964,7 millones) y el mayor importador fue México (US$ 10.026,8 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "href": "dashboard/dispositivos-medicos-todos.html#participación-de-alc-en-las-exportaciones-mundiales",
+    "title": "Dispositivos médicos (todos)",
+    "section": "1. Participación de ALC en las exportaciones mundiales",
+    "text": "1. Participación de ALC en las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "href": "dashboard/dispositivos-medicos-todos.html#estructura-regional-de-las-exportaciones-mundiales",
+    "title": "Dispositivos médicos (todos)",
+    "section": "2. Estructura regional de las exportaciones mundiales",
+    "text": "2. Estructura regional de las exportaciones mundiales"
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#exportaciones-importaciones-y-balance-de-alc",
+    "href": "dashboard/dispositivos-medicos-todos.html#exportaciones-importaciones-y-balance-de-alc",
+    "title": "Dispositivos médicos (todos)",
+    "section": "3. Exportaciones, importaciones y balance de ALC",
+    "text": "3. Exportaciones, importaciones y balance de ALC"
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#países-alc-con-mayor-comercio",
+    "href": "dashboard/dispositivos-medicos-todos.html#países-alc-con-mayor-comercio",
+    "title": "Dispositivos médicos (todos)",
+    "section": "4. Países ALC con mayor comercio",
+    "text": "4. Países ALC con mayor comercio\nEl ranking ordena países por comercio total en el último año disponible. El punto representa el balance comercial de cada país."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#resultados-por-país",
+    "href": "dashboard/dispositivos-medicos-todos.html#resultados-por-país",
+    "title": "Dispositivos médicos (todos)",
+    "section": "5. Resultados por país",
+    "text": "5. Resultados por país\nLa tabla resume exportaciones, importaciones, balance y comercio total por país para 2024. Puede ordenarse, filtrarse y buscarse desde el navegador."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#origen-y-destino-regional-del-comercio",
+    "href": "dashboard/dispositivos-medicos-todos.html#origen-y-destino-regional-del-comercio",
+    "title": "Dispositivos médicos (todos)",
+    "section": "6. Origen y destino regional del comercio",
+    "text": "6. Origen y destino regional del comercio\nLa composición corresponde a 2024. En exportaciones se muestra la región de destino y en importaciones la región de origen."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#comercio-intrarregional",
+    "href": "dashboard/dispositivos-medicos-todos.html#comercio-intrarregional",
+    "title": "Dispositivos médicos (todos)",
+    "section": "7. Comercio intrarregional",
+    "text": "7. Comercio intrarregional\nLa tabla presenta, para 2024, qué proporción de las exportaciones de cada país se dirige a un país de la región y cuál es su principal destino dentro de ALC.\nLas columnas permiten distinguir la intensidad del comercio intrarregional y el peso del principal socio regional:\n\nPaís: país exportador de ALC.\n% exportado hacia ALC: proporción de las exportaciones totales de la categoría que el país destina a otros países de ALC.\nExportaciones a ALC, miles de USD: valor de esas exportaciones intrarregionales.\nPrincipal destino dentro de ALC: país de ALC que recibe el mayor flujo exportado por ese país.\n% hacia principal destino: proporción de las exportaciones totales de la categoría que corresponde al flujo hacia ese principal destino intrarregional.\n\n\n\n\n\n\n\n\nPrincipales flujos intrarregionales\nEl diagrama Sankey resume los principales flujos intrarregionales. Se muestran los 30 flujos de mayor valor para Dispositivos médicos (todos)."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#productos-exportados-por-país-de-origen",
+    "href": "dashboard/dispositivos-medicos-todos.html#productos-exportados-por-país-de-origen",
+    "title": "Dispositivos médicos (todos)",
+    "section": "8. Productos exportados por país de origen",
+    "text": "8. Productos exportados por país de origen\nCada grupo de la tabla corresponde a un producto HS07, dentro de la categoría Dispositivos médicos (todos). Puede buscarse, filtrarse y agruparse por código de producto. Dentro de cada producto, las columnas muestran:\n\nPaís exportador: país de ALC que registra exportaciones del producto.\nExportaciones, miles de USD: valor exportado por el país en ese producto, en 2024.\n% de la exportación regional: proporción del país en las exportaciones regionales de ALC de ese producto.\nRCA: índice de ventaja comparativa revelada de Balassa (RCA). Valores mayores que 1 indican que el producto pesa más en las exportaciones del país que en las exportaciones mundiales. Cuando un país tiene una ventaja comparativa revelada para un determinado producto (RCA &gt; 1), se infiere que es un productor y exportador competitivo de dicho producto en relación con un país que produce y exporta ese bien en o por debajo del promedio mundial.\n\nPara concentrar la tabla en productos y países con mayor relevancia comercial o especialización relativa, se muestran sólo las filas donde el país tiene RCA &gt; 1 o exportaciones del producto superiores a US$ 1 millón."
+  },
+  {
+    "objectID": "dashboard/dispositivos-medicos-todos.html#notas-metodológicas",
+    "href": "dashboard/dispositivos-medicos-todos.html#notas-metodológicas",
+    "title": "Dispositivos médicos (todos)",
+    "section": "Notas metodológicas",
+    "text": "Notas metodológicas\n\nTodos los análisis presentados se basan en los datos de CEPII-BACI, con nomenclatura HS 2007.\nLa base BACI armoniza los reportes bilaterales de comercio para mejorar la consistencia internacional de los flujos. Como parte de esa metodología, los costos CIF se estiman y se remueven de los valores de importación para obtener valores de importación en términos FOB, comparables con las exportaciones. Además, CEPII evalúa la confiabilidad de cada país como reportante. Si los datos declarados por un país tienden a diferir sistemáticamente de los datos reportados por sus socios comerciales, ese país recibe un menor peso en la estimación del flujo reconciliado.\nA pesar de este proceso de armonización, los datos de comercio no permiten distinguir si una exportación corresponde efectivamente a producción nacional o a reexportaciones. Esto es especialmente relevante para economías con funciones logísticas o de intermediación comercial, como Panamá.\nOtra limitación relevante es que, para esta categoría, la clasificación HS07 no permite distinguir si los productos exportados o importados tienen uso final en medicina humana o animal."
+  },
+  {
     "objectID": "dashboard/dispositivos-quirurgicos.html",
     "href": "dashboard/dispositivos-quirurgicos.html",
     "title": "Dispositivos quirúrgicos e invasivos",
     "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 11.069,2 millones e importó US$ 3.541,5 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 7.527,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 6.937,5 millones) y el mayor importador fue México (US$ 1.422,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 27.442,4 millones e importó US$ 9.013,1 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 18.429,3 millones. Entre los países de la región, el mayor exportador fue México (US$ 18.047,0 millones) y el mayor importador fue México (US$ 4.494,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
   },
   {
     "objectID": "dashboard/dispositivos-quirurgicos.html#panorama-regional",
     "href": "dashboard/dispositivos-quirurgicos.html#panorama-regional",
     "title": "Dispositivos quirúrgicos e invasivos",
     "section": "",
-    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 11.069,2 millones e importó US$ 3.541,5 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 7.527,7 millones. Entre los países de la región, el mayor exportador fue México (US$ 6.937,5 millones) y el mayor importador fue México (US$ 1.422,1 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
+    "text": "Exportaciones ALC\n\n2024\n\n\nImportaciones ALC\n\n2024\n\n\nBalance comercial\n\nExportaciones menos importaciones\n\n\nParticipación mundial de ALC\n\n2024\n\n\n\nEn 2024, América Latina y el Caribe exportó US$ 27.442,4 millones e importó US$ 9.013,1 millones en Dispositivos quirúrgicos e invasivos, con un balance comercial de US$ 18.429,3 millones. Entre los países de la región, el mayor exportador fue México (US$ 18.047,0 millones) y el mayor importador fue México (US$ 4.494,2 millones). En el comercio agregado de la región, el principal destino regional de las exportaciones fue América del Norte y el principal origen de las importaciones fue América del Norte."
   },
   {
     "objectID": "dashboard/dispositivos-quirurgicos.html#participación-de-alc-en-las-exportaciones-mundiales",
@@ -1425,14 +1502,14 @@
     "href": "dashboard/panorama-regional.html",
     "title": "Panorama regional",
     "section": "",
-    "text": "La tabla resume el comercio de América Latina y el Caribe en 2024 para los productos seleccionados. Las filas se pueden desplegar para navegar desde los grandes bloques, hacia las categorías de uso común de los productos. En las columnas de participación, cada fila se compara con su nivel de agrupación inmediatamente superior.\n\n\nCategoría\nImp. ALC\n% de imp. del nivel superior\nExp. ALC\n% de exp. del nivel superior\n\n\n\nTecnologías sanitarias\nUS$ 50,5 mil millones\n88,7%\nUS$ 49,6 mil millones\n96,6%\n\n\n\nMedicamentos, vacunas y otros\nUS$ 25,7 mil millones\n50,9%\nUS$ 6,5 mil millones\n13,2%\n\n\nMedicamentos\nUS$ 22,5 mil millones\n87,4%\nUS$ 6,3 mil millones\n95,8%\n\n\nVacunas (humanas)\nUS$ 2,4 mil millones\n9,2%\nUS$ 0,1 mil millones\n1,6%\n\n\nCélulas, tejidos y otras sustancias de origen humano o animal para uso terapéutico\nUS$ 0,2 mil millones\n0,6%\nUS$ 0,1 mil millones\n1,9%\n\n\nSangre y productos derivados, inmunoglobulinas y antisueros\nUS$ 0,7 mil millones\n2,8%\nUS$ 0,0 mil millones\n0,8%\n\n\n\n\nDispositivos médicos\nUS$ 24,8 mil millones\n49,1%\nUS$ 43,1 mil millones\n86,8%\n\n\nDispositivos de diagnóstico in vitro y de laboratorio\nUS$ 3,2 mil millones\n13,1%\nUS$ 0,3 mil millones\n0,8%\n\n\nCuidado de heridas y dispositivos de protección\nUS$ 1,3 mil millones\n5,2%\nUS$ 0,5 mil millones\n1,1%\n\n\nDispositivos cardiovasculares\nUS$ 0,2 mil millones\n0,7%\nUS$ 0,0 mil millones\n0,0%\n\n\nDispositivos de diagnóstico por imagen\nUS$ 2,1 mil millones\n8,6%\nUS$ 0,6 mil millones\n1,4%\n\n\nDispositivos de esterilización y desinfección\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,1 mil millones\n0,3%\n\n\nDispositivos odontológicos\nUS$ 6,2 mil millones\n25,0%\nUS$ 16,8 mil millones\n39,1%\n\n\nDispositivos para rehabilitación y asistencia\nUS$ 6,3 mil millones\n25,5%\nUS$ 10,3 mil millones\n23,9%\n\n\nDispositivos quirúrgicos e invasivos\nUS$ 3,5 mil millones\n14,3%\nUS$ 11,1 mil millones\n25,7%\n\n\nEquipos de diagnóstico y monitoreo\nUS$ 0,8 mil millones\n3,4%\nUS$ 2,5 mil millones\n5,8%\n\n\nEquipos de laboratorio\nUS$ 0,1 mil millones\n0,4%\nUS$ 0,0 mil millones\n0,0%\n\n\nEquipos terapéuticos\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,0 mil millones\n0,0%\n\n\nInsumos médicos y suministros para la atención de pacientes\nUS$ 0,6 mil millones\n2,3%\nUS$ 0,5 mil millones\n1,1%\n\n\nMobiliario médico y elementos de soporte\nUS$ 0,2 mil millones\n0,9%\nUS$ 0,3 mil millones\n0,6%\n\n\n\n\n\nInsumos\nUS$ 6,5 mil millones\n11,3%\nUS$ 1,8 mil millones\n3,4%\n\n\n\nIFAs\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%\n\n\nIngredientes farmacéuticos activos\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%"
+    "text": "La tabla resume el comercio de América Latina y el Caribe en 2024 para los productos seleccionados. Las filas se pueden desplegar para navegar desde los grandes bloques, hacia las categorías de uso común de los productos. En las columnas de participación, cada fila se compara con su nivel de agrupación inmediatamente superior.\n\n\nCategoría\nImp. ALC\n% de imp. del nivel superior\nExp. ALC\n% de exp. del nivel superior\n\n\n\nTecnologías sanitarias\nUS$ 50,5 mil millones\n88,7%\nUS$ 49,6 mil millones\n96,6%\n\n\n\nMedicamentos, vacunas y otros\nUS$ 25,7 mil millones\n50,9%\nUS$ 6,5 mil millones\n13,2%\n\n\nMedicamentos\nUS$ 22,5 mil millones\n87,4%\nUS$ 6,3 mil millones\n95,8%\n\n\nVacunas (humanas)\nUS$ 2,4 mil millones\n9,2%\nUS$ 0,1 mil millones\n1,6%\n\n\nCélulas, tejidos y otras sustancias de origen humano o animal para uso terapéutico\nUS$ 0,2 mil millones\n0,6%\nUS$ 0,1 mil millones\n1,9%\n\n\nSangre y productos derivados, inmunoglobulinas y antisueros\nUS$ 0,7 mil millones\n2,8%\nUS$ 0,0 mil millones\n0,8%\n\n\n\n\nDispositivos médicos\nUS$ 24,8 mil millones\n49,1%\nUS$ 43,1 mil millones\n86,8%\n\n\nDispositivos de diagnóstico in vitro y de laboratorio\nUS$ 3,2 mil millones\n13,1%\nUS$ 0,3 mil millones\n0,8%\n\n\nCuidado de heridas y dispositivos de protección\nUS$ 1,3 mil millones\n5,2%\nUS$ 0,5 mil millones\n1,1%\n\n\nDispositivos cardiovasculares\nUS$ 0,2 mil millones\n0,7%\nUS$ 0,0 mil millones\n0,0%\n\n\nDispositivos de diagnóstico por imagen\nUS$ 2,1 mil millones\n8,6%\nUS$ 0,6 mil millones\n1,4%\n\n\nDispositivos de esterilización y desinfección\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,1 mil millones\n0,3%\n\n\nDispositivos odontológicos\nUS$ 0,7 mil millones\n2,9%\nUS$ 0,5 mil millones\n1,1%\n\n\nDispositivos para rehabilitación y asistencia\nUS$ 6,3 mil millones\n25,5%\nUS$ 10,3 mil millones\n23,9%\n\n\nDispositivos quirúrgicos e invasivos\nUS$ 9,0 mil millones\n36,3%\nUS$ 27,4 mil millones\n63,7%\n\n\nEquipos de diagnóstico y monitoreo\nUS$ 0,8 mil millones\n3,4%\nUS$ 2,5 mil millones\n5,8%\n\n\nEquipos de laboratorio\nUS$ 0,1 mil millones\n0,4%\nUS$ 0,0 mil millones\n0,0%\n\n\nEquipos terapéuticos\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,0 mil millones\n0,0%\n\n\nInsumos médicos y suministros para la atención de pacientes\nUS$ 0,6 mil millones\n2,3%\nUS$ 0,5 mil millones\n1,1%\n\n\nMobiliario médico y elementos de soporte\nUS$ 0,2 mil millones\n0,9%\nUS$ 0,3 mil millones\n0,6%\n\n\n\n\n\nInsumos\nUS$ 6,5 mil millones\n11,3%\nUS$ 1,8 mil millones\n3,4%\n\n\n\nIFAs\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%\n\n\nIngredientes farmacéuticos activos\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%"
   },
   {
     "objectID": "dashboard/panorama-regional.html#resumen",
     "href": "dashboard/panorama-regional.html#resumen",
     "title": "Panorama regional",
     "section": "",
-    "text": "La tabla resume el comercio de América Latina y el Caribe en 2024 para los productos seleccionados. Las filas se pueden desplegar para navegar desde los grandes bloques, hacia las categorías de uso común de los productos. En las columnas de participación, cada fila se compara con su nivel de agrupación inmediatamente superior.\n\n\nCategoría\nImp. ALC\n% de imp. del nivel superior\nExp. ALC\n% de exp. del nivel superior\n\n\n\nTecnologías sanitarias\nUS$ 50,5 mil millones\n88,7%\nUS$ 49,6 mil millones\n96,6%\n\n\n\nMedicamentos, vacunas y otros\nUS$ 25,7 mil millones\n50,9%\nUS$ 6,5 mil millones\n13,2%\n\n\nMedicamentos\nUS$ 22,5 mil millones\n87,4%\nUS$ 6,3 mil millones\n95,8%\n\n\nVacunas (humanas)\nUS$ 2,4 mil millones\n9,2%\nUS$ 0,1 mil millones\n1,6%\n\n\nCélulas, tejidos y otras sustancias de origen humano o animal para uso terapéutico\nUS$ 0,2 mil millones\n0,6%\nUS$ 0,1 mil millones\n1,9%\n\n\nSangre y productos derivados, inmunoglobulinas y antisueros\nUS$ 0,7 mil millones\n2,8%\nUS$ 0,0 mil millones\n0,8%\n\n\n\n\nDispositivos médicos\nUS$ 24,8 mil millones\n49,1%\nUS$ 43,1 mil millones\n86,8%\n\n\nDispositivos de diagnóstico in vitro y de laboratorio\nUS$ 3,2 mil millones\n13,1%\nUS$ 0,3 mil millones\n0,8%\n\n\nCuidado de heridas y dispositivos de protección\nUS$ 1,3 mil millones\n5,2%\nUS$ 0,5 mil millones\n1,1%\n\n\nDispositivos cardiovasculares\nUS$ 0,2 mil millones\n0,7%\nUS$ 0,0 mil millones\n0,0%\n\n\nDispositivos de diagnóstico por imagen\nUS$ 2,1 mil millones\n8,6%\nUS$ 0,6 mil millones\n1,4%\n\n\nDispositivos de esterilización y desinfección\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,1 mil millones\n0,3%\n\n\nDispositivos odontológicos\nUS$ 6,2 mil millones\n25,0%\nUS$ 16,8 mil millones\n39,1%\n\n\nDispositivos para rehabilitación y asistencia\nUS$ 6,3 mil millones\n25,5%\nUS$ 10,3 mil millones\n23,9%\n\n\nDispositivos quirúrgicos e invasivos\nUS$ 3,5 mil millones\n14,3%\nUS$ 11,1 mil millones\n25,7%\n\n\nEquipos de diagnóstico y monitoreo\nUS$ 0,8 mil millones\n3,4%\nUS$ 2,5 mil millones\n5,8%\n\n\nEquipos de laboratorio\nUS$ 0,1 mil millones\n0,4%\nUS$ 0,0 mil millones\n0,0%\n\n\nEquipos terapéuticos\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,0 mil millones\n0,0%\n\n\nInsumos médicos y suministros para la atención de pacientes\nUS$ 0,6 mil millones\n2,3%\nUS$ 0,5 mil millones\n1,1%\n\n\nMobiliario médico y elementos de soporte\nUS$ 0,2 mil millones\n0,9%\nUS$ 0,3 mil millones\n0,6%\n\n\n\n\n\nInsumos\nUS$ 6,5 mil millones\n11,3%\nUS$ 1,8 mil millones\n3,4%\n\n\n\nIFAs\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%\n\n\nIngredientes farmacéuticos activos\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%"
+    "text": "La tabla resume el comercio de América Latina y el Caribe en 2024 para los productos seleccionados. Las filas se pueden desplegar para navegar desde los grandes bloques, hacia las categorías de uso común de los productos. En las columnas de participación, cada fila se compara con su nivel de agrupación inmediatamente superior.\n\n\nCategoría\nImp. ALC\n% de imp. del nivel superior\nExp. ALC\n% de exp. del nivel superior\n\n\n\nTecnologías sanitarias\nUS$ 50,5 mil millones\n88,7%\nUS$ 49,6 mil millones\n96,6%\n\n\n\nMedicamentos, vacunas y otros\nUS$ 25,7 mil millones\n50,9%\nUS$ 6,5 mil millones\n13,2%\n\n\nMedicamentos\nUS$ 22,5 mil millones\n87,4%\nUS$ 6,3 mil millones\n95,8%\n\n\nVacunas (humanas)\nUS$ 2,4 mil millones\n9,2%\nUS$ 0,1 mil millones\n1,6%\n\n\nCélulas, tejidos y otras sustancias de origen humano o animal para uso terapéutico\nUS$ 0,2 mil millones\n0,6%\nUS$ 0,1 mil millones\n1,9%\n\n\nSangre y productos derivados, inmunoglobulinas y antisueros\nUS$ 0,7 mil millones\n2,8%\nUS$ 0,0 mil millones\n0,8%\n\n\n\n\nDispositivos médicos\nUS$ 24,8 mil millones\n49,1%\nUS$ 43,1 mil millones\n86,8%\n\n\nDispositivos de diagnóstico in vitro y de laboratorio\nUS$ 3,2 mil millones\n13,1%\nUS$ 0,3 mil millones\n0,8%\n\n\nCuidado de heridas y dispositivos de protección\nUS$ 1,3 mil millones\n5,2%\nUS$ 0,5 mil millones\n1,1%\n\n\nDispositivos cardiovasculares\nUS$ 0,2 mil millones\n0,7%\nUS$ 0,0 mil millones\n0,0%\n\n\nDispositivos de diagnóstico por imagen\nUS$ 2,1 mil millones\n8,6%\nUS$ 0,6 mil millones\n1,4%\n\n\nDispositivos de esterilización y desinfección\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,1 mil millones\n0,3%\n\n\nDispositivos odontológicos\nUS$ 0,7 mil millones\n2,9%\nUS$ 0,5 mil millones\n1,1%\n\n\nDispositivos para rehabilitación y asistencia\nUS$ 6,3 mil millones\n25,5%\nUS$ 10,3 mil millones\n23,9%\n\n\nDispositivos quirúrgicos e invasivos\nUS$ 9,0 mil millones\n36,3%\nUS$ 27,4 mil millones\n63,7%\n\n\nEquipos de diagnóstico y monitoreo\nUS$ 0,8 mil millones\n3,4%\nUS$ 2,5 mil millones\n5,8%\n\n\nEquipos de laboratorio\nUS$ 0,1 mil millones\n0,4%\nUS$ 0,0 mil millones\n0,0%\n\n\nEquipos terapéuticos\nUS$ 0,1 mil millones\n0,3%\nUS$ 0,0 mil millones\n0,0%\n\n\nInsumos médicos y suministros para la atención de pacientes\nUS$ 0,6 mil millones\n2,3%\nUS$ 0,5 mil millones\n1,1%\n\n\nMobiliario médico y elementos de soporte\nUS$ 0,2 mil millones\n0,9%\nUS$ 0,3 mil millones\n0,6%\n\n\n\n\n\nInsumos\nUS$ 6,5 mil millones\n11,3%\nUS$ 1,8 mil millones\n3,4%\n\n\n\nIFAs\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%\n\n\nIngredientes farmacéuticos activos\nUS$ 6,5 mil millones\n100,0%\nUS$ 1,8 mil millones\n100,0%"
   },
   {
     "objectID": "dashboard/panorama-regional.html#evolución-del-comercio-de-tecnologías-sanitarias-e-insumos",

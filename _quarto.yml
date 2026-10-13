@@ -24,6 +24,8 @@ website:
           - text: "Sangre, inmunoglobulinas y antisueros"
             href: dashboard/hemoderivados.qmd
           - text: "── Dispositivos médicos ──"
+          - text: "Dispositivos médicos (todos)"
+            href: dashboard/dispositivos-medicos-todos.qmd
           - text: "Dispositivos de diagnóstico in vitro y laboratorio"
             href: dashboard/diagnostico-in-vitro.qmd
           - text: "Cuidado de heridas y dispositivos de protección"
