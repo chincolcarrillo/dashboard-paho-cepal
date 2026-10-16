@@ -19,6 +19,11 @@ El proyecto no instala paquetes durante el procesamiento ni durante el render. P
 3. Revise `r/02_functions_plots.R` si necesita modificar temas, formatos o visualizaciones compartidas.
 4. Renderice el proyecto Quarto. Las páginas permanecen estáticas; no se utiliza Shiny.
 
+La página interna de complejidad de productos es opcional. Para actualizarla,
+ejecute `r/04_complexity_indicators.R` después de `r/01_clean_baci.R` y antes
+de renderizar. Si la base interna no existe, el resto del sitio puede renderizarse
+y la página oculta muestra un aviso en lugar de interrumpir el proceso.
+
 Los archivos de `data/dashboard/` son los insumos de las páginas. No es necesario cargar los CSV BACI durante el render.
 
 ## Organización del dashboard

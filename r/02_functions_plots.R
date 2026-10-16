@@ -1701,10 +1701,26 @@ prepare_overview_lac_trade_by_group <- function(trade_balance) {
       value_1000usd = sum(value_1000usd, na.rm = TRUE),
       .groups = "drop"
     ) |>
+    dplyr::group_by(year, flow_type) |>
+    dplyr::mutate(
+      total_value_1000usd = sum(value_1000usd, na.rm = TRUE),
+      share_value = dplyr::if_else(
+        .data$total_value_1000usd > 0,
+        .data$value_1000usd / .data$total_value_1000usd,
+        NA_real_
+      )
+    ) |>
+    dplyr::ungroup() |>
     dplyr::mutate(
       product_group = factor(.data$summary_level_2, levels = group_levels),
       value_musd = to_musd(.data$value_1000usd),
-      tooltip = format_usd_millions(.data$value_1000usd)
+      tooltip = make_tooltip(
+        format_usd_millions(.data$value_1000usd),
+        glue::glue(
+          "<b>Participación de la categoría:</b> ",
+          "{format_percent_label(.data$share_value)}"
+        )
+      )
     ) |>
     dplyr::arrange(.data$flow_type, .data$year, .data$summary_level_2_order)
 }
@@ -3097,7 +3113,8 @@ render_product_exports_by_country_table <- function(product_exports) {
       share_product = exports_1000usd / sum(exports_1000usd, na.rm = TRUE)
     ) |>
     dplyr::filter(
-      rca_balassa > 1 | exports_1000usd > 1000
+      rca_balassa > dashboard_product_rca_threshold |
+        exports_1000usd > dashboard_product_exports_threshold_1000usd
     ) |>
     dplyr::ungroup()
 
@@ -3135,6 +3152,352 @@ render_product_exports_by_country_table <- function(product_exports) {
         name = "RCA",
         align = "right",
         format = reactable::colFormat(digits = 2, separators = TRUE)
+      )
+    ),
+    theme = reactable::reactableTheme(
+      borderColor = "#e5e7eb",
+      stripedColor = "#f8fafc",
+      highlightColor = "#f1f5f9",
+      cellPadding = "8px 10px"
+    )
+  )
+}
+
+# 9. EXPLORACIÓN INTERNA DE COMPLEJIDAD DE PRODUCTO ----
+
+## 9.1. Carga de la base interna ----
+
+load_internal_data <- function(file_name, data_dir = internal_data_dir) {
+  file_path <- file.path(data_dir, file_name)
+
+  if (!file.exists(file_path)) {
+    stop(
+      glue::glue(
+        "No se encontró la base interna '{file_path}'. ",
+        "Ejecute primero los scripts de procesamiento correspondientes."
+      ),
+      call. = FALSE
+    )
+  }
+
+  readRDS(file_path)
+}
+
+## 9.2. Balance comercial y complejidad por producto ----
+
+complexity_product_group_palette <- c(
+  "Medicamentos, vacunas y otros" = "#8dd3c7",
+  "Dispositivos médicos" = "#fb8072",
+  "IFAs" = "#fdb462"
+)
+
+plot_product_complexity_trade_balance <- function(
+  data,
+  interactive = TRUE,
+  balance_scale = c("linear", "pseudo_log")
+) {
+  balance_scale <- rlang::arg_match(balance_scale)
+
+  required_cols <- c(
+    "code", "description", "hc_cat2", "product_group", "pci_2024",
+    "balance_1000usd"
+  )
+  check_required_columns(data, required_cols, "pci_tec_sanitaria")
+
+  plot_data <- data |>
+    dplyr::filter(
+      !is.na(.data$pci_2024),
+      !is.na(.data$balance_1000usd),
+      !is.na(.data$product_group)
+    ) |>
+    dplyr::mutate(
+      product_group = factor(
+        as.character(.data$product_group),
+        levels = names(complexity_product_group_palette)
+      ),
+      description_full = dplyr::coalesce(
+        stringr::str_squish(.data$description),
+        "Sin descripción disponible"
+      ),
+      balance_musd = .data$balance_1000usd / 1000,
+      tooltip = make_tooltip(
+        glue::glue("<b>Producto:</b> {.data$code} — {.data$description_full}"),
+        glue::glue("<b>Categoría:</b> {.data$hc_cat2}"),
+        glue::glue("<b>Balance comercial:</b> {format_usd_millions(.data$balance_1000usd)}"),
+        glue::glue("<b>PCI 2024:</b> {scales::number(.data$pci_2024, accuracy = 0.01, decimal.mark = ',')}")
+      )
+    )
+
+  if (nrow(plot_data) == 0) {
+    rlang::abort("No hay productos con PCI y balance comercial disponibles para graficar.")
+  }
+
+  balance_transformation <- if (balance_scale == "pseudo_log") {
+    scales::pseudo_log_trans(sigma = 1, base = 10)
+  } else {
+    "identity"
+  }
+
+  balance_axis_title <- if (balance_scale == "pseudo_log") {
+    "Balance comercial de ALC, 2024 (millones de USD; escala pseudologarítmica)"
+  } else {
+    "Balance comercial de ALC, 2024 (millones de USD)"
+  }
+
+  p <- ggplot2::ggplot(
+    plot_data,
+    ggplot2::aes(
+      x = balance_musd,
+      y = pci_2024,
+      color = product_group,
+      text = tooltip
+    )
+  ) +
+    ggplot2::geom_vline(
+      xintercept = 0,
+      color = "#8c8c8c",
+      linetype = "dashed",
+      linewidth = 0.4
+    ) +
+    ggplot2::geom_hline(
+      yintercept = 0,
+      color = "#b0b0b0",
+      linetype = "dotted",
+      linewidth = 0.35
+    ) +
+    ggplot2::geom_point(size = 2.8, alpha = 0.78) +
+    ggplot2::scale_color_manual(
+      values = complexity_product_group_palette,
+      drop = FALSE
+    ) +
+    ggplot2::scale_x_continuous(
+      trans = balance_transformation,
+      labels = scales::label_number(
+        prefix = "US$ ",
+        suffix = " M",
+        big.mark = ".",
+        decimal.mark = ","
+      ),
+      expand = ggplot2::expansion(mult = 0.06)
+    ) +
+    ggplot2::labs(
+      x = balance_axis_title,
+      y = "Índice de complejidad de producto (PCI), 2024",
+      color = NULL
+    ) +
+    theme_trade() +
+    ggplot2::theme(legend.position = "bottom")
+
+  if (isTRUE(interactive)) {
+    return(
+      plotly::ggplotly(p, tooltip = "text") |>
+        plotly::layout(
+          hovermode = "closest",
+          legend = list(
+            orientation = "h",
+            x = 0.5,
+            xanchor = "center",
+            y = -0.16
+          ),
+          margin = list(l = 95, r = 25, t = 25, b = 105)
+        )
+    )
+  }
+
+  p
+}
+
+## 9.3. Balance comercial en escala pseudologarítmica ----
+
+plot_product_complexity_trade_balance_log <- function(data, interactive = TRUE) {
+  plot_product_complexity_trade_balance(
+    data = data,
+    interactive = interactive,
+    balance_scale = "pseudo_log"
+  )
+}
+
+## 9.4. Participación exportadora en el comercio total ----
+
+plot_product_complexity_export_share <- function(data, interactive = TRUE) {
+  required_cols <- c(
+    "code", "description", "hc_cat2", "product_group", "pci_2024",
+    "exports_1000usd", "imports_1000usd"
+  )
+  check_required_columns(data, required_cols, "pci_tec_sanitaria")
+
+  plot_data <- data |>
+    dplyr::mutate(
+      total_trade_1000usd = .data$exports_1000usd + .data$imports_1000usd,
+      export_share_total_trade = dplyr::if_else(
+        .data$total_trade_1000usd > 0,
+        .data$exports_1000usd / .data$total_trade_1000usd,
+        NA_real_
+      )
+    ) |>
+    dplyr::filter(
+      !is.na(.data$pci_2024),
+      !is.na(.data$export_share_total_trade),
+      !is.na(.data$product_group)
+    ) |>
+    dplyr::mutate(
+      product_group = factor(
+        as.character(.data$product_group),
+        levels = names(complexity_product_group_palette)
+      ),
+      description_full = dplyr::coalesce(
+        stringr::str_squish(.data$description),
+        "Sin descripción disponible"
+      ),
+      tooltip = make_tooltip(
+        glue::glue("<b>Producto:</b> {.data$code} — {.data$description_full}"),
+        glue::glue("<b>Categoría:</b> {.data$hc_cat2}"),
+        glue::glue("<b>Exportaciones:</b> {format_usd_millions(.data$exports_1000usd)}"),
+        glue::glue("<b>Importaciones:</b> {format_usd_millions(.data$imports_1000usd)}"),
+        glue::glue(
+          "<b>Participación exportadora:</b> ",
+          "{format_percent_label(.data$export_share_total_trade)}"
+        ),
+        glue::glue("<b>PCI 2024:</b> {scales::number(.data$pci_2024, accuracy = 0.01, decimal.mark = ',')}")
+      )
+    )
+
+  if (nrow(plot_data) == 0) {
+    rlang::abort("No hay productos con PCI y flujos comerciales disponibles para graficar.")
+  }
+
+  p <- ggplot2::ggplot(
+    plot_data,
+    ggplot2::aes(
+      x = export_share_total_trade,
+      y = pci_2024,
+      color = product_group,
+      text = tooltip
+    )
+  ) +
+    ggplot2::geom_vline(
+      xintercept = 0.5,
+      color = "#8c8c8c",
+      linetype = "dashed",
+      linewidth = 0.4
+    ) +
+    ggplot2::geom_hline(
+      yintercept = 0,
+      color = "#b0b0b0",
+      linetype = "dotted",
+      linewidth = 0.35
+    ) +
+    ggplot2::geom_point(size = 2.8, alpha = 0.78) +
+    ggplot2::scale_color_manual(
+      values = complexity_product_group_palette,
+      drop = FALSE
+    ) +
+    ggplot2::scale_x_continuous(
+      labels = scales::percent_format(accuracy = 1),
+      limits = c(0, 1),
+      breaks = seq(0, 1, by = 0.1),
+      expand = ggplot2::expansion(mult = c(0.01, 0.01))
+    ) +
+    ggplot2::labs(
+      x = "Exportaciones como proporción del comercio total de ALC, 2024",
+      y = "Índice de complejidad de producto (PCI), 2024",
+      color = NULL
+    ) +
+    theme_trade() +
+    ggplot2::theme(legend.position = "bottom")
+
+  if (isTRUE(interactive)) {
+    return(
+      plotly::ggplotly(p, tooltip = "text") |>
+        plotly::layout(
+          hovermode = "closest",
+          legend = list(
+            orientation = "h",
+            x = 0.5,
+            xanchor = "center",
+            y = -0.16
+          ),
+          margin = list(l = 95, r = 25, t = 25, b = 105)
+        )
+    )
+  }
+
+  p
+}
+
+## 9.5. Tabla navegable de complejidad por producto ----
+
+render_product_complexity_table <- function(data) {
+  required_cols <- c(
+    "code", "description", "hc_cat2", "product_group", "pci_2024",
+    "pci_2023", "pci_2022", "exports_1000usd", "imports_1000usd",
+    "balance_1000usd"
+  )
+  check_required_columns(data, required_cols, "pci_tec_sanitaria")
+
+  table_data <- data |>
+    dplyr::transmute(
+      codigo_hs07 = .data$code,
+      descripcion = dplyr::coalesce(
+        stringr::str_squish(.data$description),
+        "Sin descripción disponible"
+      ),
+      grupo_principal = as.character(.data$product_group),
+      categoria = .data$hc_cat2,
+      pci_2024 = .data$pci_2024,
+      pci_2023 = .data$pci_2023,
+      pci_2022 = .data$pci_2022,
+      exportaciones_1000usd = .data$exports_1000usd,
+      importaciones_1000usd = .data$imports_1000usd,
+      balance_1000usd = .data$balance_1000usd
+    ) |>
+    dplyr::arrange(dplyr::desc(.data$pci_2024), .data$codigo_hs07)
+
+  reactable::reactable(
+    table_data,
+    searchable = TRUE,
+    filterable = TRUE,
+    sortable = TRUE,
+    pagination = TRUE,
+    defaultPageSize = 20,
+    defaultSorted = list(pci_2024 = "desc"),
+    highlight = TRUE,
+    striped = TRUE,
+    bordered = TRUE,
+    columns = list(
+      codigo_hs07 = reactable::colDef(name = "Código HS07", minWidth = 105),
+      descripcion = reactable::colDef(name = "Descripción", minWidth = 320),
+      grupo_principal = reactable::colDef(name = "Grupo principal", minWidth = 210),
+      categoria = reactable::colDef(name = "Categoría", minWidth = 260),
+      pci_2024 = reactable::colDef(
+        name = "PCI 2024",
+        align = "right",
+        format = reactable::colFormat(digits = 2)
+      ),
+      pci_2023 = reactable::colDef(
+        name = "PCI 2023",
+        align = "right",
+        format = reactable::colFormat(digits = 2)
+      ),
+      pci_2022 = reactable::colDef(
+        name = "PCI 2022",
+        align = "right",
+        format = reactable::colFormat(digits = 2)
+      ),
+      exportaciones_1000usd = reactable::colDef(
+        name = "Exp., miles de USD",
+        align = "right",
+        format = reactable::colFormat(digits = 0, separators = TRUE)
+      ),
+      importaciones_1000usd = reactable::colDef(
+        name = "Imp., miles de USD",
+        align = "right",
+        format = reactable::colFormat(digits = 0, separators = TRUE)
+      ),
+      balance_1000usd = reactable::colDef(
+        name = "Balance, miles de USD",
+        align = "right",
+        format = reactable::colFormat(digits = 0, separators = TRUE)
       )
     ),
     theme = reactable::reactableTheme(

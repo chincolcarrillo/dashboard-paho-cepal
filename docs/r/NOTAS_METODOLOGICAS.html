@@ -207,8 +207,10 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#crecimiento-interanual-a-n-años-series-de-tendencia" id="toc-crecimiento-interanual-a-n-años-series-de-tendencia" class="nav-link" data-scroll-target="#crecimiento-interanual-a-n-años-series-de-tendencia">3.8 Crecimiento interanual / a n años (series de tendencia)</a></li>
   <li><a href="#distribución-del-comercio-de-un-país-entre-categorías" id="toc-distribución-del-comercio-de-un-país-entre-categorías" class="nav-link" data-scroll-target="#distribución-del-comercio-de-un-país-entre-categorías">3.9 Distribución del comercio de un país entre categorías</a></li>
   <li><a href="#índice-de-ventaja-comparativa-revelada-rca-de-balassa" id="toc-índice-de-ventaja-comparativa-revelada-rca-de-balassa" class="nav-link" data-scroll-target="#índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</a></li>
+  <li><a href="#pares-producto-país-emergentes-a-15-años" id="toc-pares-producto-país-emergentes-a-15-años" class="nav-link" data-scroll-target="#pares-producto-país-emergentes-a-15-años">3.10.1 Pares producto-país emergentes a 15 años</a></li>
   <li><a href="#kpi-agregados-de-la-página-de-inicio" id="toc-kpi-agregados-de-la-página-de-inicio" class="nav-link" data-scroll-target="#kpi-agregados-de-la-página-de-inicio">3.11 KPI agregados de la página de inicio</a></li>
   <li><a href="#categoría-agregada-de-dispositivos-médicos" id="toc-categoría-agregada-de-dispositivos-médicos" class="nav-link" data-scroll-target="#categoría-agregada-de-dispositivos-médicos">3.12 Categoría agregada de dispositivos médicos</a></li>
+  <li><a href="#complejidad-de-producto-y-balance-comercial" id="toc-complejidad-de-producto-y-balance-comercial" class="nav-link" data-scroll-target="#complejidad-de-producto-y-balance-comercial">3.13 Complejidad de producto y balance comercial</a></li>
   </ul></li>
   <li><a href="#notas-generales" id="toc-notas-generales" class="nav-link" data-scroll-target="#notas-generales">4. Notas generales</a></li>
   </ul></li>
@@ -328,7 +330,12 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="índice-de-ventaja-comparativa-revelada-rca-de-balassa" class="level3">
 <h3 class="anchored" data-anchor-id="índice-de-ventaja-comparativa-revelada-rca-de-balassa">3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)</h3>
-<p><strong>Se calcula en el script 03_trade_indicators.R</strong> La columna <code>rca_balassa</code> llega ya calculada desde la base <code>product_exports_lac_2024_by_country</code> (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En <code>render_product_exports_by_country_table()</code> <strong>se promedia (<code>mean</code>) si hay múltiples registros por producto/país [quizás sacar???]</strong>, y la tabla se filtra a productos con <code>rca_balassa &gt; 1</code> <strong>o</strong> exportaciones <code>&gt; US$ 1 millón</code>, para priorizar productos relevantes.</p>
+<p><strong>Se calcula en el script 03_trade_indicators.R</strong> La columna <code>rca_balassa</code> llega ya calculada desde la base <code>product_exports_lac_2024_by_country</code> (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume: - En <code>render_product_exports_by_country_table()</code> se promedia si hay múltiples registros por producto/país, y la tabla se filtra a productos con <code>rca_balassa &gt; 1</code> <strong>o</strong> exportaciones <code>&gt; US$ 1 millón</code>, para priorizar productos relevantes. Ambos umbrales están centralizados en <code>r/00_config.R</code>.</p>
+</section>
+<section id="pares-producto-país-emergentes-a-15-años" class="level3">
+<h3 class="anchored" data-anchor-id="pares-producto-país-emergentes-a-15-años">3.10.1 Pares producto-país emergentes a 15 años</h3>
+<p><code>data/internal/emerging_product_country_pairs_15y.rds</code> es una base de consulta interna y no alimenta ninguna página del dashboard. Parte de los pares producto-país ALC incluidos en la tabla del último año disponible y retiene aquellos que, quince años antes, no cumplían ni el umbral de RCA ni el de exportaciones.</p>
+<p>La ausencia de un par en BACI durante el año de referencia se interpreta como exportaciones registradas iguales a cero. En esos casos, <code>exports_ratio_vs_reference</code> y <code>rca_change</code> quedan como <code>NA</code>, porque no existe una base histórica válida para calcularlos. Para mantener el archivo parsimonioso, se conservan sólo la identificación del par, exportaciones y RCA del corte, año de referencia y las medidas de cambio.</p>
 </section>
 <section id="kpi-agregados-de-la-página-de-inicio" class="level3">
 <h3 class="anchored" data-anchor-id="kpi-agregados-de-la-página-de-inicio">3.11 KPI agregados de la página de inicio</h3>
@@ -339,6 +346,12 @@ ul.task-list li input[type="checkbox"] {
 <h3 class="anchored" data-anchor-id="categoría-agregada-de-dispositivos-médicos">3.12 Categoría agregada de dispositivos médicos</h3>
 <p><code>Dispositivos médicos (todos)</code> es una categoría virtual de presentación y no un nivel adicional de <code>hc_cat2</code>. <code>dashboard_category_members()</code> la vincula dinámicamente con todas las categorías enumeradas en <code>medical_device_categories</code>.</p>
 <p>Al cargar su página, las bases livianas se agregan nuevamente desde sus valores absolutos. Las participaciones mundiales y por región contraparte, los balances comerciales y los totales de flujo se recalculan después de la suma para evitar agregar porcentajes preexistentes. De este modo, cualquier nueva categoría incorporada correctamente a <code>medical_device_categories</code> queda incluida automáticamente.</p>
+</section>
+<section id="complejidad-de-producto-y-balance-comercial" class="level3">
+<h3 class="anchored" data-anchor-id="complejidad-de-producto-y-balance-comercial">3.13 Complejidad de producto y balance comercial</h3>
+<p>La exploración interna de complejidad cruza los PCI 2022–2024 de <code>data/Data-PCI.csv</code> con la clasificación sanitaria y con el balance comercial de ALC a nivel HS6. Este último se calcula para 2024 como exportaciones regionales menos importaciones regionales y se guarda primero en <code>data/internal/product_trade_balance_lac_2024.rds</code>.</p>
+<p><code>r/04_complexity_indicators.R</code> construye <code>data/internal/pci_tec_sanitaria.rds</code>. La cobertura del PCI es parcial: los productos sin <code>pci_2024</code> se conservan en la tabla interna, pero se excluyen del scatterplot. La página <code>dashboard/complejidad-productos.qmd</code> no aparece en la navegación y declara <code>noindex, nofollow</code>.</p>
+<p>La página compara tres especificaciones del eje comercial: balance neto lineal; balance neto con transformación pseudologarítmica, que admite valores negativos y cero; y participación exportadora <code>X / (X + M)</code>. Esta última queda entre 0 y 1, con 0,5 como punto de equilibrio, y evita los valores infinitos del cociente <code>X / M</code> cuando las importaciones son cero.</p>
 </section>
 </section>
 <section id="notas-generales" class="level2">

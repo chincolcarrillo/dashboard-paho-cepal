@@ -1,0 +1,95 @@
+---
+title: "Complejidad y comercio (desagregado)"
+subtitle: "Exploración a nivel de producto"
+css: category-page.css
+page-layout: full
+params:
+  data_dir: "data/internal"
+format:
+  html:
+    toc: true
+    include-in-header:
+      text: |
+        <meta name="robots" content="noindex, nofollow">
+---
+
+```{r}
+#| label: setup-product-complexity
+#| include: false
+
+source("r/02_functions_plots.R", encoding = "UTF-8")
+
+complexity_data_path <- file.path(params$data_dir, "pci_tec_sanitaria.rds")
+has_complexity_data <- file.exists(complexity_data_path)
+
+pci_tec_sanitaria <- if (has_complexity_data) {
+  load_internal_data(
+    "pci_tec_sanitaria.rds",
+    data_dir = params$data_dir
+  )
+} else {
+  NULL
+}
+```
+
+Esta página permite explorar la relación entre la complejidad de los productos y la comercialización en América Latina y el Caribe. El PCI no está disponible para todos los códigos incluidos en la clasificación, por lo que el gráfico utiliza únicamente productos con PCI 2024 informado. Cada punto representa una subpartida del HS07 al nivel de seis dígitos.
+
+## Balance comercial y complejidad de producto
+
+```{r}
+#| label: product-complexity-scatter
+#| fig-height: 7
+
+if (has_complexity_data) {
+  plot_product_complexity_trade_balance(
+    pci_tec_sanitaria,
+    interactive = TRUE
+  )
+} else {
+  htmltools::div(
+    class = "dashboard-card",
+    "La base de complejidad aún no está disponible. Ejecute primero ",
+    htmltools::code("r/01_clean_baci.R"),
+    " y luego ",
+    htmltools::code("r/04_complexity_indicators.R"),
+    "."
+  )
+}
+```
+
+
+## Participación de las exportaciones en el comercio total
+
+El indicador presenta el cociente **exportaciones / (exportaciones + importaciones)**. 
+
+```{r}
+#| label: product-complexity-scatter-export-share
+#| fig-height: 7
+
+if (has_complexity_data) {
+  plot_product_complexity_export_share(
+    pci_tec_sanitaria,
+    interactive = TRUE
+  )
+} else {
+  htmltools::div(
+    class = "dashboard-card",
+    "La visualización se habilitará al reconstruir la base interna de complejidad."
+  )
+}
+```
+
+## Tabla de productos e indicadores
+
+```{r}
+#| label: product-complexity-table
+
+if (has_complexity_data) {
+  render_product_complexity_table(pci_tec_sanitaria)
+} else {
+  htmltools::div(
+    class = "dashboard-card",
+    "La tabla se habilitará al reconstruir la base interna de complejidad."
+  )
+}
+```

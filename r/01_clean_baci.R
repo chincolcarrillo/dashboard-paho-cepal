@@ -193,6 +193,15 @@ save_dashboard_rds <- function(object, file_name, output_dir = "data/dashboard/"
   invisible(path)
 }
 
+# Las bases de exploración interna se mantienen fuera de data/dashboard para
+# que Quarto no las trate como insumos de presentación.
+save_internal_rds <- function(object, file_name, output_dir = internal_data_dir) {
+  fs::dir_create(output_dir)
+  path <- file.path(output_dir, file_name)
+  saveRDS(object, path)
+  invisible(path)
+}
+
 ## Fx para imprimir validaciones simples ----
 validate_dashboard_base <- function(
   data,
@@ -835,10 +844,11 @@ save_dashboard_rds(
 #   y luego se une a esta base PAHO por year x exporter x product.
 
 product_exports_year <- max(comercio_hc_world$year, na.rm = TRUE)
+emerging_pairs_reference_year <- product_exports_year - emerging_pairs_lookback_years
 
-product_country_indicators_2024 <- calculate_product_country_rca(
+product_country_indicators_comparison <- calculate_product_country_rca(
   baci_data = baci,
-  indicator_year = product_exports_year,
+  indicator_year = c(product_exports_year, emerging_pairs_reference_year),
   countries_exp = paises_exp
 ) |>
   mutate(
@@ -846,6 +856,9 @@ product_country_indicators_2024 <- calculate_product_country_rca(
     exp_region_longname = replace_na(as.character(exp_region_longname), unclassified_region),
     exp_country_name = replace_na(as.character(exp_country_name), unclassified_region)
   )
+
+product_country_indicators_2024 <- product_country_indicators_comparison |>
+  filter(year == product_exports_year)
 
 validate_dashboard_base(
   product_country_indicators_2024,
@@ -921,6 +934,99 @@ validate_dashboard_base(
 save_dashboard_rds(
   product_exports_lac_2024_by_country,
   "product_exports_lac_2024_by_country.rds"
+)
+
+## 4.5.1. Base interna: surgimiento de pares producto-país en 15 años ----
+
+# Objetivo:
+#   Identificar pares producto-país ALC que cumplen en el último año los mismos
+#   criterios de la tabla del dashboard (RCA > 1 o exportaciones > US$ 1 millón),
+#   pero que no cumplían ninguno de ellos quince años antes.
+#
+# Esta base no alimenta páginas Quarto. Se guarda en data/internal para análisis
+# exploratorio del equipo y conserva valores y RCA de ambos años.
+
+emerging_product_country_pairs_15y <- identify_emerging_product_country_pairs(
+  current_products = product_exports_lac_2024_by_country,
+  reference_indicators = product_country_indicators_comparison,
+  cutoff_year = product_exports_year,
+  reference_year = emerging_pairs_reference_year
+)
+
+if (nrow(emerging_product_country_pairs_15y) > 0) {
+  validate_dashboard_base(
+    emerging_product_country_pairs_15y,
+    base_name = "emerging_product_country_pairs_15y",
+    value_var = "exports_cutoff_1000usd",
+    key = c("cutoff_year", "hc_cat2", "product", "exporter")
+  )
+}
+
+save_internal_rds(
+  emerging_product_country_pairs_15y,
+  "emerging_product_country_pairs_15y.rds"
+)
+
+## 4.5.2. Base interna: balance comercial ALC por producto HS6, 2024 ----
+
+# Objetivo:
+#   Proveer el balance regional a nivel de producto para cruzarlo con indicadores
+#   externos de complejidad. Los flujos intrarregionales aparecen como exportación
+#   e importación y, por construcción, se compensan en el balance agregado de ALC.
+
+product_trade_balance_lac_2024 <- dplyr::bind_rows(
+  comercio_hc_world |>
+    dplyr::filter(
+      .data$year == .env$complexity_indicator_year,
+      .data$exp_region == "ALC"
+    ) |>
+    dplyr::transmute(
+      year = as.integer(.data$year),
+      product = as.character(.data$product),
+      hc_cat2 = as.character(.data$hc_cat2),
+      flow_type = "exports_1000usd",
+      value_1000usd = .data$value_1000usd
+    ),
+  comercio_hc_world |>
+    dplyr::filter(
+      .data$year == .env$complexity_indicator_year,
+      .data$imp_region == "ALC"
+    ) |>
+    dplyr::transmute(
+      year = as.integer(.data$year),
+      product = as.character(.data$product),
+      hc_cat2 = as.character(.data$hc_cat2),
+      flow_type = "imports_1000usd",
+      value_1000usd = .data$value_1000usd
+    )
+) |>
+  dplyr::group_by(year, product, hc_cat2, flow_type) |>
+  dplyr::summarise(
+    value_1000usd = sum(.data$value_1000usd, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  tidyr::pivot_wider(
+    names_from = flow_type,
+    values_from = value_1000usd,
+    values_fill = 0
+  ) |>
+  dplyr::mutate(
+    exports_1000usd = tidyr::replace_na(.data$exports_1000usd, 0),
+    imports_1000usd = tidyr::replace_na(.data$imports_1000usd, 0),
+    balance_1000usd = .data$exports_1000usd - .data$imports_1000usd
+  ) |>
+  dplyr::arrange(.data$hc_cat2, .data$product)
+
+validate_dashboard_base(
+  product_trade_balance_lac_2024,
+  base_name = "product_trade_balance_lac_2024",
+  value_var = "exports_1000usd",
+  key = c("year", "hc_cat2", "product")
+)
+
+save_internal_rds(
+  product_trade_balance_lac_2024,
+  "product_trade_balance_lac_2024.rds"
 )
 
 ## 4.6. Base auxiliar: exportaciones ALC de dispositivos médicos, 2024 ----

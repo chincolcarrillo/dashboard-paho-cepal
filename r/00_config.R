@@ -79,5 +79,13 @@ region_colors <- c(
 unclassified_region <- "No clasificada"
 
 dashboard_data_dir <- "data/dashboard"
+internal_data_dir <- "data/internal"
 sankey_years <- c(2018L, 2021L, 2024L)
 target_year_partner <- 2024L
+
+# Criterios comunes para la tabla producto-país y los análisis internos.
+# Las exportaciones están expresadas en miles de USD: 1.000 = US$ 1 millón.
+dashboard_product_rca_threshold <- 1
+dashboard_product_exports_threshold_1000usd <- 1000
+emerging_pairs_lookback_years <- 15L
+complexity_indicator_year <- 2024L

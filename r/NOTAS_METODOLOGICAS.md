@@ -80,7 +80,13 @@ Muestra cómo se compone el comercio de tecnologías sanitarias de cada país po
 ### 3.10 Índice de Ventaja Comparativa Revelada (RCA de Balassa)
 **Se calcula en el script 03_trade_indicators.R** 
 La columna `rca_balassa` llega ya calculada desde la base `product_exports_lac_2024_by_country` (ver script de preparación de datos / cálculo del índice de Balassa). Este archivo solo la consume:
-- En `render_product_exports_by_country_table()` **se promedia (`mean`) si hay múltiples registros por producto/país [quizás sacar???]**, y la tabla se filtra a productos con `rca_balassa > 1` **o** exportaciones `> US$ 1 millón`, para priorizar productos relevantes.
+- En `render_product_exports_by_country_table()` se promedia si hay múltiples registros por producto/país, y la tabla se filtra a productos con `rca_balassa > 1` **o** exportaciones `> US$ 1 millón`, para priorizar productos relevantes. Ambos umbrales están centralizados en `r/00_config.R`.
+
+### 3.10.1 Pares producto-país emergentes a 15 años
+
+`data/internal/emerging_product_country_pairs_15y.rds` es una base de consulta interna y no alimenta ninguna página del dashboard. Parte de los pares producto-país ALC incluidos en la tabla del último año disponible y retiene aquellos que, quince años antes, no cumplían ni el umbral de RCA ni el de exportaciones.
+
+La ausencia de un par en BACI durante el año de referencia se interpreta como exportaciones registradas iguales a cero. En esos casos, `exports_ratio_vs_reference` y `rca_change` quedan como `NA`, porque no existe una base histórica válida para calcularlos. Para mantener el archivo parsimonioso, se conservan sólo la identificación del par, exportaciones y RCA del corte, año de referencia y las medidas de cambio.
 
 ### 3.11 KPI agregados de la página de inicio
 `prepare_landing_group_kpis()` combina, para los tres grupos de la landing y el último año disponible:
@@ -94,6 +100,14 @@ Las categorías se agrupan mediante `dashboard_category_hierarchy()` en disposit
 `Dispositivos médicos (todos)` es una categoría virtual de presentación y no un nivel adicional de `hc_cat2`. `dashboard_category_members()` la vincula dinámicamente con todas las categorías enumeradas en `medical_device_categories`.
 
 Al cargar su página, las bases livianas se agregan nuevamente desde sus valores absolutos. Las participaciones mundiales y por región contraparte, los balances comerciales y los totales de flujo se recalculan después de la suma para evitar agregar porcentajes preexistentes. De este modo, cualquier nueva categoría incorporada correctamente a `medical_device_categories` queda incluida automáticamente.
+
+### 3.13 Complejidad de producto y balance comercial
+
+La exploración interna de complejidad cruza los PCI 2022–2024 de `data/Data-PCI.csv` con la clasificación sanitaria y con el balance comercial de ALC a nivel HS6. Este último se calcula para 2024 como exportaciones regionales menos importaciones regionales y se guarda primero en `data/internal/product_trade_balance_lac_2024.rds`.
+
+`r/04_complexity_indicators.R` construye `data/internal/pci_tec_sanitaria.rds`. La cobertura del PCI es parcial: los productos sin `pci_2024` se conservan en la tabla interna, pero se excluyen del scatterplot. La página `dashboard/complejidad-productos.qmd` no aparece en la navegación y declara `noindex, nofollow`.
+
+La página compara tres especificaciones del eje comercial: balance neto lineal; balance neto con transformación pseudologarítmica, que admite valores negativos y cero; y participación exportadora `X / (X + M)`. Esta última queda entre 0 y 1, con 0,5 como punto de equilibrio, y evita los valores infinitos del cociente `X / M` cuando las importaciones son cero.
 
 ## 4. Notas generales
 
